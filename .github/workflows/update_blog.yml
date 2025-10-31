@@ -1,12 +1,12 @@
-name: Update Blog Posts
-
 on:
   push:
     branches:
       - main
   schedule:
-    - cron: '0 * * * *'  # 🔁 매 1시간마다 실행 (기존 하루 2회 → 매시간)
-  workflow_dispatch:      # ✅ 수동 실행 버튼(Run workflow) 활성화
+    - cron: '0 0 * * *'
+    - cron: '0 15 * * *'
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   update_blog:
@@ -15,17 +15,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.GH_PAT }}  # ✅ Push 권한용 개인 토큰 사용
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.x'
-
-    - name: Install dependencies
-      run: |
-        pip install feedparser gitpython
 
     - name: Run script
       run: python scripts/update_blog.py
