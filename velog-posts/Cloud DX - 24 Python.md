@@ -390,6 +390,7 @@ print(&quot;{:,}원&quot; .format(20000000)) # 20,000,000원</code></pre>
 print(&quot;%s, %d&quot; %(name, age))
 print(&quot;{}, {}&quot; .format(name, age))
 print(f&quot;{name}, {age}&quot;)</code></pre>
+<h3 id="예제-2">예제 2.</h3>
 <blockquote>
 <p> 홍길동씨의 과목별 점수는 다음과 같다고 할 때 합계와 평균 점수를 구하는 소스 코드를 작성하시오.<br />국어(85.56), 영어(79.34), 수학(95.47)
  '%문자열', '.format()함수', 'f-String'으로 모두 표현한다.
