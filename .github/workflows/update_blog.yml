@@ -3,10 +3,10 @@ name: Update Blog Posts
 on:
   push:
     branches:
-      - main  # 또는 실제 사용 중인 브랜치 이름
+      - main
   schedule:
-    - cron: '0 0 * * *'
-    - cron: '0 15 * * *'
+    - cron: '0 * * * *'  # 🔁 매 1시간마다 실행 (기존 하루 2회 → 매시간)
+  workflow_dispatch:      # ✅ 수동 실행 버튼(Run workflow) 활성화
 
 jobs:
   update_blog:
@@ -14,16 +14,12 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
-
-    - name: Push changes
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git push https://${{ secrets.GH_PAT }}@github.com/kyk02405/velog.git
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GH_PAT }}  # ✅ Push 권한용 개인 토큰 사용
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: '3.x'
 
@@ -33,3 +29,11 @@ jobs:
 
     - name: Run script
       run: python scripts/update_blog.py
+
+    - name: Commit & Push changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add .
+        git commit -m "🔄 Update blog posts $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+        git push https://${{ secrets.GH_PAT }}@github.com/kyk02405/velog.git
