@@ -219,9 +219,11 @@ print(company + '\n' + day)</code></pre>
 b, c, d = a[0], 'y', a[2:]
 print(b + c + d)</code></pre>
 <hr />
-<h2 id="24-출력-formatting-3가지">2.4 출력 Formatting 3가지</h2>
-<h3 id="241--문자열-포맷">2.4.1 <code>%</code> 문자열 포맷</h3>
-<pre><code class="language-python">name = &quot;사마달&quot;
+<h1 id="24-출력-formatting-3가지">2.4 출력 Formatting 3가지</h1>
+<h2 id="241--문자열-포맷">2.4.1 <code>%</code> 문자열 포맷</h2>
+<pre><code class="language-python">print(&quot;%유형1, %유형2, ...&quot; % (값1, 값2, ...))
+
+name = &quot;사마달&quot;
 age = 20
 print(&quot;이름: %s, 나이: %d살&quot; % (name, age))</code></pre>
 <ul>
@@ -318,12 +320,13 @@ print(&quot;%9.2f&quot; % 3.14) # .좌측(자리확보) / .우측(소수이하�
 print(&quot;%.2f&quot; % 3.146) # 3.15  (5 이상은 반올림)
 print(&quot;%.2f&quot; % 3.144) # 3.14  (5 미만은 반올림 불가)</code></pre>
 <hr />
-<h3 id="242-formatting-2-format-함수">2.4.2 Formatting 2. .format() 함수</h3>
+<h2 id="242-formatting-2-format-함수">2.4.2 Formatting 2. .format() 함수</h2>
 <ul>
 <li>특징
 <code>%문자열은</code> <code>서식 지정자</code>를 이용해서 출력하지만
 <code>.format()함수</code>는 <code>인덱스 넘버</code>를 이용해서 출력한다.</li>
-<li>문법</li>
+<li>문법<pre><code class="language-python">print(&quot;{0}, {1}, ...&quot; .format(값1, 값2, ...))</code></pre>
+</li>
 </ul>
 <h3 id="실습-1">실습</h3>
 <ul>
@@ -358,6 +361,45 @@ a, b = na[:3], na[5:]
 print(&quot;%s님의 나이는 %s살입니다.&quot; % (a, b)) # 사마달님의 나이는 200살입니다.
 print(&quot;{0}님의 나이는 {1}살입니다.&quot; .format(a, b)) # 사마달님의 나이는 200살입니다.</code></pre>
 </li>
-<li><p>예제 3.</p>
+<li><p>예제 3. 앞에서 했던 <code>%문자열</code> 예제를 <code>.format()함수</code>로 표현</p>
 </li>
 </ul>
+<h2 id="기타-1">기타</h2>
+<h3 id="특수-기호가-붙은-문자열">특수 기호가 붙은 문자열</h3>
+<pre><code class="language-python">print(&quot;{}%&quot; .format(54))</code></pre>
+<h3 id="출력문에-이름-넣기-값-대신-변수명으로-치환한-후-대입">출력문에 이름 넣기 (값 대신 변수명으로 치환한 후 대입)</h3>
+<h3 id="문자열-정렬">문자열 정렬</h3>
+<h3 id="소수점-표현">소수점 표현</h3>
+<ul>
+<li>실수는 기본적으로 <code>6자리</code> 표현<pre><code class="language-python">print(&quot;{}&quot; .format(3.14124234)) # 3.14124234
+print(&quot;{0:f}&quot; .format(3.14124234)) # 3.14124234
+print(&quot;{0:.2f}&quot; .format(3.14124234)) # 3.14
+print(&quot;{:.2f}&quot; .format(3.14124234)) # 인덱스넘버 생략 가능 # 3.14</code></pre>
+<h3 id="통화-단위-구분">통화 단위 구분</h3>
+<pre><code class="language-python">print(&quot;{}원&quot; .format(20000000)) # 20000000원
+print(&quot;{:,}원&quot; .format(20000000)) # 20,000,000원</code></pre>
+</li>
+</ul>
+<hr />
+<h2 id="243-formatting-3-f-string">2.4.3 Formatting 3. <code>f-String</code></h2>
+<h3 id="문법">문법</h3>
+<pre><code class="language-python">print(f&quot;{값1}, {값2}, ...&quot;)</code></pre>
+<h3 id="실습-2">실습</h3>
+<h3 id="예제-1-문자열과-format-함수-f-string의-비교">예제 1. <code>%문자열</code>과 <code>.format() 함수</code>, <code>f-String</code>의 비교</h3>
+<pre><code class="language-python">name, age = &quot;사마달&quot;, 30
+print(&quot;%s, %d&quot; %(name, age))
+print(&quot;{}, {}&quot; .format(name, age))
+print(f&quot;{name}, {age}&quot;)</code></pre>
+<blockquote>
+<p> 홍길동씨의 과목별 점수는 다음과 같다고 할 때 합계와 평균 점수를 구하는 소스 코드를 작성하시오.<br />국어(85.56), 영어(79.34), 수학(95.47)
+ '%문자열', '.format()함수', 'f-String'으로 모두 표현한다.
+ 소수이하 1자리까지 표현한다.
+ 출력 결과는 몇 줄이 되어도 무관하고 출력문은 반드시 한 줄로 표현해야 한다.</p>
+</blockquote>
+<pre><code class="language-python">a, b, c = 85.56, 79.34, 95.47
+sum = a + b + c
+avg = sum / 3
+
+print(&quot;합계(%.1f) | 평균(%.1f)&quot; % (sum, avg))
+print(&quot;합계({0:.1f}) | 평균({1:.1f})&quot;  .format(sum, avg))
+print(f&quot;합계({sum:.1f}) | 평균({avg:.1f})&quot; )</code></pre>
