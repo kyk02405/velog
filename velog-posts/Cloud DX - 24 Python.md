@@ -317,20 +317,47 @@ print(&quot;%9.2f&quot; % 3.14) # .좌측(자리확보) / .우측(소수이하�
 
 print(&quot;%.2f&quot; % 3.146) # 3.15  (5 이상은 반올림)
 print(&quot;%.2f&quot; % 3.144) # 3.14  (5 미만은 반올림 불가)</code></pre>
+<hr />
 <h3 id="242-formatting-2-format-함수">2.4.2 Formatting 2. .format() 함수</h3>
 <ul>
-<li><p>특징
+<li>특징
 <code>%문자열은</code> <code>서식 지정자</code>를 이용해서 출력하지만
-<code>.format()함수</code>는 <code>인덱스 넘버</code>를 이용해서 출력한다.</p>
-</li>
-<li><p>문법</p>
-</li>
-<li><p>실습</p>
+<code>.format()함수</code>는 <code>인덱스 넘버</code>를 이용해서 출력한다.</li>
+<li>문법</li>
+</ul>
+<h3 id="실습-1">실습</h3>
 <ul>
-<li>예제 1.<code>%문자열</code>과 <code>.format() 함수</code>의 비교<pre><code class="language-python">print(
-
+<li>예제 1.<code>%문자열</code>과 <code>.format() 함수</code>의 비교<pre><code class="language-python">print(&quot;Himedia %d년 10월 31일&quot; % 2025)
+print(&quot;Himedia {0}년 10월 31일&quot; .format(2025))
+print(&quot;Himedia {}년 10월 31일&quot; .format(2025))
 </code></pre>
 </li>
 </ul>
+<p>a = &quot;Himedia {}년 10월 31일&quot;
+print(a .format(2025))</p>
+<p>b, c, d = 2025, 10, 31
+print(&quot;Himedia %d년 %d월 %d일&quot; % (b, c, d))
+print(&quot;Himedia {0}년 {1}월 {2}일&quot; .format(b, c, d))
+print(&quot;Himedia {}년 {}월 {}일&quot; .format(b, c, d))</p>
+<pre><code>- 예제 2.`&quot;%사마달님의 나이는 200살입니다.&quot;`를 `%문자열`과 `.format()함수로` 표현
+
+
+```python
+b, c = &quot;사마달&quot;, 200
+print(&quot;%s님의 나이는 %d살 입니다.&quot; % (b, c))
+print(&quot;{0}님의 나이는 {1}살 입니다.&quot; .format(b, c))
+
+name, age = &quot;사마달&quot;, 200
+str1 = &quot;%s님의 나이는 %d살입니다.&quot;
+str2 = &quot;{0}님의 나이는 {1}살 입니다.&quot;
+print(str1 % (name, age))
+print(str2 .format(name, age))</code></pre><ul>
+<li><p>인덱싱에서는 <code>한글 1자</code>를 그냥 <code>문자 1개</code>로 인식한다</p>
+<pre><code class="language-python">na = &quot;사마달, 200&quot;
+a, b = na[:3], na[5:]
+print(&quot;%s님의 나이는 %s살입니다.&quot; % (a, b)) # 사마달님의 나이는 200살입니다.
+print(&quot;{0}님의 나이는 {1}살입니다.&quot; .format(a, b)) # 사마달님의 나이는 200살입니다.</code></pre>
+</li>
+<li><p>예제 3.</p>
 </li>
 </ul>
