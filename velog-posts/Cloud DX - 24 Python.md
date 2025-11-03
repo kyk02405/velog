@@ -530,3 +530,132 @@ print(var4 * 3,'|', var5 *3, '|',var6 *3)
 &lt;class 'int'&gt; &lt;class 'float'&gt; &lt;class 'str'&gt;
 6 | 9.0 | 4.54.54.5
 '''</code></pre>
+<hr />
+<h1 id="3-자료형의-표현-리스트list-튜풀tuple-딕셔너리dictionary">3. 자료형의 표현, 리스트(List), 튜풀(Tuple), 딕셔너리(Dictionary)</h1>
+<hr />
+<h1 id="31-리스트list">3.1 리스트(List)</h1>
+<h2 id="311-개요">3.1.1 개요</h2>
+<ul>
+<li><p>컴퓨터 언어(<code>C</code>, <code>C++</code>, <code>Java</code>, <code>...</code>)에서의 <code>배열</code>과 유사하다.</p>
+</li>
+<li><p><code>배열</code>은 변수 <code>한 개</code>에 동일한 자료형의 변수 <code>여러 개</code>의 값을 <code>빈틈없이</code> <code>연결</code>되어 있는 것을 말한다.</p>
+</li>
+<li><p><code>List</code>는 모두 <code>문자열</code>이다</p>
+</li>
+</ul>
+<hr />
+<h2 id="312-리스트-유형별-표현">3.1.2 리스트 유형별 표현</h2>
+<pre><code class="language-python">리스트명 = [요소1, 요소2, 요소3, ...]
+
+a = []
+b = [1, 2, 3]
+c = ['samadal', 'sam', 'madal']
+d = [1, 2, 'samadal', 'sam']
+e = [1, 2, [],'samadal', 'sam']</code></pre>
+<hr />
+<h2 id="313-인덱싱과-슬라이싱">3.1.3 인덱싱과 슬라이싱</h2>
+<h3 id="리스트-인덱싱">리스트 인덱싱</h3>
+<pre><code class="language-python">a = [1, 2, 3]
+print(a)
+print(a[0])
+print(type(a) | type(a[0]))
+</code></pre>
+<pre><code class="language-console">[1, 2, 3]
+1
+list | int</code></pre>
+<ul>
+<li><code>리스트</code> 전체는 <code>문자열</code> 이지만 리스트 안에 있는 값들은 <code>각 유형</code>에 맞는 <code>자료형</code>이 된다. 즉, <code>정수</code>는 <code>정수형</code>으로, <code>실수</code>는 <code>실수형</code>을 사용하면 된다.<h3 id="단일-인덱싱">단일 인덱싱</h3>
+<pre><code class="language-python">a = [1, 2, 3]
+print(a)
+print(a[0])
+print(type(a) | type(a[0]))
+print(a[1] + a[2])
+print(a[2] + a[1])
+print(a[-3])
+print(a[1])</code></pre>
+<pre><code>[1, 2, 3]
+1
+list | int
+5
+5
+1
+2</code></pre><h3 id="다중-인덱싱리스트-안에-리스트가-들어간-형태">다중 인덱싱(리스트 안에 리스트가 들어간 형태</h3>
+<pre><code class="language-python">b = [1, 2, 3, ['a!', 'b', 'c']]
+print(b)
+print(b[0], b[1], b[2])
+print(b[3][0])
+print(b[-1][1])</code></pre>
+<pre><code>[1, 2, 3, ['a!', 'b', 'c']]
+1 2 3
+a!
+b</code></pre><pre><code class="language-python">a = [1, 2, 3]
+</code></pre>
+</li>
+</ul>
+<p>print(a[:])
+print(a[1:])
+print(a[:-2])</p>
+<p>b = [1, 2, 3, ['a', 'b', 'c'], 4, 5]
+print(b[2:5])
+print(b[3][:-2])</p>
+<pre><code></code></pre><p>[1, 2, 3]
+[2, 3]
+[1]
+[3, ['a', 'b', 'c'], 4]
+['a']</p>
+<pre><code>---
+# 3.2 튜풀(Tuple)
+## 3.2.1 개요
+- 리스트와 거의 모두 동일하지만 값의 생성, 수정, 삭제가 불가능하다. 
+- 묶음이 `()`로 되어 있다.
+
+## 3.2.2 튜플 자료형의 유형과 특징
+### ▪ 유형
+```python
+t1 = ()
+t2 = (1, )
+t3 = (1, 2, 3)
+t4 = 1, 2, 3
+t5 = ('a', 'b', ('ab', 'cd'))</code></pre><h2 id="323-튜플-인덱싱-및-슬라이싱-연산">3.2.3 튜플 인덱싱 및 슬라이싱, 연산</h2>
+<h3 id="▪-인덱싱">▪ 인덱싱</h3>
+<pre><code class="language-python">a = (1, 2, 'a', 'b')
+b = (3, 4, 'c', 'd')
+
+print(a[0])        # 인덱싱 → 1
+print(b[3])        # 인덱싱 → 'd'</code></pre>
+<h3 id="▪-슬라이싱">▪ 슬라이싱</h3>
+<pre><code class="language-python">print(a[:2])       # 슬라이싱 → (1, 2)
+print(b[1:])       # 슬라이싱 → (4, 'c', 'd')</code></pre>
+<h3 id="▪-연산">▪ 연산</h3>
+<pre><code class="language-python">print(a + b)       # 연결 → (1, 2, 'a', 'b', 3, 4, 'c', 'd')
+print(b * 4)       # 반복 → (3, 4, 'c', 'd', 3, 4, 'c', 'd', 3, 4, 'c', 'd', 3, 4, 'c', 'd')</code></pre>
+<h3 id="▪-유형-확인">▪ 유형 확인</h3>
+<pre><code class="language-python">print(type(a), type(b))             # &lt;class 'tuple'&gt; &lt;class 'tuple'&gt;
+print(type(a[0]), type(b[3]))       # &lt;class 'int'&gt; &lt;class 'str'&gt;</code></pre>
+<h3 id="▪-1-2-3이라는-튜플에-4라는-값을-추가해서-1-2-3-4처럼-출력되게-하려면">▪ (1, 2, 3)이라는 튜플에 4라는 값을 추가해서 (1, 2, 3, 4)처럼 출력되게 하려면?</h3>
+<pre><code class="language-python">c, d = (1, 2, 3), (4, )
+
+print(c, d)                         # (1, 2, 3) (4,)
+print(type(c), type(d))            # &lt;class 'tuple'&gt; &lt;class 'tuple'&gt;
+print(type(c[0]), type(d[0]))      # &lt;class 'int'&gt; &lt;class 'int'&gt;
+
+c = c + d                          # 튜플끼리 연결 → (1, 2, 3, 4)
+print(c)</code></pre>
+<hr />
+<h1 id="33-딕셔너리dictionary">3.3 딕셔너리(Dictionary)</h1>
+<h2 id="331-개요">3.3.1 개요</h2>
+<ul>
+<li><p>출력 시 입력한 순서대로 출력하지 않고 <code>Key</code>를 통한 값을 호출해서 출력한다.</p>
+</li>
+<li><p>형태는 <code>변수 = 값</code>과 비슷한 <code>Key = Value</code> 형태로 입력한다.</p>
+</li>
+<li><p>묶음이 <code>{}</code>로 되어 있다. </p>
+</li>
+</ul>
+<h2 id="332-사용법">3.3.2 사용법</h2>
+<pre><code class="language-python">변수명 = {'Key1':'Value1', 'Key2':'Value2', ...}</code></pre>
+<h2 id="333-실습">3.3.3 실습</h2>
+<h3 id="▪-특징을-통한-딕셔너리-이해">▪ 특징을 통한 딕셔너리 이해</h3>
+<ul>
+<li>특징 1, 딕셔너리는 다른 연산 방식과 달리 연산을 병합이 되지 않는다.</li>
+</ul>
