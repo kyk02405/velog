@@ -657,5 +657,101 @@ print(c)</code></pre>
 <h2 id="333-실습">3.3.3 실습</h2>
 <h3 id="▪-특징을-통한-딕셔너리-이해">▪ 특징을 통한 딕셔너리 이해</h3>
 <ul>
-<li>특징 1, 딕셔너리는 다른 연산 방식과 달리 연산을 병합이 되지 않는다.</li>
+<li>특징 1. 딕셔너리는 다른 연산 방식과 달리 연산을 병합이 되지 않는다.<pre><code class="language-python">a = {1:'himedia'}
+b = {2:'samadal'}
+</code></pre>
+</li>
+</ul>
+<h1 id="printa--b----------연산병합이-안된다">print(a + b )        # 연산(병합)이 안된다.</h1>
+<p>ab1, ab2 = a[1], b[2]  # key를 변수로 선언
+print(ab1 + ab2)</p>
+<pre><code></code></pre><p>himediasamadal</p>
+<pre><code>
+- 특징 2. 딕셔너리의 `'Value'`는 리스트도 가능하다
+```python
+a = {1:'himedia'}
+b = {2:'samadal'}
+b[3] = [7, 8, 9]
+print(b)</code></pre><pre><code>{2: 'samadal', 3: [7, 8, 9]}</code></pre><ul>
+<li>특징 3. 기타<pre><code class="language-python">del b[2]
+print(&quot;b = &quot;, b)     # key를 삭제하면 값도 함께 삭제된다.
+</code></pre>
+</li>
+</ul>
+<p>del b['samadal']     # 삭제할 때는 키를 사용하고 값은 사용할 수가 없다.
+print(&quot;b = &quot;, b)</p>
+<pre><code></code></pre><p>b =  {3: [7, 8, 9]}
+    del b['samadal']     # 삭제할 때는 키를 사용하고 값은 사용할 수가 
+없다.
+        ~^^^^^^^^^^^
+KeyError: 'samadal'</p>
+<pre><code>### ▪ 딕셔너리의 생성, 추가, 삭제
+- 딕셔너리 생성 (키와 값을 함께 생성해야 한다.)
+```python
+dic1 = {'name':'samadal', 'phone':'010-1234-5678', 'birth':'1109'}
+print(dic1)
+print(type(dic1))
+print(dic1['name'])
+
+dic2 = {'1':'madal'}
+print(dic1['name'], dic2['1'])
+
+dic3 = {'a':[1, 2, 3]}
+print(dic1['name'], dic2['1'], dic3['a'])</code></pre><pre><code>{'name': 'samadal', 'phone': '010-1234-5678', 'birth': '1109'}
+&lt;class 'dict'&gt;
+samadal
+samadal madal
+samadal madal [1, 2, 3]</code></pre><ul>
+<li>딕셔너리 추가</li>
+<li>빈 딕셔너리를 생성하고 <code>key</code>와 <code>Value</code> 넣기<pre><code class="language-python">a = {1:'a'}     # 키에 있는 숫자는 문자열로 하지 않아도 된다. 
+</code></pre>
+</li>
+</ul>
+<p>a[20] = 'b'
+print(a)</p>
+<p>b = {}
+b['name'] = 'Samadal'
+print(b)</p>
+<p>b['madal'] = 'samadal'
+print(b)</p>
+<pre><code></code></pre><p>{1: 'a', 20: 'b'}
+{'name': 'Samadal'}
+{'name': 'Samadal', 'madal': 'samadal'}</p>
+<pre><code>
+- 딕셔너리 삭제
+```python
+b['madal'] = ''     # 키에 해당하는 값만 삭제
+print(b)
+
+b = {}        # 딕셔너 자체를 공백처리 즉 ,딕셔너리 삭제
+print(b)    </code></pre><pre><code>{'name': 'Samadal', 'madal': ''}
+{}</code></pre><hr />
+<blockquote>
+<h3 id="학생의-인적사항을-등록한-훟-검색하는-프로그램">학생의 인적사항을 등록한 훟 검색하는 프로그램</h3>
+</blockquote>
+<ul>
+<li>'인적사항'에는 '학번, 이름, 주민번호, 학점(A, B, C, D, F)' 등이 등록이 되어야 한다.</li>
+<li>'메뉴 선택' 방식으로 되어야 한다.<ul>
+<li><ol>
+<li>학생 등록</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>학생 검색</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>학생부 수정</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>전체학생 출력</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>학생 삭제</li>
+</ol>
+</li>
+</ul>
+</li>
 </ul>
