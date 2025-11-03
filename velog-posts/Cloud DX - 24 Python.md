@@ -755,3 +755,76 @@ print(b)    </code></pre><pre><code>{'name': 'Samadal', 'madal': ''}
 </ul>
 </li>
 </ul>
+<hr />
+<h1 id="4-변수variable">4. 변수(Variable)</h1>
+<h2 id="411-변수-선언과-호출사용">4.1.1 변수 선언과 호출(사용)</h2>
+<h3 id="선언">선언</h3>
+<pre><code class="language-python">변수명 = (초기)값</code></pre>
+<h3 id="호출">호출</h3>
+<ul>
+<li>print(변수명)을 이용해서 변수명이 가지고 있는 값을 출력한다.</li>
+<li>변수명의 <code>값</code>을 <code>변경</code>할 수도 있다.</li>
+<li>다른 변수의 <code>초기값</code>으로 지정할 수도 있다.</li>
+<li><code>...</code></li>
+</ul>
+<h3 id="변수의-종류">변수의 종류</h3>
+<ul>
+<li><code>고정 변수</code><ul>
+<li><code>값</code>을 미리 정해 놓고 사용하는 <code>변수</code>를 말한다.</li>
+</ul>
+</li>
+<li><code>가변 변수</code><ul>
+<li><code>값</code>을 받아와서 처리하는 <code>변수</code>를 말한다.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="42-실습">4.2 실습</h2>
+<h3 id="421-고정-변수">4.2.1 고정 변수</h3>
+<ul>
+<li>예제 1. 현재 원달러 환율은 1,287.34원이고 엔화 환율은 9.11원이다. 500달러를 엔화로 환전하면 몇 엔이 되는가?</li>
+</ul>
+<pre><code class="language-python">wpd, wpy, fh = 1287.34, 9.11, 500
+fiveh = fh * wpd # 500달러를 원화로 환전
+result = fiveh / wpy # 비례식 (1:wpy = x:5h)
+print(&quot;Result : %.2f엔&quot; % result)
+print(&quot;Result : {:.2f}엔&quot; .format(result))
+print(f&quot;Result : {result:.2f}엔&quot;)</code></pre>
+<pre><code>Result : 70655.32엔
+Result : 70655.32엔
+Result : 70655.32엔</code></pre><ul>
+<li>예제 2. X극장 영화표는 11,000원이고 Y극장 영화표는 9,500원일 때 각각 극장 수익이 X극장(5,390,000,000), Y극장(7,521,245,000)이라고 한다.<ul>
+<li>위와 같은 조건일 때 다음의 내용으로 값을 구하도록 한다.</li>
+<li>각 극장의 관람객수는 얼마인가?</li>
+<li>두 극장의 총 관람객 수는 얼마인가?</li>
+<li>각 극장의 점유율은 얼마인가?<pre><code class="language-python">x, y = 11000, 9500
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>xm, ym = 5390000000, 7521245000</p>
+<p>xcon = xm // x
+ycon = ym // y</p>
+<p>total = xcon + ycon</p>
+<p>xper = xcon / total * 100
+yper = ycon / total * 100</p>
+<p>print(&quot;x 극장 : %s명 | y 극장 : %s명&quot; % (format(xcon, &quot;,&quot;), format(ycon, &quot;,&quot;)))
+print(&quot;x 극장 : {:,}명 | y 극장 : {:,}명&quot;.format(xcon, ycon))
+print(f&quot;x 극장 : {xcon:,}명 | y 극장 : {ycon:,}명&quot;)</p>
+<p>print(&quot;총 관람객 수 : %s명&quot; % format(total, &quot;,&quot;))
+print(&quot;총 관람객 수 : {:,}명&quot;.format(total))
+print(f&quot;총 관람객 수 : {total:,}명&quot;)</p>
+<p>print(&quot;x 극장 : %.2f%% | y 극장 : %.2f%%&quot; % (xper, yper))
+print(&quot;x 극장 : {:.2f}% | y 극장 : {:.2f}%&quot;.format(xper, yper))
+print(f&quot;x 극장 : {xper:.2f}% | y 극장 : {yper:.2f}%&quot;)</p>
+<pre><code></code></pre><p>x 극장 : 490,000명 | y 극장 : 791,710명
+x 극장 : 490,000명 | y 극장 : 791,710명
+x 극장 : 490,000명 | y 극장 : 791,710명
+총 관람객 수 : 1,281,710명
+총 관람객 수 : 1,281,710명
+총 관람객 수 : 1,281,710명
+x 극장 : 38.23% | y 극장 : 61.77%
+x 극장 : 38.23% | y 극장 : 61.77%
+x 극장 : 38.23% | y 극장 : 61.77%
+```</p>
