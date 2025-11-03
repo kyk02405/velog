@@ -404,3 +404,106 @@ avg = sum / 3
 print(&quot;합계(%.1f) | 평균(%.1f)&quot; % (sum, avg))
 print(&quot;합계({0:.1f}) | 평균({1:.1f})&quot;  .format(sum, avg))
 print(f&quot;합계({sum:.1f}) | 평균({avg:.1f})&quot; )</code></pre>
+<h3 id="예제-3">예제 3.</h3>
+<blockquote>
+<p>놀이공원을 가기 위해 11개의 지하철 역을 지나왔다. 출발역에서 도착역까지 37분이 걸렸다면 한 역을 지나는데 걸리는 시간은 얼마인가 
+단, 소수 이하 2자리까지만 출력한다.</p>
+</blockquote>
+<pre><code class="language-python">sta = 11 
+time = 37
+print(&quot;한 역을 지나는데 걸리는 시간 %.2f분&quot; %(time/sta))
+print(&quot;한 역을 지나는데 걸리는 시간({-:.2f})&quot; .format(time/sta))
+print(f&quot;한 역을 지나는데 걸리는 시간 {time/sta:.2f}분&quot;)</code></pre>
+<h3 id="예제-4">예제 4.</h3>
+<blockquote>
+<p>호텔 한 층의 높이는 260cm이다.
+총 14개의 층을 사용하고 있으며 1층의 높이만
+500.23cm라고 할 때 이 건물의 높이는 총 몇 m인가? 
+단, 소수 이하 2자리까지만 출력한다. </p>
+</blockquote>
+<pre><code class="language-python">floor = 13
+oneheight = 500.23
+height = 260
+
+total = (floor * height +  oneheight) / 100
+
+print(&quot;이 건물의 높이는 %.2fm&quot; % (total)) # 이 건물의 높이는 38.80m
+print(&quot;이 건물의 높이는 {0:.2f}m&quot; .format(total)) # 이 건물의 높이는 38.80m
+print(f&quot;이 건물의 높이는 {(total):.2f}m&quot;) # 이 건물의 높이는 38.80m</code></pre>
+<h3 id="예제-5">예제 5.</h3>
+<blockquote>
+<p> 홍길동씨의 주민등록번호는 881120-1068234이다.'-'을 기준으로 좌측과 우측으로 분리하고 작업한 후 원래 형태로 출력  </p>
+</blockquote>
+<pre><code class="language-python">num = &quot;881120&quot;
+num2 = &quot;068234&quot;
+
+print(num[:6],&quot;-&quot;,num2[:6])
+
+id = &quot;881120-1068234&quot;
+id1, id2 = id[:6], id[-7:] # 881120 - 1068234
+print(id1 + '-' + id2) # 881120-1068234
+print(&quot;%s-%s&quot; % (id1, id2)) # 881120-1068234
+print(&quot;{0}-{1}&quot; .format(id1, id2)) # 881120-1068234
+print(f&quot;{id1}-{id2}&quot;) # 881120-1068234</code></pre>
+<hr />
+<h1 id="25-기타">2.5 기타</h1>
+<h2 id="251-문자열-관련-함수-내장-함수">2.5.1 문자열 관련 함수 (내장 함수)</h2>
+<h3 id="count">count</h3>
+<ul>
+<li>문자의 갯수를 센다.<pre><code class="language-python">변수.count('문자')
+</code></pre>
+</li>
+</ul>
+<p>a = &quot;samadal&quot;
+print(a.count('a')) # 3</p>
+<pre><code>### find, index
+- 문자의 위치를 알려준다.
+```python
+변수.find('문자') / 변수.(index('문자')
+
+b = &quot;Himedia Samadal&quot;
+print(b.find('S')) # 8
+print(b.index('S'))  # 8</code></pre><h3 id="join">join</h3>
+<ul>
+<li>문자열을 삽입한다.<pre><code class="language-python">변수.jotin('문자(열)')
+</code></pre>
+</li>
+</ul>
+<p>print(&quot;,,&quot;.join('samadal')) # s,,a,,m,,a,,d,,a,,l
+print(&quot;, &quot;.join('samadal')) # s, a, m, a, d, a, l</p>
+<pre><code>
+### upper, lower
+- 대문자(또는 소문자)를 소문자(또는 대문자)로 치환한다.
+
+```python
+변수.upper() / 변수.lower()
+
+c, d = 'SAMADAL', 'samadal'
+print(c.lower()) #samadal
+print(d.upper()) #SAMADAL</code></pre><h3 id="replace">replace</h3>
+<ul>
+<li>문자열을 교체한다.<pre><code class="language-python">변슈.replace(&quot;교체 전&quot;, &quot;교체 후&quot;)
+</code></pre>
+</li>
+</ul>
+<p>e = &quot;Samadal Himedia&quot;
+print(e.replace(&quot;Samadal&quot;, 'Sam')) # Sam Himedia
+print(e.replace(&quot;Himedia&quot;, 'Hm')) # Samadal Hm</p>
+<pre><code>
+### split
+- 문자열을 나눈다.
+- 공백을 기준으로 분리되는데 '리스트(List)' 형태로 분리
+
+```python
+변수,split()
+
+f ,g = &quot;Himedia Saamadal&quot;, &quot;a : b:c:d&quot;
+print(f.split)
+#&lt;built-in method split of str object at 0x000002E4C54C55F0&gt;
+print(g.split)
+#&lt;built-in method split of str object at 0x000002E4C54C57F0&gt;</code></pre><hr />
+<h2 id="252-cast-연산-강제-형-변환">2.5.2 Cast 연산( 강제 형 변환)</h2>
+<h3 id="개요">개요</h3>
+<ul>
+<li>변수에 정의된 유형(또는 자료형)</li>
+</ul>
