@@ -450,14 +450,14 @@ print(f&quot;{id1}-{id2}&quot;) # 881120-1068234</code></pre>
 <h2 id="251-문자열-관련-함수-내장-함수">2.5.1 문자열 관련 함수 (내장 함수)</h2>
 <h3 id="count">count</h3>
 <ul>
-<li>문자의 갯수를 센다.<pre><code class="language-python">변수.count('문자')
+<li><code>문자</code>의 <code>갯수</code>를 센다.<pre><code class="language-python">변수.count('문자')
 </code></pre>
 </li>
 </ul>
 <p>a = &quot;samadal&quot;
 print(a.count('a')) # 3</p>
 <pre><code>### find, index
-- 문자의 위치를 알려준다.
+- `문자`의 `위치`를 알려준다.
 ```python
 변수.find('문자') / 변수.(index('문자')
 
@@ -465,7 +465,7 @@ b = &quot;Himedia Samadal&quot;
 print(b.find('S')) # 8
 print(b.index('S'))  # 8</code></pre><h3 id="join">join</h3>
 <ul>
-<li>문자열을 삽입한다.<pre><code class="language-python">변수.jotin('문자(열)')
+<li><code>문자열</code>을 <code>삽입</code>한다.<pre><code class="language-python">변수.jotin('문자(열)')
 </code></pre>
 </li>
 </ul>
@@ -473,7 +473,7 @@ print(b.index('S'))  # 8</code></pre><h3 id="join">join</h3>
 print(&quot;, &quot;.join('samadal')) # s, a, m, a, d, a, l</p>
 <pre><code>
 ### upper, lower
-- 대문자(또는 소문자)를 소문자(또는 대문자)로 치환한다.
+- `대문자`(또는 소문자)를 `소문자`(또는 대문자)로 `치환`한다.
 
 ```python
 변수.upper() / 변수.lower()
@@ -482,7 +482,7 @@ c, d = 'SAMADAL', 'samadal'
 print(c.lower()) #samadal
 print(d.upper()) #SAMADAL</code></pre><h3 id="replace">replace</h3>
 <ul>
-<li>문자열을 교체한다.<pre><code class="language-python">변슈.replace(&quot;교체 전&quot;, &quot;교체 후&quot;)
+<li><code>문자열</code>을 <code>교체</code>한다.<pre><code class="language-python">변슈.replace(&quot;교체 전&quot;, &quot;교체 후&quot;)
 </code></pre>
 </li>
 </ul>
@@ -491,8 +491,8 @@ print(e.replace(&quot;Samadal&quot;, 'Sam')) # Sam Himedia
 print(e.replace(&quot;Himedia&quot;, 'Hm')) # Samadal Hm</p>
 <pre><code>
 ### split
-- 문자열을 나눈다.
-- 공백을 기준으로 분리되는데 '리스트(List)' 형태로 분리
+- `문자열`을 `나눈다`.
+- `공백`을 기준으로 분리되는데 `'리스트(List)'` 형태로 분리
 
 ```python
 변수,split()
@@ -505,5 +505,28 @@ print(g.split)
 <h2 id="252-cast-연산-강제-형-변환">2.5.2 Cast 연산( 강제 형 변환)</h2>
 <h3 id="개요">개요</h3>
 <ul>
-<li>변수에 정의된 유형(또는 자료형)</li>
+<li><code>변수</code>에 정의된 유형(또는 자료형)</li>
+<li><code>적용</code>하고자 할 때만 사용할 수 있다.</li>
+<li><code>영구</code>적인 것이 아닌 <code>일시적</code> 변환</li>
 </ul>
+<pre><code class="language-python">var1 ,var2, var3 = '2', 3, 4.5
+var4, var5 ,var6 = var1, var2, var3
+
+print(&quot;문자열({0}) | 정수({1}) | 실수({2})&quot; .format(var4, var5 ,var6))
+print(&quot;문자열(%s) | 정수(%d) | 실수(%.1f)&quot; % (var4, var5 ,var6))
+print(f&quot;문자열({var4}) | 정수({var5}) | 실수({var6})&quot;)
+
+print(type(var1), type(var2), type(var3))
+var4, var5, var6 = int(var1), float(var2), str(var3)
+
+print(type(var4), type(var5), type(var6))
+print(var4 * 3,'|', var5 *3, '|',var6 *3)
+
+'''
+문자열(2) | 정수(3) | 실수(4.5)
+문자열(2) | 정수(3) | 실수(4.5)
+문자열(2) | 정수(3) | 실수(4.5)
+&lt;class 'str'&gt; &lt;class 'int'&gt; &lt;class 'float'&gt;
+&lt;class 'int'&gt; &lt;class 'float'&gt; &lt;class 'str'&gt;
+6 | 9.0 | 4.54.54.5
+'''</code></pre>
