@@ -826,5 +826,78 @@ x 극장 : 490,000명 | y 극장 : 791,710명
 총 관람객 수 : 1,281,710명
 x 극장 : 38.23% | y 극장 : 61.77%
 x 극장 : 38.23% | y 극장 : 61.77%
-x 극장 : 38.23% | y 극장 : 61.77%
-```</p>
+x 극장 : 38.23% | y 극장 : 61.77%</p>
+<pre><code>
+---
+- 예제 3. 담배 1갑의 가격이 4,500원이고 하루에 1갑 반씩 담배를 피우는 사람의 경우 5000만원 가량의 차량을 구입하기 위해서는 몇 년동안 금연을 해야 하는가
+
+```python
+smo = 4500
+harpsmo = 1.5 * smo
+car = 50000000
+
+day = car / harpsmo
+year = 365
+
+total = day / year
+
+print(f&quot;{harpsmo:,.0f}원&quot;)
+print(f&quot;{day:.0f}일&quot;)
+print(f&quot;{total:.1f}년&quot;)</code></pre><pre><code>6,750원
+7407일
+20.3년</code></pre><hr />
+<h2 id="422-가변-변수-input함수">4.2.2 가변 변수 (input()함수)</h2>
+<h3 id="개요-1">개요</h3>
+<ul>
+<li>실행시 에러 구문이 다음과 같이 나타날 때
+<code>TypeError: %d format: a real number is required, not str</code></li>
+<li><code>input()</code> 함수로 받아들이는 모든 값은 문자열이다.<h3 id="사용법">사용법</h3>
+<pre><code class="language-python">변수명 = input()</code></pre>
+<h3 id="실습-1-가변-변수의-이해">실습 1. 가변 변수의 이해</h3>
+<pre><code class="language-python">var = input('값을 입력하세요 :')
+print(&quot;{}을 입력받았다.&quot; .format(var))
+print(&quot;%d을 입력받았다.&quot; % var)
+print(type(var))</code></pre>
+</li>
+</ul>
+<h3 id="실습-2-input-함수로-받아들이는-모든-값은-문자열이다">실습 2. input() 함수로 받아들이는 모든 값은 문자열이다.</h3>
+<pre><code class="language-python">var1 = input('문자열 입력:')
+var2 = input('정수 입력:')
+print(type(var1), type(var2))
+
+print(&quot;문자열(%s) | 정수(%s)&quot; % (var1,var2))</code></pre>
+<pre><code>문자열 입력:s
+정수 입력:1
+&lt;class 'str'&gt; &lt;class 'str'&gt;
+문자열(s) | 정수(1)</code></pre><h3 id="실습-3-두-개의-정수값을-입력받은-후-사칙연산을-하는-소스">실습 3. 두 개의 정수값을 입력받은 후 사칙연산을 하는 소스</h3>
+<pre><code class="language-python">var1 = int(input('숫자1 입력:'))
+var2 = int(input('숫자2 입력:'))
+
+plus = var1 + var2
+minus = var1 - var2
+multi = var1 * var2
+div = var1 / var2
+
+print(f&quot;{var1} + {var2} = {plus}&quot;)
+print(f&quot;{var1} - {var2} = {minus}&quot;)
+print(f&quot;{var1} * {var2} = {multi}&quot;)
+print(f&quot;{var1} / {var2} = {div:.2f}&quot;)</code></pre>
+<pre><code>숫자1 입력:5
+숫자2 입력:3
+8
+5 + 3 = 8
+5 - 3 = 2
+5 * 3 = 15
+5 / 3 = 1.67</code></pre><h3 id="실습-4-홍길동-씨의-과목3과목별-점수를-입력받은-후-합계와-평균을-구하는-소스">실습 4. 홍길동 씨의 과목(3과목)별 점수를 입력받은 후 합계와 평균을 구하는 소스</h3>
+<pre><code class="language-python">mat = int(input('국어 점수 입력:'))
+eng = int(input('영어 점수 입력:'))
+kor = int(input('수학 점수 입력:'))
+
+sum = mat + eng + kor 
+avg = sum / 3
+
+print(f&quot;과목 총합 점수 : {sum}점, 과목 평균 점수 : {avg:.1f}점&quot;)</code></pre>
+<pre><code>국어 점수 입력:97
+영어 점수 입력:76
+수학 점수 입력:76
+과목 총합 점수 : 249점, 과목 평균 점수 : 83.0점</code></pre>
