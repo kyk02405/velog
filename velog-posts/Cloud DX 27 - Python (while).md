@@ -888,42 +888,85 @@ print(&quot;%d&quot; % result)</p>
 - 예제 1. 계산기
   - 한 개의 클래스에 모든 메서드들을 위치시키고 외부로 부터 초기값을 받아오는 메서드(madal)를 통해서 외부로부터 초기값을 받아와서 각 메서드별로 반환값을 반환하고 출력
   - 한 개의 클래스에서 초기값을 받아오는 메서드없이  초기값을 직접 받아와서 계산 후 반환 호출한 곳으로 반환값을 반환하고 
+
 ```python
 class FourCal:
-    def add(self, first, second):
-        self.first = first
-        self.second = second
-        self.result = self.first + self.second
-        return self.result
+  def add(self, first, second):
+    self.first = first
+    self.second = second
+    self.result = self.first + self.second
+    return self.result
+  def mul(self, first, second):
+    self.first = first
+    self.second = second    
+    self.result = self.first - self.second
+    return self.result
+  def sub(self, first, second):
+    self.first = first
+    self.second = second    
+    self.result = self.first * self.second
+    return self.result
+  def div(self, first, second):
+    self.first = first
+    self.second = second    
+    self.result = self.first / self.second
+    return self.result        
 
-    def mul(self, first, second):
-        self.first = first
-        self.second = second
-        self.result = self.first * self.second
-        return self.result
-
-    def sub(self, first, second):
-        self.first = first
-        self.second = second
-        self.result = self.first - self.second
-        return self.result
-
-    def div(self, first, second):
-        self.first = first
-        self.second = second
-        # 0으로 나누는 경우 예외 처리 추가
-        if self.second == 0:
-            return &quot;0으로 나눌 수 없습니다.&quot;
-        self.result = self.first / self.second
-        return self.result
-
-
-# 실행 부분
 a, b = 7, 4
+
 fc = FourCal()
 
-print(&quot;더하기 결과 : %d&quot; % fc.add(a, b))
-print(&quot;빼기 결과 : %d&quot; % fc.sub(a, b))
-print(&quot;곱하기 결과 : %d&quot; % fc.mul(a, b))
-print(&quot;나누기 결과 : %.2f&quot; % fc.div(a, b))
+print(&quot;%d&quot; % fc.add(a, b))
+print(&quot;%d&quot; % fc.mul(a, b))
+print(&quot;%d&quot; % fc.sub(a, b))
+print(&quot;%d&quot; % fc.div(a, b))</code></pre><pre><code class="language-python"># 개선 버전
+class Base:
+    def data(self, first, second):
+        self.first = first
+        self.second = second
+
+class ADD(Base):
+    def calc(self):
+        return self.first + self.second
+
+class MIN(Base):
+    def calc(self):
+        return self.first - self.second
+
+class MUL(Base):
+    def calc(self):
+        return self.first * self.second
+
+class DIV(Base):
+    def calc(self):
+        return self.first / self.second
+
+# 사용
+a = ADD(); a.data(4, 2); print(a.calc())
+b = MIN(); b.data(4, 2); print(b.calc())
+c = MUL(); c.data(4, 2); print(c.calc())
+d = DIV(); d.data(4, 2); print(d.calc())
 </code></pre>
+<hr />
+<h1 id="73-클래스의-인자값-self">7.3 클래스의 인자값 'self'</h1>
+<h2 id="731-개요">7.3.1 개요</h2>
+<ul>
+<li>클래스 밖에서 값을 받아들일 때는 'self'인자를 사용한다.</li>
+<li>클래스 안에 있는 함수(메서드)에 인자를 입력할 때는 첫 항목에 'self'를 입력한다.<h2 id="732-self를-사용할-때의-두-가지-유형">7.3.2 'self'를 사용할 때의 두 가지 유형</h2>
+</li>
+<li>외부에서 받아들인 값을 그냥 사용할 경우 메스드 안에만 'self'를 입력한다.</li>
+<li>외부에서 받아들인 값을 변수로 <code>치환해서 사용</code>할 경우 모든 변수에 'self'를 함께 입력한다.</li>
+</ul>
+<h2 id="733-실습">7.3.3 실습</h2>
+<pre><code class="language-python">odan4 = 5 # 5단으로 사용할 값을 전역변수로 선언
+class Dan:
+    def sam4(self):
+        for i4 in range(1, 10):
+                print(&quot;%d x %d = %d&quot; % (odan4, i4, odan4*i4))
+
+a = Dan()
+# print(a.sam4())   # 클래스의 메서드 안에 이미 출력문이 있기 떄문에
+                    # 호출만 해야 한다. 만약 입력했을 경우에는
+                    # 메서드의 출력문은 정상적으로 출력되고 이 출력은
+                    # 'None'으로 출력된다.
+a.sam4()</code></pre>
