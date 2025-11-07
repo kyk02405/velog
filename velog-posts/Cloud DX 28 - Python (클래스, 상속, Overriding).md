@@ -603,11 +603,41 @@ print(m2.sub(4, 3)) </code></pre>
 </li>
 <li><p>모듈 호출 방법</p>
 <ul>
-<li>문법<pre><code class="language-python">from &lt;모듈 파일명&gt; improt &lt;모듈 함수&gt;</code></pre>
-</li>
-<li>예시<ul>
-<li>작업 개요<ul>
+<li><p>예제</p>
+<ul>
+<li><p>작업 개요</p>
+<ul>
 <li>모듈 파일<code>(m2.py)</code>는 그대로 두고 주 파일<code>(m1.py)</code>만 수정</li>
+</ul>
+</li>
+<li><p>호출 1. 모듈 안에 있는 모듈 함수 한 개만 호출할 떄</p>
+<ul>
+<li><pre><code class="language-python">from &lt;모듈 파일명&gt; import &lt;모듈 함수&gt;</code></pre>
+</li>
+<li><pre><code class="language-python">from m2 import add
+print(add(4, 3))
+print(sub(4, 3)) </code></pre>
+</li>
+</ul>
+</li>
+<li><p>호출 2. 모듈 안에 있는 모듈 함수를 여러개를 호출할 때 </p>
+<ul>
+<li><pre><code class="language-python">from &lt;모듈 파일명&gt; import &lt;모듈 함수1, 모듈 함수2, ...&gt;</code></pre>
+</li>
+<li><pre><code class="language-python">from m2 import add,sub
+print(add(4, 3))
+print(sub(4, 3)) </code></pre>
+</li>
+</ul>
+</li>
+<li><p>호출 3. 모듈 안에 있는 모든 모듈 함수를 호출할 때</p>
+<ul>
+<li><pre><code class="language-python">from &lt;모듈 파일명&gt; import &lt;*&gt;</code></pre>
+</li>
+<li><pre><code class="language-python">from m2 import *
+print(add(4, 3))
+print(sub(4, 3)) </code></pre>
+</li>
 </ul>
 </li>
 </ul>
@@ -617,3 +647,7 @@ print(m2.sub(4, 3)) </code></pre>
 </ul>
 <hr />
 <h2 id="92-실습">9.2 실습</h2>
+<h3 id="921-실습-1-사칙연산에-관련된-소스를-모듈함수를-이용해서-호출">9.2.1 실습 1. 사칙연산에 관련된 소스를 모듈함수를 이용해서 호출</h3>
+<ul>
+<li></li>
+</ul>
