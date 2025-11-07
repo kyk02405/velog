@@ -96,7 +96,43 @@
 <hr />
 <h3 id="step-2-가상-시스템-생성">Step 2. 가상 시스템 생성</h3>
 <ul>
-<li><h2 id="데이터-스토어에-iso파일-등록을-위한-폴더-생성">데이터 스토어에 ISO파일 등록을 위한 폴더 생성</h2>
-</li>
+<li>폴더 생성<ul>
+<li>데이터 스토어에 ISO파일 등록을 위한 폴더 생성</li>
 <li>데이터 스토어에 <code>가상 머신 생성</code>을 위한 폴더 생성</li>
+</ul>
+</li>
+<li>가상 머신 생성</li>
+<li>가상 머신 설치</li>
+</ul>
+<h3 id="가상-시스템-접속">가상 시스템 접속</h3>
+<ul>
+<li><p><strong>네트워크 활성화</strong></p>
+<ul>
+<li><p><code>root</code>로 로그인한 후 바탕화면에서 우클릭하고 <code>터미널 열기</code>를 클릭한다.</p>
+</li>
+<li><p>다음 두 명령을 실행했을 때 모두 오류가 발생한다.</p>
+<ul>
+<li><code>ifconfig</code> (IP가 표시되지 않는다.)</li>
+<li><code>ping 8.8.8.8</code> (외부 네트워크 통신이 되지 않는다.)</li>
+</ul>
+</li>
+<li><p>우측 상단의 <code>전원</code> 아이콘을 클릭한다.</p>
+</li>
+<li><p><code>유선 꺼짐</code>을 클릭한 후 <code>유선 네트워크 설정</code>을 선택한다.</p>
+</li>
+<li><p><code>네트워크</code> 항목 우측의 <code>유선</code> 옆 <code>톱니바퀴</code> 아이콘을 클릭한다.</p>
+</li>
+<li><p>하단의 <code>자세히 보기</code> 메뉴에서 <code>자동으로 연결</code>을 체크한다.</p>
+</li>
+<li><p><code>IPv4</code>를 클릭한 후 <code>수동</code>을 선택하고 다음과 같이 입력한다.</p>
+</li>
+</ul>
+</li>
+<li><p>주소: <code>192.168.10.128 / 255.255.255.0 / 192.168.10.2</code></p>
+</li>
+<li><p>네임서버: <code>192.168.10.2</code></p>
+<ul>
+<li>설정 후 <code>끔</code> 상태를 <code>켬</code>으로 변경한다.</li>
+</ul>
+</li>
 </ul>
