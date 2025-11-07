@@ -65,3 +65,38 @@
 <hr />
 <h2 id="가상-시스템-생성-2-정상">가상 시스템 생성 2. 정상</h2>
 <h3 id="step-1-가상-시스템-생성을-위한-스토리지-등록">Step 1. 가상 시스템 생성을 위한 스토리지 등록</h3>
+<ul>
+<li><p><code>저장소 추가</code></p>
+<ul>
+<li>현재 동작 중인 가상 시스템을 종료한다.</li>
+<li><code>인벤토리</code> 항목에 있는 <code>가상 머신(새 가상 시스템)</code>에서 우클릭한 후 <code>디스크에서 삭제</code>를 클릭한다.</li>
+<li><code>vSphere Client</code> 창은 닫는다.</li>
+<li><code>VMWare</code>에서 동작 중인 <code>Server System</code>에서 <code>F12</code>를 누른 후 종료한다.</li>
+<li><code>SCSI</code> 타입의 <code>HDD</code>를 2개 추가한다.</li>
+</ul>
+</li>
+<li><p><code>128GB</code>는 <code>ISO 파일</code>을 저장하기 위한 저장소이다.</p>
+</li>
+<li><p><code>256GB</code>는 <code>가상 시스템</code>을 설치하고 저장하기 위한 저장소이다.</p>
+<ul>
+<li>장착이 완료되면 <code>Server System</code>을 다시 켜고 <code>vSphere Client</code>에 로그인한다.</li>
+</ul>
+</li>
+<li><p>데이터 스토어에 ISO 파일 업로드하고 가상머신 설치를 위한 스토리지 등록 </p>
+<ul>
+<li>좌측에 있는 '인벤토리'의 'IP'를 클릭한 후 우측에 있는 '요약'탭을 클릭한다.</li>
+<li>구성 탭 클릭 후 좌측에 스토리지 클릭</li>
+<li>좌측 상단에 스토리지 추가 선택</li>
+<li>디스크 선택</li>
+<li>우선 <code>ISO 파일</code>을 위해 추가한 <code>HDD</code>의 <code>128GB</code>선택한다.</li>
+<li>다음으로 가상 시스템 설치를 위한 HDD인 256GB도 같은 방법으로 작업</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="step-2-가상-시스템-생성">Step 2. 가상 시스템 생성</h3>
+<ul>
+<li><h2 id="데이터-스토어에-iso파일-등록을-위한-폴더-생성">데이터 스토어에 ISO파일 등록을 위한 폴더 생성</h2>
+</li>
+<li>데이터 스토어에 <code>가상 머신 생성</code>을 위한 폴더 생성</li>
+</ul>
