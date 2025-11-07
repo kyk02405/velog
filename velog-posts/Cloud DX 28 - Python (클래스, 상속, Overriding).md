@@ -647,7 +647,65 @@ print(sub(4, 3)) </code></pre>
 </ul>
 <hr />
 <h2 id="92-실습">9.2 실습</h2>
-<h3 id="921-실습-1-사칙연산에-관련된-소스를-모듈함수를-이용해서-호출">9.2.1 실습 1. 사칙연산에 관련된 소스를 모듈함수를 이용해서 호출</h3>
+<h3 id="예제-1-사칙연산에-관련된-소스를-모듈함수를-이용해서-호출">예제 1. 사칙연산에 관련된 소스를 모듈함수를 이용해서 호출</h3>
+<pre><code class="language-python"># m2.py
+def add(a, b):
+    return a + b
+def sub(a, b):
+    return a - b 
+def mul(a, b):
+    return a * b
+def div(a, b):
+    return a / b </code></pre>
+<pre><code class="language-python"># m1.py
+# 모듈로 사용할 파일을 불러와서 실행하는 주 파일
+
+from m2 import *
+
+x, y = int(input(&quot;값1 : &quot;)), int(input(&quot;값2 : &quot;))
+print(add(x, y))
+print(sub(x, y)) 
+print(mul(x, y))
+print(div(x, y)) 
+print(&quot;%.1f&quot; % (div(x,y)))</code></pre>
+<h3 id="예제-2-클래스나-변수-등을-포함한-모듈">예제 2. 클래스나 변수 등을 포함한 모듈</h3>
 <ul>
-<li></li>
+<li>모듈 파일 생성(m2.py)</li>
+<li>주 파일을 수정해 가면서 테스트 한다.<ul>
+<li>Step 1. 모듈 안에 선언된 변수 호출</li>
+<li><pre><code class="language-python">import m2 
+print(m2.PI)        # 모듈 안에 있는 변수 호출</code></pre>
+</li>
+<li><pre><code class="language-python">import m2 
+print(m2.PI)        # 모듈 안에 있는 변수 호출</code></pre>
+</li>
+<li>Step 2. 모듈 안에 선언된 클래스 호출 (클래스 내부 함수, Method) <ul>
+<li>방법 1. with Instance Object      </li>
+<li>방법 2. without Instance Object</li>
+</ul>
+</li>
+<li>Step 3. 모듈 안에 선언된 <code>함수</code>호출<ul>
+<li>모듈 안에 선언된 '함수' 호출 (모듈 안에 있는 클래스 외부에 선언된 '알반 함수' 호출)</li>
+<li><pre><code class="language-python">import m2
+ab1, ab2 = int(input(&quot;값1 : &quot;)), int(input(&quot;값2 : &quot;))
+ab3 = m2.add(ab1, ab2)      # Module.Function()
+print(ab3)                  # Module.Class.Method()</code></pre>
+</li>
+</ul>
+</li>
+<li>Step 4. 모듈 함수 호출 (from 모듈명 import 모듈 함수)<ul>
+<li><pre><code class="language-python">from m2 import add 
+ab1, ab2 = int(input(&quot;값1 : &quot;)), int(input(&quot;값2 : &quot;)) # 모듈과 모듈 안에 있는 일반함수를 호출
+print(ab3)                # Step3. 과 같이 모듈을 쓸 필요가 없다.</code></pre>
+</li>
+</ul>
+</li>
+<li>Step 5. 모듈 안에 선언된 변수, 메서드 ,일반 함수 호출</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="예제-3-사칙연산을-모듈을-사용해서-작성">예제 3. 사칙연산을 모듈을 사용해서 작성</h3>
+<ul>
+<li>(모듈변수, 클래스, 함수)가 모두 포함되도록 한다.</li>
 </ul>
