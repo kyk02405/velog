@@ -555,3 +555,65 @@ a.travel(&quot;독도&quot;)
 <li><span style="color: red;">(특징)</span> 확장자가 <code>*.py</code>인 파일은 모두 모듈이 될 수가 있다.</li>
 <li><span style="color: red;">(주의)</span> 기본적으로 <code>모듈 파일</code>과 모듈 파일을 불러오는 '주 파일'은 같은 경로에 둬야 한다.</li>
 </ul>
+<h3 id="912-문법">9.1.2 문법</h3>
+<pre><code class="language-python">Import &lt;모듈로 사용할 확장자가 `*.py`인 파일&gt;</code></pre>
+<h3 id="913-예시">9.1.3 예시</h3>
+<ul>
+<li><p>모듈 둘러보기(모듈로 매개변수)</p>
+<ul>
+<li>소스 코드 (01.py)<pre><code class="language-python">import sys  # Python 시스템의 내장 모듈 호출
+        # '컴퓨터 언어'에서의 'Header File'과 유사하다.
+        # 즉, 'C언어'에서의 최상단에 선언하는 'stdio.h'
+args = sys.argv[1:] # 실행 순서 하단에 있는 터미널 영역에 다음과 같이 
+for i in args: print(i) # 입력한다.       </code></pre>
+</li>
+<li>실행 순서<ul>
+<li>'cmd' 창을 실행한 후 현재 작업하고 있는 'D:\3_VMs\Python\vcode'로 이동한다.</li>
+<li>위의 '01.py' 파일을 생성한다.</li>
+<li>'python 01.py samadal madalgyo 0WonHara'을 입력, 실행하면 된다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>모듈 생성 방법</p>
+<ul>
+<li>작업 개요<ul>
+<li>모듈로 사용할 파일<code>(m2.py)</code>과 <code>주 파일(m1.py)</code>을 생성하고 테스트한다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>m2.py</code></p>
+<pre><code class="language-python"># 모듈로 사용할 파일
+def add(a, b):
+  return a + b
+def sub(a, b):
+  return a - b </code></pre>
+</li>
+<li><p><code>m1.py</code></p>
+<pre><code class="language-python"># 모듈로 사용할 파일을 불러와서 실행하는 주 파일
+import m2   # 주 파일에서 사용할 모듈 파일을 입력할 때는 `py`는 뺀다.
+print(m2.add(4, 3))
+print(m2.sub(4, 3)) </code></pre>
+</li>
+<li><p>테스트</p>
+<ul>
+<li><code>Visual Studio Code</code>에서 실행하거나 실행창(cmd)에서 <code>python m1.py</code>를 실행하면 된다.</li>
+</ul>
+</li>
+<li><p>모듈 호출 방법</p>
+<ul>
+<li>문법<pre><code class="language-python">from &lt;모듈 파일명&gt; improt &lt;모듈 함수&gt;</code></pre>
+</li>
+<li>예시<ul>
+<li>작업 개요<ul>
+<li>모듈 파일<code>(m2.py)</code>는 그대로 두고 주 파일<code>(m1.py)</code>만 수정</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="92-실습">9.2 실습</h2>
