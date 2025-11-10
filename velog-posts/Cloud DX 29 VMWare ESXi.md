@@ -1,7 +1,7 @@
 # Cloud DX 29 VMWare ESXi
 
 - 📅 Published: Fri, 07 Nov 2025 03:45:49 GMT
-- 🔗 [Read on Velog](https://velog.io/@kyk02405/Cloud-DX-29-VMWare-ESXi)
+- 🔗 [Read on Velog](https://velog.io/@kyk02405/Cloud-DX-29-ESXi)
 
 <hr />
 <h1 id="일반">일반</h1>
