@@ -1,7 +1,7 @@
 # Cloud DX 29 VMWare ESXi
 
 - 📅 Published: Fri, 07 Nov 2025 03:45:49 GMT
-- 🔗 [Read on Velog](https://velog.io/@kyk02405/Cloud-DX-29-ESXi)
+- 🔗 [Read on Velog](https://velog.io/@kyk02405/Cloud-DX-29-VMWare-ESXi)
 
 <hr />
 <h1 id="일반">일반</h1>
@@ -102,8 +102,16 @@
 <li>데이터 스토어에 <code>가상 머신 생성</code>을 위한 폴더 생성</li>
 </ul>
 </li>
-<li>가상 머신 생성</li>
-<li>가상 머신 설치</li>
+<li>가상 머신 생성<ul>
+<li><code>256</code>로 설치</li>
+</ul>
+</li>
+<li>가상 머신 설치<ul>
+<li><code>GUI 모드로 설치</code></li>
+<li><code>swap 2408</code></li>
+<li><code>/ 18GB</code></li>
+</ul>
+</li>
 </ul>
 <h3 id="가상-시스템-접속">가상 시스템 접속</h3>
 <ul>
@@ -137,11 +145,44 @@
 </ul>
 </li>
 </ul>
-<p><code>sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*</code>
-<code>sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*</code></p>
+<pre><code class="language-bash">`sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*`
+`sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*`</code></pre>
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/224697a8-0d71-4c8f-9387-60a4aac37f84/image.png" /></p>
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4170de23-6a0b-421f-b6d2-b560a7e69b52/image.png" /></p>
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d5f37e29-fea3-42c8-a2a5-b5050851e846/image.png" /></p>
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7221171f-7825-40bd-8b3e-de02d2db3901/image.png" /></p>
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/74794e08-70cc-4626-a1a1-2041cb641a49/image.png" /></p>
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/213602a9-7753-4246-a9c3-1f46ccc7058e/image.png" /></p>
+<hr />
+<h1 id="활용">활용</h1>
+<h2 id="가상-머신-추가-후-원격-접속">가상 머신 추가 후 원격 접속</h2>
+<h2 id="gui-mode로-가상-머신-접속"><code>GUI Mode</code>로 가상 머신 접속</h2>
+<h3 id="개요">개요</h3>
+<ul>
+<li><p>터미널 방식의 접속 시에는 대부분 <code>CLI Mode</code>로 접속이 되는데 경우에 따라서 <code>GUI Mode</code>로 접속 해야 할 때가 있는데 <code>VMC</code>는 이와 같은 경우에 사용이 된다.</p>
+</li>
+<li><p>프로그램 다운로드 및 설치, 로그인</p>
+</li>
+<li><p><code>VNC Server</code></p>
+<ul>
+<li><p>패키지(tigervnc-*) 설치 (rpm 9개)</p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4a675ae7-0659-48dc-b035-3f6f34b799ba/image.png" /></p>
+</li>
+<li><p>포트(5901, 5902) 추가</p>
+</li>
+<li><p>데몬(vncserver) 실행</p>
+</li>
+</ul>
+</li>
+<li><p>RealVNC Viewer 를 통한 GUI Mode로 접속</p>
+</li>
+<li><p>테스트 1. vncserver 재실행</p>
+<ul>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d4455694-d10b-4e2a-849d-a969ff52b462/image.png" /></li>
+<li>passwd 삭제 ( 비번 다시입력)</li>
+<li>192.168.10.129:1 -&gt; :2로 </li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/79588970-89d8-4d25-8ca3-83b3d67176d5/image.png" /></li>
+</ul>
+</li>
+</ul>
