@@ -171,7 +171,7 @@ drwxr-xr-x 3 samadal samadal 4096 11월 11 15:07 flask_project
 </li>
 </ul>
 <hr />
-<h3 id="flask-applition-만들기-1-터미널에서-출력">Flask Applition 만들기 1. 터미널에서 출력</h3>
+<h3 id="flask-applition-만들기-1-터미널에서-바로-출력">Flask Applition 만들기 1. 터미널에서 바로 출력</h3>
 <ul>
 <li><p>가상 환경으로 들어간 후 <code>pybo.py</code>파일 생성</p>
 <ul>
@@ -221,9 +221,32 @@ drwxr-xr-x 3 samadal samadal 4096 11월 11 15:07 flask_project
 <ul>
 <li><code>수정</code><ul>
 <li>파일명을 <code>pybo.py</code>에서 <code>app.py</code>로 변경한다.</li>
-<li><code>mv pybo.py app.py</code></li>
+<li><code>mv pybo.py app.py</code><pre><code class="language-bash">from flask import Flask
+</code></pre>
+</li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>app = Flask(<strong>name</strong>)</p>
+<p>@app.route('/')
+def hello_pycloud():
+    return 'Hello, Python Cloud!'</p>
+<p>if <strong>name</strong> == '<strong>main</strong>':
+    app.run(host='0.0.0.0', port=5000)</p>
+<p>```</p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2528a808-9a50-456b-a8fe-487fcc17f4fb/image.png" /></p>
+<hr />
+<h3 id="flask-applition-만들기-2-사이트에서-출력">Flask Applition 만들기 2. 사이트에서 출력</h3>
+<ul>
+<li>작업 개요<ul>
+<li><code>CentOS</code>를 <code>DNS</code>로 롤백하고 로딩한 후 네임서버(gusiya.com)를 구축하고 <code>Ubuntu</code>에 호스트(ubuntu)를 부여한다.</li>
+<li><code>IP Address</code> 변경<ul>
+<li><code>Ubuntu</code> (192.168.10.140 / C Class / 192.168.10.2 / 192,168,10,141)</li>
+<li><code>CentOS</code> (192.168.10.141 / C Class / 192.168.10.2 / 192,168,10,141)    </li>
 </ul>
 </li>
 </ul>
