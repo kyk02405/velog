@@ -113,4 +113,36 @@ ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that 
 ERROR 1410 (42000): You are not allowed to create a user with GRANT</code></pre>
 <ul>
 <li><code>MySQL</code>에서는 사용자를 먼저 생성하고 <code>DB</code>와 연결 해야한다.</li>
+<li>생성된 사용자를 확인한다.<pre><code class="language-sql">mysql&gt; SELECT host, user FROM user;
++-----------+------------------+
+| host      | user             |
++-----------+------------------+
+| localhost | mysql.infoschema |
+| localhost | mysql.session    |
+| localhost | mysql.sys        |
+| localhost | root             |
+| localhost | usersamadal      |
++-----------+------------------+
+5 rows in set (0.00 sec)</code></pre>
+<ul>
+<li>생성된 사용자에게 모든 명령어를 실행할 수 있는 권한을 부여한다.</li>
+</ul>
+</li>
+<li>권한 부여</li>
+<li>사용자를 생성하고 권한을 부여하면 <code>user</code> 테이블 뿐만 아니라 <code>db</code> 테이블에도 자동 생성된다.</li>
+<li><code>MariaDB</code> 수업할 때 했던 내용을 참고하면, <code>grant</code> 명령으로 사용자를 생성하면 <code>user</code> 테이블에 사용자가 생성되고 <code>db</code> 테이블에는 사용자와 사용자가 사용할 DB가 자동 연동된다.<pre><code class="language-sql">FLUSH PRIVILEGES;</code></pre>
+</li>
+</ul>
+<hr />
+<h3 id="실습-3-databased-backup--restore">실습 3. Databased Backup &amp; Restore</h3>
+<ul>
+<li><code>Database Backup</code><ul>
+<li>백업 명령어 작동 유무 확인<pre><code class="language-cmd">C:\&gt;mysqldump
+Usage: mysqldump [OPTIONS] database [tables]
+OR     mysqldump [OPTIONS] --databases [OPTIONS] DB1 [DB2 DB3...]
+OR     mysqldump [OPTIONS] --all-databases [OPTIONS]
+For more options, use mysqldump --help</code></pre>
+</li>
+</ul>
+</li>
 </ul>
