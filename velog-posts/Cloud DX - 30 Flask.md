@@ -135,8 +135,8 @@ ERROR 1410 (42000): You are not allowed to create a user with GRANT</code></pre>
 </ul>
 <hr />
 <h3 id="실습-3-databased-backup--restore">실습 3. Databased Backup &amp; Restore</h3>
+<h4 id="database-backup"><code>Database Backup</code></h4>
 <ul>
-<li><code>Database Backup</code><ul>
 <li>백업 명령어 작동 유무 확인<pre><code class="language-cmd">C:\&gt;mysqldump
 Usage: mysqldump [OPTIONS] database [tables]
 OR     mysqldump [OPTIONS] --databases [OPTIONS] DB1 [DB2 DB3...]
@@ -144,5 +144,93 @@ OR     mysqldump [OPTIONS] --all-databases [OPTIONS]
 For more options, use mysqldump --help</code></pre>
 </li>
 </ul>
+<ul>
+<li><code>DB</code> 전체 백업</li>
+</ul>
+<pre><code class="language-cmd">C:\&gt;mysqldump -u root -p --all-databases &gt; e:\full.sql</code></pre>
+<ul>
+<li><p>원하는 <code>DB</code>만 백업</p>
+<pre><code class="language-cmd">C:\&gt;mysqldump -u root -p mysql &gt; e:\omysql.sql</code></pre>
 </li>
+<li><p>테이블만 백업</p>
+<pre><code>C:\&gt;mysqldump -u root -p mysql user &gt; e:\tbbackup.sql</code></pre></li>
+<li><p>테이블 구조만 백업</p>
+<pre><code>C:\&gt;mysqldump -u root -p --no-data mysql user &gt; e:\nodata.sql</code></pre></li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e0621c81-3462-493c-9b59-b2794819708e/image.png" /></p>
+</li>
+</ul>
+<hr />
+<h4 id="database-restore"><code>Database Restore</code></h4>
+<ul>
+<li>원하는 <code>DB</code>만 복구<pre><code>E:\&gt;mysql -u root -p mysql &lt; e:\full.sql</code></pre></li>
+<li>작업 중인 <code>DB</code>에 변화를 준 백업한 내용 복구<pre><code class="language-sql">mysql&gt; create table tbsamadal (num int(10), name char(20), addr char(80));
+</code></pre>
+</li>
+</ul>
+<p>mysql&gt; show tables;
++------------------------------------------------------+
+| Tables_in_mysql                                      |
++------------------------------------------------------+
+| columns_priv                                         |
+...
+| tbsamadal                                            |
+...
++------------------------------------------------------+
+39 rows in set (0.00 sec)</p>
+<p>mysql&gt; flush privileges;</p>
+<p>mysql&gt; exit</p>
+<p>E:&gt;mysql -u root -p mysql &lt; e:\full.sql</p>
+<p>mysql&gt; show tables;</p>
+<h1 id="테이블-변화-없음">테이블 변화 없음</h1>
+<p>mysql&gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| dbsamadal          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)</p>
+<p>mysql&gt; drop database dbsamadal;</p>
+<p>mysql&gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+6 rows in set (0.00 sec)</p>
+<p>mysql&gt; flush privileges;</p>
+<p>mysql&gt; exit</p>
+<p>E:&gt;mysql -u root -p mysql &lt; e:\full.sql</p>
+<p>E:&gt;mysql -u root -p mysql</p>
+<p>mysql&gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| dbsamadal          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)</p>
+<pre><code>```bash
+(server-129) mysqldump -u root -p mysql &gt; /export/home/samadal/full.sql
+
+(server-129) scp /export/home/samadal/full.sql samadal@192.168.10.131:/dbback/ </code></pre><hr />
+<h1 id="flask">Flask</h1>
+<h2 id="개요-1">개요</h2>
+<ul>
+<li>'Ubuntu 24.04.2'에 'Flask'를 설치하여 가볍고 오픈 소스인 'Python 프레임워크'로 최신 '웹 애플리케이션'을 만든다.</li>
 </ul>
