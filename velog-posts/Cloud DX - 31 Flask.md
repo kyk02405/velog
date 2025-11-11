@@ -112,5 +112,120 @@ it may be easiest to use pipx install xyz, which will manage a
 virtual environment for you. Make sure you have pipx installed.
 
 See /usr/share/doc/python3.12/README.venv for more information.</code></pre><p>note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
-hint: See PEP 668 for the detailed specification.
-```</p>
+hint: See PEP 668 for the detailed specification.</p>
+<pre><code>- `Pip`를 사용해서 `Flask` 설치 2. 오류 (허가 거부)
+```bash
+(flaskenv) samadal@CloudDX:/sdb/flask_project$ pip install flask --no-user
+Collecting flask
+  Downloading flask-3.1.2-py3-none-any.whl.metadata (3.2 kB)
+Collecting blinker&gt;=1.9.0 (from flask)
+  Downloading blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
+Collecting click&gt;=8.1.3 (from flask)
+  Downloading click-8.3.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting itsdangerous&gt;=2.2.0 (from flask)
+  Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting jinja2&gt;=3.1.2 (from flask)
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting markupsafe&gt;=2.1.1 (from flask)
+  Downloading markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+Collecting werkzeug&gt;=3.1.0 (from flask)
+  Downloading werkzeug-3.1.3-py3-none-any.whl.metadata (3.7 kB)
+Downloading flask-3.1.2-py3-none-any.whl (103 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 103.3/103.3 kB 7.0 MB/s eta 0:00:00
+Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Downloading click-8.3.0-py3-none-any.whl (107 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 107.3/107.3 kB 19.7 MB/s eta 0:00:00
+Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 134.9/134.9 kB 22.8 MB/s eta 0:00:00
+Downloading markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+Downloading werkzeug-3.1.3-py3-none-any.whl (224 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 224.5/224.5 kB 20.1 MB/s eta 0:00:00
+Installing collected packages: markupsafe, itsdangerous, click, blinker, werkzeug, jinja2, flask
+ERROR: Could not install packages due to an OSError: [Errno 13] 허가 거부: '/sdb/flask_project/flaskenv/lib/python3.12/site-packages/markupsafe'
+Check the permissions.</code></pre><ul>
+<li><code>Pip</code>를 사용해서 Flask 설치 3. 정상<ul>
+<li>(매우 중요한 내용) <code>flash_projetc</code> 디렉토리와 이 디렉토리 하위에 <code>python3 -m venv flaskenv</code> 명령으로 생성된 <code>flask</code> 디렉토리의 소유권은 <code>root</code>가 되어서는 안된다. </li>
+<li>소유권 변경<pre><code class="language-bash">(flaskenv) samadal@CloudDX:/sdb/flask_project$ pwd
+/sdb/flask_project
+(flaskenv) samadal@CloudDX:/sdb/flask_project$ ls -l
+합계 4
+drwxr-xr-x 5 root root 4096 11월 11 15:07 flaskenv
+(flaskenv) samadal@CloudDX:/sdb/flask_project$ cd /sdb
+(flaskenv) samadal@CloudDX:/sdb$ ls -l
+합계 20
+drwxr-xr-x 3 root root  4096 11월 11 15:07 flask_project
+drwx------ 2 root root 16384 11월 11 14:17 lost+found
+(flaskenv) samadal@CloudDX:/sdb$ sudo rm -rf lost+found/
+[sudo] samadal 암호:
+(flaskenv) samadal@CloudDX:/sdb$ ls -l
+합계 4
+drwxr-xr-x 3 root root 4096 11월 11 15:07 flask_project
+(flaskenv) samadal@CloudDX:/sdb$ sudo chown samadal: flask_project/
+(flaskenv) samadal@CloudDX:/sdb$ ls -l
+합계 4
+drwxr-xr-x 3 samadal samadal 4096 11월 11 15:07 flask_project
+(flaskenv) samadal@CloudDX:/sdb$</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="flask-applition-만들기-1-터미널에서-출력">Flask Applition 만들기 1. 터미널에서 출력</h3>
+<ul>
+<li><p>가상 환경으로 들어간 후 <code>pybo.py</code>파일 생성</p>
+<ul>
+<li><p>가상 환경으로 들어간 후 파일을 생성한다.</p>
+<pre><code class="language-bash">(flaskenv) samadal@CloudDX:/sdb/flask_project$ vi pybo.py
+(flaskenv) samadal@CloudDX:/sdb/flask_project$ nl pybo.py
+ 1  from flask import Flask
+
+ 2  # 'Flask(Flask) 애플리케이션'을 생성하는 부분이다.
+ 3
+ 4  # 이 코드는 'Flask(Flask) 애플리케이션'을 초기화하고 구성하는 역할을 한다.
+
+ 5  app = Flask(__name__)
+
+ 6  @app.route('/')
+
+ 7  def hello_pycloud(): return 'Hello, Python Cloud!'</code></pre>
+</li>
+</ul>
+</li>
+<li><p><code>Flask</code> 실행</p>
+<ul>
+<li><p><code>오류 1.</code> </p>
+<ul>
+<li><code>오류</code>의 원인<ul>
+<li><code>Flask</code>는 기본적으로 <code>app.py</code>를 실행하도록 구성되어 있기 때문이다. </li>
+<li>따라서 <code>pybo.py</code>를 <code>app.py</code>로 변경하거나 
+<code>FLASK_APP 환경 변수</code>를 <code>pybo.py</code>로 변경하면 된다. </li>
+</ul>
+</li>
+<li><code>실행</code>(오류)</li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/6ba3c70c-bbfa-41c1-a668-73c11cac58c7/image.png" /></li>
+</ul>
+</li>
+<li><p><code>오류 2.</code></p>
+<ul>
+<li><code>수정</code><ul>
+<li><code>FLASK_APP 환경변수</code>를 <code>set FLASK_APP= 파일명</code>과 같이 변경하면 된다.</li>
+<li>이 때 확장자는 반드시 생략한다.</li>
+</ul>
+</li>
+<li><code>실행</code>(오류)</li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/be000b5a-984c-4c35-93d7-93462d587f6e/image.png" /></li>
+</ul>
+</li>
+<li><p><code>정상</code></p>
+<ul>
+<li><code>수정</code><ul>
+<li>파일명을 <code>pybo.py</code>에서 <code>app.py</code>로 변경한다.</li>
+<li><code>mv pybo.py app.py</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
