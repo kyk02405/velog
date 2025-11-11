@@ -15,7 +15,7 @@
 </ul>
 <h3 id="다운로드">다운로드</h3>
 <ul>
-<li><a href="https://dev.mysql.com/downloads/mysql/">MySQL</a></li>
+<li><a href="https://dev.mysql.com/downloads/mysql/">MySQL</a> &lt;-</li>
 <li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/49973647-cfaa-4f1b-b248-ca78e8ae6f21/image.png" /></li>
 </ul>
 <h3 id="설치">설치</h3>
@@ -84,3 +84,33 @@
 <blockquote>
 <p><code>GUI</code>기반 이냐, <code>CLI</code>기반이냐의 차이만 있을 뿐이다.</p>
 </blockquote>
+<hr />
+<h3 id="실습-2-workbench에서-dbsamadal이라는-db를-생성하고-cmd창에서-확인한다">실습 2. Workbench에서 dbsamadal이라는 DB를 생성하고 cmd창에서 확인한다.</h3>
+<ul>
+<li>Database 생성<pre><code class="language-sql">(work) create database dbsamadal;
+(cmd) mysql -u root -p mysql
+(cmd) show databases;</code></pre>
+</li>
+<li>사용자 생성 1. 오류 <ul>
+<li>개요 <ul>
+<li><code>cmd</code>창에서 사용자를 생성하고 <code>Workbench</code>에서 확인한다.</li>
+<li><code>Mariadb</code>에서는 다음과 같이 생성했었다.<pre><code class="language-sql">(mariadb) insert into user (host, user, password) values ('localhost', 'usersamadal', password('pwsamadal'));</code></pre>
+</li>
+</ul>
+</li>
+<li>(중요) <code>MySQL</code>에서는 <code>password</code> 필드가 없기 때문에 MariaDB와 같이 생성 할 수가 없다.<pre><code class="language-sql">(cmd) show tables;
+(cmd) desc user;</code></pre>
+</li>
+<li>(실제 생성 명령) 따라서 <code>grant</code> 명령을 이용해서 생성해줘야 한다.</li>
+</ul>
+</li>
+<li>사용자 생성 2. 생성</li>
+<li>(중요) <code>MySQL</code>에서는 <code>password</code> 필드가 없기 때문에 명령 입력 시 오류가 발생한다.<pre><code class="language-sql">mysql&gt; grant all on dbsamadal.* to usersamadal@'localhost' identified by 'pwsamadal';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'identified by 'pwsamadal'' at line 1</code></pre>
+</li>
+</ul>
+<pre><code class="language-sql">mysql&gt; grant all privileges on dbsamadal.* to usersamadal@'localhost';
+ERROR 1410 (42000): You are not allowed to create a user with GRANT</code></pre>
+<ul>
+<li><code>MySQL</code>에서는 사용자를 먼저 생성하고 <code>DB</code>와 연결 해야한다.</li>
+</ul>
