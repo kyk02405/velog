@@ -237,18 +237,40 @@ def hello_pycloud():
     return 'Hello, Python Cloud!'</p>
 <p>if <strong>name</strong> == '<strong>main</strong>':
     app.run(host='0.0.0.0', port=5000)</p>
-<p>```</p>
-<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2528a808-9a50-456b-a8fe-487fcc17f4fb/image.png" /></p>
-<hr />
-<h3 id="flask-applition-만들기-2-사이트에서-출력">Flask Applition 만들기 2. 사이트에서 출력</h3>
+<pre><code>
+![](https://velog.velcdn.com/images/kyk02405/post/2528a808-9a50-456b-a8fe-487fcc17f4fb/image.png)
+
+
+---
+### Flask Applition 만들기 2. 사이트에서 출력
+- 작업 개요
+  - `CentOS`를 `DNS`로 롤백하고 로딩한 후 네임서버(gusiya.com)를 구축하고 `Ubuntu`에 호스트(ubuntu)를 부여한다.
+  - `IP Address` 변경
+    - `Ubuntu` (192.168.10.140 / C Class / 192.168.10.2 / 192,168,10,141)
+    - `CentOS` (192.168.10.141 / C Class / 192.168.10.2 / 192,168,10,141)    
+  - `Ubuntu`에서 네임서버 조회
+
+  - 방화벽을 통해 포트 (5000) 추가
+```bash
+(flaskenv) samadal@CloudDX:/sdb/flask_project$ sudo ufw allow 5000/tcp
+(flaskenv) samadal@CloudDX:/sdb/flask_project$ sudo ufw enable
+(flaskenv) samadal@CloudDX:/sdb/flask_project$ sudo ufw reload</code></pre><ul>
+<li><p>화면 출력 시 일반적으로 나타나는 유형</p>
+<pre><code class="language-bash">(flaskenv) samadal@CloudDX:/sdb/flask_project$ python3 app.py</code></pre>
 <ul>
-<li>작업 개요<ul>
-<li><code>CentOS</code>를 <code>DNS</code>로 롤백하고 로딩한 후 네임서버(gusiya.com)를 구축하고 <code>Ubuntu</code>에 호스트(ubuntu)를 부여한다.</li>
-<li><code>IP Address</code> 변경<ul>
-<li><code>Ubuntu</code> (192.168.10.140 / C Class / 192.168.10.2 / 192,168,10,141)</li>
-<li><code>CentOS</code> (192.168.10.141 / C Class / 192.168.10.2 / 192,168,10,141)    </li>
+<li><code>HTTP Request (GET/HTTP/1.1)</code></li>
+<li><code>HTTP Response (HTTP/1.1 200 ok)</code></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/cb69126c-68cf-4352-a689-5da82e6ceed3/image.png" /></li>
 </ul>
 </li>
+<li><p>테스트 1. IP로 입력 후 사이트 출력</p>
+</li>
+<li><p>테스트 2. 도메인을 입력 후 사이트 출력</p>
+</li>
+<li><p>테스트 3. Site Redirection</p>
+<ul>
+<li><code>CentOS</code>에서 <code>Web Server</code>를 활성화 시킨 후 기본경로에 <code>index.html</code>을 생성한다</li>
+<li>생성한 문서 안에 임의의 시간 설정에 따른 <code>Ubuntu</code>로 이동할 수 있게끔 설정</li>
 </ul>
 </li>
 </ul>
