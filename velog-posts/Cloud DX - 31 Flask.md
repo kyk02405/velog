@@ -270,7 +270,19 @@ def hello_pycloud():
 <li><p>테스트 3. Site Redirection</p>
 <ul>
 <li><code>CentOS</code>에서 <code>Web Server</code>를 활성화 시킨 후 기본경로에 <code>index.html</code>을 생성한다</li>
-<li>생성한 문서 안에 임의의 시간 설정에 따른 <code>Ubuntu</code>로 이동할 수 있게끔 설정</li>
+<li>생성한 문서 안에 임의의 시간 설정에 따른 <code>Ubuntu</code>로 이동할 수 있게끔 설정<pre><code class="language-bash"># vi /var/www/html/index.html
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF=8&quot;&gt;
+&lt;title&gt;Site Redirection Test&lt;/title&gt;
+&lt;meta http-equiv=&quot;refresh&quot; content=&quot;5; url=http://ubuntu.gusiya.com:5000&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;p&gt;move&lt;a href=&quot;http://ubuntu.gusiya.com:5000&quot;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</li>
 </ul>
 </li>
 </ul>
