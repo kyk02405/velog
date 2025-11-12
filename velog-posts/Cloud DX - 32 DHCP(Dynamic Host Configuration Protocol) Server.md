@@ -141,3 +141,95 @@
 <ul>
 <li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0308cb91-153b-4fc1-9f47-2a0768ae121e/image.png" /></li>
 </ul>
+<hr />
+<h2 id="linux-server-환경에서의-dhcp-server">Linux Server 환경에서의 DHCP Server</h2>
+<h3 id="작업환경">작업환경</h3>
+<h3 id="server-및-client에게-부여할-ip">'Server' 및 'Client'에게 부여할 IP</h3>
+<ul>
+<li>Server      : 192.168.10.128</li>
+<li>Gateway      : 192.168.1.2</li>
+<li>DNS         : 8.8.8.8</li>
+<li>Broadcast      : 192.168.10.254</li>
+<li>Client Bandwidth   : 192.168.10.150 ~ 180</li>
+</ul>
+<h3 id="dhcp-서버-구성을-위한-network-환경-구성">DHCP 서버 구성을 위한 Network 환경 구성</h3>
+<ul>
+<li><p>Server</p>
+<ul>
+<li>'192.168.10.128 / 255.255.255.0 / 192.168.10.2 / 8.8.8.8'
+-&gt; 'Client'</li>
+<li>'자동 설정'</li>
+</ul>
+</li>
+<li><p>패키지(dhcp-*), 포트(x), 서비스(dhcp), 데몬(dhcpd)</p>
+<h3 id="시스템별-구성">시스템별 구성</h3>
+</li>
+<li><p><code>DHCP Server</code></p>
+<ul>
+<li>패키지 설치<pre><code class="language-bash">[root@localhost ~]# yum -y install epel-release
+# 저장소 업데이트
+[root@localhost ~]# yum -y install dhcpd-*
+[root@localhost ~]# yum -y install dhcp-*</code></pre>
+</li>
+<li>샘플 파일 복사해서 구성 파일 생성<pre><code class="language-bash">[root@localhost ~]# cd /usr/share/doc/dhcp-4.2.5
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>[root@localhost dhcp-4.2.5]# ls -l /etc/dhcp/</p>
+<p>[root@localhost dhcp-4.2.5]# cp -p /etc/dhcp/dhcpd.conf /etc/dhcp/dhcp.conf.samadal
+[root@localhost dhcp-4.2.5]# cp -ipf /usr/share/doc/dhcp-4.2.5/dhcpd.conf.example /etc/dhcp/dhcp.conf</p>
+<pre><code>  - `Clinet`에게 발급한 `IP` 확인
+```bash
+[root@localhost dhcp-4.2.5]# cd /var/lib/dhcpd
+[root@localhost dhcpd]# ls -l
+합계 0
+-rw-r--r-- 1 dhcpd dhcpd 0  6월 11  2024 dhcpd.leases
+-rw-r--r-- 1 dhcpd dhcpd 0  6월 11  2024 dhcpd6.leases
+[root@localhost dhcpd]# cat dhcpd.leases</code></pre><ul>
+<li><p>설정 <code>vi /etc/dhcp/dhcpd.conf</code></p>
+<pre><code class="language-bash"># A slightly different configuration for an internal subnet.
+subnet 192.168.10.0 netmask 255.255.255.0 {
+range 192.168.10.150 192.168.10.180;
+option subnet-mask 255.255.255.0;
+option routers 192.168.10.2;
+option broadcast-address 192.168.10.255;
+option domain-name-servers 192.168.10.2, 168.128.63.1;
+default-lease-time 7200;
+max-lease-time 36000;
+}</code></pre>
+<ul>
+<li>데몬 재실행<pre><code class="language-bash">[root@localhost dhcp]# systemctl enable dhcpd
+[root@localhost dhcp]# systemctl restart dhcpd
+[root@localhost dhcp]# systemctl status dhcpd</code></pre>
+<pre><code class="language-bash">  1 # A slightly different configuration for an internal subnet.
+  2 subnet 192.168.10.0 netmask 255.255.255.0 {
+  3   range 192.168.10.150 192.168.10.180;
+  4   option routers 192.168.10.2;
+  5   option broadcast-address 192.168.10.255;
+  6   option domain-name-servers 8.8.8.8;
+  7   option domain-name &quot;samadal.com&quot;;
+  8   default-lease-time 7200;
+  9   max-lease-time 36000;
+ 10 }</code></pre>
+</li>
+</ul>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0550aeaf-909d-47e8-8697-8deceb69cbb5/image.png" /></p>
+<ul>
+<li><code>Virtual Network Editor</code>의 <code>Host-only</code>는 체크 다시 하고 <code>NAT</code>는 아래와 같이 체크해제</li>
+</ul>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9d4c41f9-7129-4b1d-8a22-bad8f77043fc/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b404d7e8-0595-4565-9689-f78c64f8ff0e/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/570d2b18-f9bb-4803-b7aa-1f2ecca5d48d/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b78345a4-fb6c-42fc-873f-dc2a5efbfa5e/image.png" /></p>
+</li>
+</ul>
+<ul>
+<li>접속한 <code>PC</code>의 <code>MAC 주소</code>, <code>접속 시간</code> 확인 가능</li>
+</ul>
