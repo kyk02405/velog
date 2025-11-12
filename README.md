@@ -1,13 +1,12 @@
 # 🪴 Velog Sync Test (자동화 확인용)
 
-# 1️⃣ README.md 생성
+> Velog 글이 GitHub Actions를 통해 자동으로 동기화되는지 테스트하기 위한 README입니다.  
+> 매 실행마다 commit이 생성되어 GitHub에 반영됩니다 🌱
+
+---
+
+## ⚙️ 실행 단계
+
+### 1️⃣ README.md 생성
+```bash
 echo "# Velog Sync Test" > README.md
-
-# 2️⃣ 변경 사항 스테이징
-git add README.md
-
-# 3️⃣ 커밋 생성
-git commit -m "Add test README for Velog sync"
-
-# 4️⃣ 원격 저장소로 푸시
-git push origin main
