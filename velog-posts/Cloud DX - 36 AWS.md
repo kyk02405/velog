@@ -148,4 +148,13 @@
 </li>
 <li><p><code>관리자 로그인</code> 시 보안을 위해 <code>2차 인증</code>을 설정한다.</p>
 </li>
+<li><p>우측의 <code>IAM 대시보드</code> 하단에 있는 <code>보안 권장 사항</code>을 확인한다.</p>
+</li>
+<li><p><code>루트 사용자에 대해 MFA 추가</code> 우측에 있는 <code>MFA추가</code> 를 클릭</p>
+<ul>
+<li>'MFA(MultiFactor Authentication)'는 '다중 인증' 또는 '다단계 인증'이라는 뜻을 가지고 있는데 네이버에서의 '2차 인증'과 동일하다.</li>
+<li>MFA 디바이스 선택 하단에서 인증 관리자 앱을 체크 한</li>
+<li></li>
+</ul>
+</li>
 </ul>
