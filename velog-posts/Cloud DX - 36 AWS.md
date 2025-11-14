@@ -94,9 +94,13 @@
 <hr />
 <h3 id="로그인-방법">로그인 방법</h3>
 <ul>
-<li><h2 id="루트-계정-로그인-일반적으로-id가-이메일-계정-형태"><code>루트 계정 로그인</code> (일반적으로 ID가 이메일 계정 형태)</h2>
+<li><code>루트 계정 로그인</code> (일반적으로 ID가 이메일 계정 형태)<ul>
+<li><code>https://console.aws.amazon.com/iam/home</code></li>
+</ul>
 </li>
-<li><h2 id="일반-사용자-계정-로그인-iam-사용자-로그인으로-링크되는-형태"><code>일반 사용자 계정 로그인</code> (IAM 사용자 로그인으로 링크되는 형태)</h2>
+<li><code>일반 사용자 계정 로그인</code> (IAM 사용자 로그인으로 링크되는 형태)<ul>
+<li><code>https://567448487869.signin.aws.amazon.com/console</code></li>
+</ul>
 </li>
 </ul>
 <hr />
@@ -152,9 +156,19 @@
 </li>
 <li><p><code>루트 사용자에 대해 MFA 추가</code> 우측에 있는 <code>MFA추가</code> 를 클릭</p>
 <ul>
-<li>'MFA(MultiFactor Authentication)'는 '다중 인증' 또는 '다단계 인증'이라는 뜻을 가지고 있는데 네이버에서의 '2차 인증'과 동일하다.</li>
-<li>MFA 디바이스 선택 하단에서 인증 관리자 앱을 체크 한</li>
-<li></li>
+<li><code>MFA(MultiFactor Authentication)</code>는 <code>다중 인증</code> 또는 <code>다단계 인증</code>이라는 뜻을 가지고 있는데 네이버에서의 <code>2차 인증</code>과 동일하다.</li>
+<li>MFA 디바이스 선택 하단에서 인증 관리자 앱을 체크 한 후 <code>다음</code>을 클릭한다.<ul>
+<li>이 때 <code>디바이스 이름</code>은 clouddx1501`로 입력한다.</li>
+<li><code>앱(Authenticaor)</code>은 <code>Amazon Services</code>을 검색한 후 설치하면 된다.</li>
+</ul>
+</li>
+<li><code>디바이스 설정</code>은 다음과 같이 진행한다.<ul>
+<li>Step 1. <code>Google Authenticator</code> 앱을 검색하고 설치한다.</li>
+<li>Step 2. <code>QR 코드 표시</code>를 클릭하고 휴대폰으로 <code>QR 코드</code>를 촬영한다.</li>
+<li>Step 3. 하단에 두 개의 연속된 'MFA 코드를 입력'하고 <code>MFA 추가</code>를 클릭한다.</li>
+</ul>
+</li>
+<li><code>멀티 팩터 인증(MFA) (1)</code>에 등록된 것을 확인할 수 있다.</li>
 </ul>
 </li>
 </ul>
