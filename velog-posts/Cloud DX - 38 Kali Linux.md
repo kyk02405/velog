@@ -309,7 +309,9 @@ eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
 <li><code>SRV100</code>과 <code>SRV200</code>을 <code>wireshark</code> 실행할 때 <code>I/F</code> <code>외부망</code>으로 </li>
 <li><code>Clinet100</code>에서 <code>Client200</code>으로 <code>ping</code> 테스트 (with <code>-t</code> 옵션)</li>
 </ul>
-<h2 id="실습-3-네트워크-해킹-절차-및">실습 3. 네트워크 해킹 절차 및</h2>
+<hr />
+<h1 id="03-네트워크-해킹-절차-및-호스트-식별">03. 네트워크 해킹 절차 및 호스트 식별</h1>
+<h2 id="31-활성화비활성화-된-호스트-식별">3.1 활성화/비활성화 된 호스트 식별</h2>
 <h3 id="네트워크-환경위치에-따른-식별-유형">네트워크 환경(위치)에 따른 식별 유형</h3>
 <ul>
 <li><p>같은 네트워크 안에 있는 경우</p>
@@ -368,16 +370,60 @@ eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
 </li>
 <li><p><code>Client200</code>에서 <code>MAC Address</code>를 확인하고 `Client100'에서의 샥스핀에 올라온 것과 비교</p>
 <ul>
-<li>결과</li>
-<li>ICMP 필터링 결과<ul>
-<li><code>1    0.000000000    192.168.200.20    192.168.100.20    ICMP    74    Echo (ping) request  id=0x0001, seq=7/1792, ttl=128</code></li>
-<li><code>2    0.000320984    192.168.200.20    192.168.100.20    ICMP    74    Echo (ping) request  id=0x0001, seq=7/1792, ttl=126 (reply in 3)</code></li>
-<li><code>3    0.000357193    192.168.100.20    192.168.200.20    ICMP    74    Echo (ping) reply    id=0x0001, seq=7/1792, ttl=64 (request in 2)</code></li>
-<li><code>4    0.000683448    192.168.100.20    192.168.200.20    ICMP    74    Echo (ping) reply    id=0x0001, seq=7/1792, ttl=62</code></li>
-</ul>
+<li><p>결과</p>
+</li>
+<li><p>ICMP 필터링 결과</p>
+<ul>
+<li><p><code>1    0.000000000    192.168.200.20    192.168.100.20    ICMP    74    Echo (ping) request  id=0x0001, seq=7/1792, ttl=128</code></p>
+</li>
+<li><p><code>2    0.000320984    192.168.200.20    192.168.100.20    ICMP    74    Echo (ping) request  id=0x0001, seq=7/1792, ttl=126 (reply in 3)</code></p>
+</li>
+<li><p><code>3    0.000357193    192.168.100.20    192.168.200.20    ICMP    74    Echo (ping) reply    id=0x0001, seq=7/1792, ttl=64 (request in 2)</code></p>
+</li>
+<li><p><code>4    0.000683448    192.168.100.20    192.168.200.20    ICMP    74    Echo (ping) reply    id=0x0001, seq=7/1792, ttl=62</code></p>
+</li>
+<li><p><code>ARP</code>는 내부망만 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/c5c7c0f0-f8bb-4626-ac3e-342869d5edfa/image.png" /></p>
 </li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+<h3 id="결론">결론</h3>
+<ul>
+<li><p>각 <code>Client</code>에서 <code>ping</code>을 때린 후 <code>SRV/xxx</code>의 내부망과 하단에 있는 <code>Client</code>의 화면에만 MAC <code>Address</code>를 확인할 수가 있다.</p>
+</li>
+<li><p>외부 = <code>ICMP</code></p>
+</li>
+<li><p>내부 = <code>ARP</code></p>
+</li>
+</ul>
+<hr />
+<h2 id="32-네트워크-해킹-절차-및-정보수집을-위한-명령어-tool">3.2 네트워크 해킹 절차 및 정보수집을 위한 명령어 Tool</h2>
+<h2 id="ping">ping</h2>
+<h3 id="개요-1">개요</h3>
+<ul>
+<li>침투 테스트 범위에 있는 IP주소를 목록화하고 현재 동작중인 시스템을 확인한다.</li>
+<li><span style="color: red;">(권장)</span> 보안상 문제(신뢰성)가 있고 IP로의 공격 범위를 제공하기 때문에 <code>차단</code>하는 것이 좋다.</li>
+<li><span style="color: red;">(핵심)</span> 가장 큰 문제점으로는, 시스템의 네트워크에 과부하를 초래할 수 있다.</li>
+</ul>
+<h3 id="사용되는-패킷">사용되는 패킷</h3>
+<ul>
+<li><code>ICMP</code> <code>(TTL)</code></li>
+<li><code>echo Request Packet</code> <code>(TTL)</code><ul>
+<li><code>Linux/Unix</code> (64byte)</li>
+<li><code>Windows</code> (32byte / 128byte)</li>
+</ul>
+</li>
+<li><code>echo Response(Reply) Packet</code> <code>(TTL)</code><ul>
+<li><code>Linux/Unix</code> (64byte)</li>
+<li><code>Windows</code> (128byte)</li>
+<li>그 밖에 (256byte)</li>
+</ul>
+</li>
+<li><code>ping</code> 명령을 실행한 후 출력되는 내용은 모두 <code>Response(응답)</code> 내용을 보여주고 있다.</li>
+<li>출력되는 내용 중에 <code>TTL</code>이 <code>echo Response(응답) Packet (TTL)</code>에서 언급한 내용과 다른 값을 보여주는데</li>
+<li>이는 해당 대역에 있는 <code>Gateway</code>주소가 빠진 값을 보여주고 있는 것이다.</li>
 </ul>
