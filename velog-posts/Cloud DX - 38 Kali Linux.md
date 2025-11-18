@@ -335,19 +335,19 @@ eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
 <ul>
 <li><p>실습 1. 로컬 테스트</p>
 <ul>
-<li>테스트 1. LAN 구간에서의 통신</li>
-<li>명령</li>
-</ul>
+<li><p>테스트 1. LAN 구간에서의 통신</p>
 </li>
-<li><p>SRV100 내부망에서 Client100으로 ping 명령을 때린 후 Client100에서 샥스핀으로 확인</p>
+<li><p>명령</p>
 <ul>
+<li><p>SRV100 내부망에서 Client100으로 ping 명령을 때린 후 Client100에서 샥스핀으로 확인</p>
+</li>
 <li><p>결과</p>
 <ul>
 <li><p>ICMP 필터링 결과</p>
 <ul>
-<li><p><code>192.168.100.10    192.168.100.20    ICMP    74    Echo (ping) request  id=0x0001, seq=48/12288, ttl=128 (reply in 2)</code></p>
-</li>
-<li><p><code>192.168.100.20    192.168.100.10    ICMP    74    Echo (ping) reply    id=0x0001, seq=48/12288, ttl=64 (request in 1)</code></p>
+<li><code>192.168.100.10    192.168.100.20    ICMP    74    Echo (ping) request  id=0x0001, seq=48/12288, ttl=128 (reply in 2)</code></li>
+<li><code>192.168.100.20    192.168.100.10    ICMP    74    Echo (ping) reply    id=0x0001, seq=48/12288, ttl=64 (request in 1)</code></li>
+</ul>
 </li>
 <li><p>출발지가 <code>Windows</code>면 <code>TTL</code>이 128 <code>Linux</code>면 <code>TTL</code>이 64</p>
 </li>
@@ -355,10 +355,25 @@ eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
 </li>
 <li><p>ARP 필터링 결과</p>
 <ul>
-<li><code>Vmware_5f:25:13    Vmware_b0:8f:47    ARP    60    Who has 192.168.100.20?  Tell 192.168.100.10</code></li>
-<li><code>Vmware_b0:8f:47    Vmware_5f:25:13    ARP    42    192.168.100.20 is at 00:0c:29:b0:8f:47</code></li>
 <li><code>Vmware_b0:8f:47    Vmware_5f:25:13    ARP    42    Who has 192.168.100.10?  Tell 192.168.100.20</code></li>
 <li><code>Vmware_5f:25:13    Vmware_b0:8f:47    ARP    60    192.168.100.10 is at 00:0c:29:5f:25:13</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>테스트 2. WAN 구간에서의 통신</p>
+</li>
+<li><p>명령
+ <code>Client200</code>에서 <code>Client100</code>으로 ping 명령을 때린 후 `Client100'에서 샥스핀으로 확인</p>
+</li>
+<li><p><code>Client200</code>에서 <code>MAC Address</code>를 확인하고 `Client100'에서의 샥스핀에 올라온 것과 비교</p>
+<ul>
+<li>결과</li>
+<li>ICMP 필터링 결과<ul>
+<li><code>1    0.000000000    192.168.200.20    192.168.100.20    ICMP    74    Echo (ping) request  id=0x0001, seq=7/1792, ttl=128</code></li>
+<li><code>2    0.000320984    192.168.200.20    192.168.100.20    ICMP    74    Echo (ping) request  id=0x0001, seq=7/1792, ttl=126 (reply in 3)</code></li>
+<li><code>3    0.000357193    192.168.100.20    192.168.200.20    ICMP    74    Echo (ping) reply    id=0x0001, seq=7/1792, ttl=64 (request in 2)</code></li>
+<li><code>4    0.000683448    192.168.100.20    192.168.200.20    ICMP    74    Echo (ping) reply    id=0x0001, seq=7/1792, ttl=62</code></li>
 </ul>
 </li>
 </ul>
