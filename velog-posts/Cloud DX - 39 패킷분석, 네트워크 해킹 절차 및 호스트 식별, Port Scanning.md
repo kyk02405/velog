@@ -614,48 +614,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="실습-1-t-옵션">실습 1. <code>T</code> 옵션</h3>
-<ul>
-<li>개요 <ul>
-<li>가장 많이 알려진 <code>포트(-T(cp), 1000개)</code>를 스캐닝한다.</li>
-<li>TCP로 연결된 것들만 스캔한다. (UDP는 제외)</li>
-<li>1,000중에서 <code>존재하지 않는 포트로 연결을 요청할 때</code> 열린 포트(22)에서는 더 이상 연결이 안 되게 끊어버린다.</li>
-</ul>
-</li>
-<li>명령 실행</li>
-<li><code>wireshark</code>로 패킷 분석<ul>
-<li><h1 id="04-port-scanning-1">04. Port Scanning</h1>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="41-tcp-scan-nmap-1">4.1 TCP Scan (nmap)</h2>
-<h3 id="개요-6">개요</h3>
-<ul>
-<li><code>TCP</code>를 이용한 포트 스캔을 말한다.</li>
-<li><code>3-Way Handshaking(TCP 연결 과정)</code> 과정을 거친다.</li>
-<li>빠른 포트 스캔을 할 수 있다.</li>
-</ul>
-<h3 id="nmap-1">nmap</h3>
-<ul>
-<li>포트를 스캔하기 전에 어떤 시스템이 <code>(핵심) 동작중인지를 먼저 확인</code>한다</li>
-<li>응답하지 않는 시스템은 스캔을 하지 않는다.</li>
-<li>가장 많이 사용하는 포트 스캔 명령어이다.<h3 id="실습환경-4">실습환경</h3>
-</li>
-<li><code>Kali</code><ul>
-<li><code>192.168.10.130</code> / <code>C Class</code> / <code>192.168.10.128</code> / <code>192.168.10.128</code></li>
-</ul>
-</li>
-<li><code>CentOS</code><ul>
-<li><code>192.168.10.128</code> / <code>C Class</code> / <code>x</code> / <code>x</code></li>
-</ul>
-</li>
-<li><code>Windows 10</code><ul>
-<li><code>192.168.10.131</code> / <code>C Class</code> / <code>192.168.10.128</code> / <code>192.168.10.128</code></li>
-</ul>
-</li>
-</ul>
-<h3 id="실습-1-t-옵션-1">실습 1. &quot;T&quot; 옵션</h3>
+<h3 id="실습-1-t-옵션">실습 1. &quot;T&quot; 옵션</h3>
 <ul>
 <li>개요 <ul>
 <li>가장 많이 알려진 <code>포트(-T(cp), 1000개)</code>를 스캐닝한다.</li>
@@ -732,7 +691,7 @@
 <li><code>Kali</code> (Port Scanning)</li>
 <li><code>Windows 10</code> (www / win 모두 출력되는지 확인)</li>
 <li><code>Rocky</code> / <code>CentOS</code> (DNS Server)</li>
-<li><code>Windows Server</code> (win,gusiya.com / IIS web/ FTP Server)</li>
+<li><code>Windows Server</code> (win.gusiya.com / IIS web/ FTP Server)</li>
 </ul>
 </li>
 <li>로컬 테스트</li>
