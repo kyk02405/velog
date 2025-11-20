@@ -1193,10 +1193,44 @@ sudo: fragrouter: 명령이 없습니다
 <h2 id="63-dns-spoofing-설정">6.3 DNS Spoofing 설정</h2>
 <h3 id="kali의-터미널에서의-작업">Kali의 터미널에서의 작업</h3>
 <ul>
-<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e7df9a00-2451-4936-9c72-31250e97087e/image.png" /></li>
-<li><code>MITM Attack</code> 성공 후 출력할 문자 생성</li>
-<li><code>Kali</code>에서 <code>firefox</code> 실행 후 다음과 같이 출력<ul>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e7df9a00-2451-4936-9c72-31250e97087e/image.png" /></p>
+</li>
+<li><p><code>MITM Attack</code> 성공 후 출력할 문서 파일(index.html) 생성</p>
+</li>
+<li><p><code>Kali</code>에서 <code>firefox</code> 실행 후 다음과 같이 출력</p>
+<ul>
 <li><code>http://localhost</code> 또는 <code>http://192.168.10.130</code></li>
+<li><code>MITM Attack</code> 시 출력할 도메인 설정<ul>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0bd4daea-d003-403d-bd79-321d99a490b4/image.png" /></li>
+</ul>
+</li>
+<li>(옵션) 명령어 백그라운드 프로그램 실행<ul>
+<li><code>sudo ettercap -G &amp;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Kali ettercap</code>에서의 작업</p>
+<ul>
+<li><p>패키지 설치</p>
+<ul>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/76233548-8356-442a-b9b1-a6bb65766e22/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8f918150-d7ba-4088-950c-f166c3f54c91/image.png" /></li>
+</ul>
+</li>
+<li><h2 id="ettercap-실행"><code>ettercap 실행</code></h2>
+<ul>
+<li></li>
+</ul>
+</li>
+<li><p><code>ettercap 설정</code></p>
+<ul>
+<li>주 메뉴 우측 상단에 있는 '√(Accept)'을 클릭한다.</li>
+<li>메인 창이 실행되면 현재 동작 중인 왼쪽 상단의 '두 번째 아이콘(Start/Stop Sniffing)'을 클릭해서 '중지'한다.</li>
+<li>우측 상단에 있는 'Ettercap Menu'를 클릭한 후 'Hosts'를 클릭하고 하위에 있는 'Scan for hosts'를 클릭한다.</li>
+<li>다시 'Ettercap Menu'를 클릭한 후 'Hosts'를 클릭하고 하위에 있는 'Host lists'를 클릭하면 앞에서 검색된 'IP Address'와 'MAC Addess' 목록이 출력된다.</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
