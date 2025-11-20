@@ -1157,7 +1157,8 @@ sudo: fragrouter: 명령이 없습니다
 </ul>
 <hr />
 <h1 id="06-dns-dhcp-spoofing-mitm-attack">06. DNS, DHCP Spoofing (MITM Attack)</h1>
-<h2 id="mitm-man-in-the-middle">'MITM (Man In The Middle)'</h2>
+<h2 id="61-용어-설명">6.1 용어 설명</h2>
+<h2 id="mitm-man-in-the-middle">MITM (Man In The Middle)</h2>
 <h3 id="개요-8">개요</h3>
 <ul>
 <li>MITM 공격은 글자 그대로 누군가의 사이에 끼어드는 것을 말한다.</li>
@@ -1177,4 +1178,25 @@ sudo: fragrouter: 명령이 없습니다
 <h3 id="개요-9">개요</h3>
 <ul>
 <li>MITM 공격을 위한 툴을 말한다.</li>
+</ul>
+<h2 id="62-실습환경nat">6.2 실습환경(NAT)</h2>
+<ul>
+<li><code>Kali</code><ul>
+<li><code>192.168.10.130</code> / <code>C Class</code> / <code>192.168.10.2</code> / <code>192.168.10.2</code></li>
+</ul>
+</li>
+<li><code>Windows 10</code><ul>
+<li><code>192.168.10.131</code> / <code>C Class</code> / <code>192.168.10.2</code> / <code>192.168.10.2</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="63-dns-spoofing-설정">6.3 DNS Spoofing 설정</h2>
+<h3 id="kali의-터미널에서의-작업">Kali의 터미널에서의 작업</h3>
+<ul>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e7df9a00-2451-4936-9c72-31250e97087e/image.png" /></li>
+<li><code>MITM Attack</code> 성공 후 출력할 문자 생성</li>
+<li><code>Kali</code>에서 <code>firefox</code> 실행 후 다음과 같이 출력<ul>
+<li><code>http://localhost</code> 또는 <code>http://192.168.10.130</code></li>
+</ul>
+</li>
 </ul>
