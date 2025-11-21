@@ -4,7 +4,7 @@
 - 🔗 [Read on Velog](https://velog.io/@kyk02405/Cloud-DX-39-%ED%8C%A8%ED%82%B7%EB%B6%84%EC%84%9D-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%ED%95%B4%ED%82%B9-%EC%A0%88%EC%B0%A8-%EB%B0%8F-%ED%98%B8%EC%8A%A4%ED%8A%B8-%EC%8B%9D%EB%B3%84-Port-Scanning)
 
 <hr />
-<h1 id="02-패킷-분석-with-샥스핀">02. 패킷 분석 (with 샥스핀)</h1>
+<h1 id="span-style--colorskyblue02-패킷-분석-with-wiresharkspan"><span style="color: skyblue;">02. 패킷 분석 (with WireShark)</span></h1>
 <h2 id="wireshark를-이용한-패킷-분석">WireShark를 이용한 패킷 분석</h2>
 <h2 id="실습-1-데이터-링크2계층-패킷-분석">실습 1. 데이터 링크(2계층) 패킷 분석</h2>
 <h3 id="실습-환경">실습 환경</h3>
@@ -94,7 +94,7 @@
 <li><code>Clinet100</code>에서 <code>Client200</code>으로 <code>ping</code> 테스트 (with <code>-t</code> 옵션)</li>
 </ul>
 <hr />
-<h1 id="03-네트워크-해킹-절차-및-호스트-식별">03. 네트워크 해킹 절차 및 호스트 식별</h1>
+<h1 id="span-style--colorskyblue03-네트워크-해킹-절차-및-호스트-식별span"><span style="color: skyblue;">03. 네트워크 해킹 절차 및 호스트 식별</span></h1>
 <h2 id="31-활성화비활성화-된-호스트-식별">3.1 활성화/비활성화 된 호스트 식별</h2>
 <h3 id="네트워크-환경위치에-따른-식별-유형">네트워크 환경(위치)에 따른 식별 유형</h3>
 <ul>
@@ -587,7 +587,7 @@
 </li>
 </ul>
 <hr />
-<h1 id="04-port-scanning">04. Port Scanning</h1>
+<h1 id="span-style--colorskyblue04-port-scanning-span"><span style="color: skyblue;">04. Port Scanning </span></h1>
 <h2 id="41-tcp-scan-nmap">4.1 TCP Scan (nmap)</h2>
 <h3 id="개요-5">개요</h3>
 <ul>
@@ -698,7 +698,7 @@
 <li>원격 테스트 (2 ~ 3인 1팀으로 구성)</li>
 </ul>
 <hr />
-<h1 id="05-sniffing스니핑과-spoofing스푸핑">05. Sniffing(스니핑)과 Spoofing(스푸핑)</h1>
+<h1 id="span-style--colorskyblue05-sniffing스니핑과-spoofing스푸핑span"><span style="color: skyblue;">05. Sniffing(스니핑)과 Spoofing(스푸핑)</span></h1>
 <h2 id="51-sniffing스니핑">5.1 Sniffing(스니핑)</h2>
 <h3 id="개요-6">개요</h3>
 <ul>
@@ -1156,7 +1156,7 @@ sudo: fragrouter: 명령이 없습니다
 </li>
 </ul>
 <hr />
-<h1 id="06-dns-dhcp-spoofing-mitm-attack">06. DNS, DHCP Spoofing (MITM Attack)</h1>
+<h1 id="span-style--colorskyblue06-dns-dhcp-spoofing-mitm-attackspan"><span style="color: skyblue;">06. DNS, DHCP Spoofing (MITM Attack)</span></h1>
 <h2 id="61-용어-설명">6.1 용어 설명</h2>
 <h2 id="mitm-man-in-the-middle">MITM (Man In The Middle)</h2>
 <h3 id="개요-8">개요</h3>
@@ -1190,8 +1190,9 @@ sudo: fragrouter: 명령이 없습니다
 </ul>
 </li>
 </ul>
+<hr />
 <h2 id="63-dns-spoofing-설정">6.3 DNS Spoofing 설정</h2>
-<h3 id="kali의-터미널에서의-작업">Kali의 터미널에서의 작업</h3>
+<h3 id="step-1-kali의-터미널에서의-작업">Step 1. Kali의 터미널에서의 작업</h3>
 <ul>
 <li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e7df9a00-2451-4936-9c72-31250e97087e/image.png" /></p>
 </li>
@@ -1205,25 +1206,19 @@ sudo: fragrouter: 명령이 없습니다
 </ul>
 </li>
 <li>(옵션) 명령어 백그라운드 프로그램 실행<ul>
-<li><code>sudo ettercap -G &amp;</code></li>
-</ul>
+<li><code>sudo ettercap -G &amp;</code><h3 id="step-2kali-ettercap에서의-작업">Step 2.<code>Kali ettercap</code>에서의 작업</h3>
 </li>
 </ul>
 </li>
-<li><p><code>Kali ettercap</code>에서의 작업</p>
-<ul>
+</ul>
+</li>
 <li><p>패키지 설치</p>
 <ul>
 <li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/76233548-8356-442a-b9b1-a6bb65766e22/image.png" /></li>
 <li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8f918150-d7ba-4088-950c-f166c3f54c91/image.png" /></li>
 </ul>
 </li>
-<li><h2 id="ettercap-실행"><code>ettercap 실행</code></h2>
-<ul>
-<li></li>
-</ul>
-</li>
-<li><p><code>ettercap 설정</code></p>
+<li><p><code>ettercap 실행</code></p>
 <ul>
 <li>주 메뉴 우측 상단에 있는 '√(Accept)'을 클릭한다.</li>
 <li>메인 창이 실행되면 현재 동작 중인 왼쪽 상단의 '두 번째 아이콘(Start/Stop Sniffing)'을 클릭해서 '중지'한다.</li>
@@ -1231,6 +1226,412 @@ sudo: fragrouter: 명령이 없습니다
 <li>다시 'Ettercap Menu'를 클릭한 후 'Hosts'를 클릭하고 하위에 있는 'Host lists'를 클릭하면 앞에서 검색된 'IP Address'와 'MAC Addess' 목록이 출력된다.</li>
 </ul>
 </li>
+<li><p><code>ettercap 설정</code></p>
+<ul>
+<li><p><code>TARGET</code>에 시스템 등록</p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/1e544661-20f0-4780-ba18-a36700a76694/image.png" /></p>
+</li>
+<li><p><code>Ettercap Menu</code>를 클릭한 후 하단에 있는 'Plugins'를 클릭하고 하위에 있는 'Manage plugins'를 클릭한다.</p>
+</li>
+<li><p>'Name' 항목에 있는 'dns-spoof'를 '더블 클릭'한 후 하단의 내용을 확인한다.</p>
+<ul>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/6f6d35de-5a35-4a8e-8a78-7d58f8d85a3f/image.png" /></li>
+</ul>
+</li>
+<li><p>메인 창의 왼쪽 상단에서 있는 'Start/Stop Sniffing'을 클릭해서 'Sniffing'을 다시 실행시킨다.</p>
+<ul>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/429bd66f-f3c7-40f4-9d66-32ad930481aa/image.png" /></li>
+</ul>
+</li>
+<li><p>우측 상단에 있는 'MITM menu'를 클릭한 후 하단에 있는 'ARP poisoning'을 클릭한 후 'OK'를 클릭한다.</p>
+<ul>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/63a87811-6a3f-4f07-af41-da0555b70b4b/image.png" /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="step-3-windows-10-에서의-작업">Step 3. Windows 10 에서의 작업</h3>
+<ul>
+<li>명령 프롬프트 창에서 ARP의 내용을 확인해보면 G/W가 Kali의 MAC Address로 변경된 것을 확인할 수 있다.<ul>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ce272360-c327-480f-b534-f664b60a5958/image.png" /></li>
+</ul>
+</li>
+<li>'웹 브라우저(Whale)'를 실행한 후 '<a href="http://www.naver.com'%EC%9D%84">www.naver.com'을</a> 실행하면 'Kali'에서 작업한 '문서(index.html)'의 내용이 출력된다.</li>
+</ul>
+<hr />
+<h2 id="64-phishing-site">6.4 Phishing Site</h2>
+<h3 id="개요-10">개요</h3>
+<ul>
+<li><p><code>피싱(Phishing)</code>이란 <code>개인 정보(Private data)</code>와 <code>낚시의 피싱(Fishing)</code>의 합성어로 <code>개인 정보를 낚시</code>한다는 의미를 지니고 있다.</p>
+</li>
+<li><p>이 <code>DNS Spoofing</code>을 이용한 네이버와 동일한 창을 만든 후 로그인을 유도하는 <code>피싱 사이트</code>를 만들 수 있다.</p>
+</li>
+<li><p><code>로그인 버튼</code>을 클릭한 후 <code>아이디</code>와 <code>비밀번호</code>를 입력할 때 패킷을 분석, 정보를 빼낼 수가 있다.</p>
+</li>
+</ul>
+<h3 id="실습환경nat-1">실습환경(NAT)</h3>
+<ul>
+<li><code>Kali</code><ul>
+<li><code>192.168.10.130</code> / <code>C Class</code> / <code>192.168.10.2</code> / <code>192.168.10.2</code></li>
+</ul>
+</li>
+<li><code>Windows 10</code><ul>
+<li><code>192.168.10.131</code> / <code>C Class</code> / <code>192.168.10.2</code> / <code>192.168.10.2</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="실습-1-loginhtml-파일을-이용한-사이트-출력">실습 1. login.html 파일을 이용한 사이트 출력</h3>
+<ul>
+<li><code>kali</code>에서 <code>/var/www/html/login.html</code> 생성</li>
+<li><code>kali</code>에서 <code>wireshark</code>를 실행시킨 후 <code>windows 10</code>의 웹 브라우저에서 입력, 실행 한 후 해킹된 내용을 확인한다.<ul>
+<li>앞에서 실행해 놓은 <code>Ettercap-graphical</code>은 무조건 실행이 되어 있어야 한다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="실습-2-navercom의-소스를-퍼다가-피싱-사이트-만들기">실습 2. naver.com의 소스를 퍼다가 피싱 사이트 만들기</h3>
+<ul>
+<li><code>FTP 서비스 활성화</code><ul>
+<li>패키지 설치</li>
+<li>포트 추가</li>
+</ul>
+</li>
+<li>FTP 서비스 환경 설정
+<code>sudo vi /etc/vsftpd.conf</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/708fe60d-3715-4ac9-9b72-15ed8d1200ee/image.png" /><ul>
+<li>기본적으로 <code>Kali</code>에서는 <code>FTP 서비스</code>가 <code>비활성화</code> 되어 있다.</li>
+</ul>
+</li>
+<li><code>Host OS</code>에서 접속하기<ul>
+<li>네이버 웹 사이트에서 우클릭 후 <code>페이지 소스 보기</code>를 클릭</li>
+<li>소스를 모두 선택한 후 임의의 드라이브에 <code>index.html</code>파일로 저장<ul>
+<li><code>ftp</code>로 전송</li>
+<li><code>sudo chmod 755 /home/samadal</code></li>
+</ul>
+</li>
+<li><code>kali</code>에 업로드 후 기본 경로로 이동<ul>
+<li><code>sudo mv index.html /var/www/html/</code></li>
+</ul>
+</li>
+<li>문서 파일 권한 변경<ul>
+<li><code>sudo chmod 755 index.html</code></li>
+</ul>
+</li>
+<li>앞에서 실행했던 웹브라우저에서 <code>새로고침(F5)</code><ul>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/dfe9a27c-1522-489d-83b9-1fdf300cb256/image.png" /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h1 id="span-style--colorskyblue07-ddos-attack분산-서비스-거부-공격span"><span style="color: skyblue;">07. DDoS Attack(분산 서비스 거부 공격)</span></h1>
+<h2 id="71-dos--ddos-공격-정리">7.1 DoS &amp; DDoS 공격 정리</h2>
+<h2 id="✅-dos-denial-of-service-attack">✅ DoS (Denial-of-Service Attack)</h2>
+<ul>
+<li><p><strong>정의</strong>: 서비스 거부 공격. 시스템의 <strong>리소스를 고갈(과부하)</strong> 시켜 정상적인 사용을 방해하는 공격 방식.</p>
+</li>
+<li><p><strong>공격 방식 예시</strong></p>
+<ul>
+<li>특정 서버에 <strong>수많은 접속 시도</strong>를 유도해 다른 이용자가 정상 이용 불가하게 만듦.</li>
+<li>서버의 <strong>TCP 연결 자원</strong>을 바닥냄.</li>
+</ul>
+</li>
+<li><p><strong>공격 목적</strong></p>
+<ul>
+<li>서비스의 일시적 또는 영구적 <strong>기능 마비 및 중단</strong> 유도.</li>
+</ul>
+</li>
+<li><p><strong>주요 표적</strong></p>
+<ul>
+<li>은행, PG사(신용카드 결제 게이트웨이), 루트 네임 서버 등 <strong>중요한 인터넷 서비스</strong>.</li>
+</ul>
+</li>
+<li><p><strong>실제 사례</strong></p>
+<ul>
+<li><code>2002년 10월 22일</code>, <code>2007년 2월 6일</code>: DNS 루트 서버를 향한 대규모 <strong>DDoS 공격</strong> 발생
+→ 인터넷 URL 체계 무력화 시도, 전 인터넷 대상 공격.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="✅-ddos-distributed-denial-of-service-attack">✅ DDoS (Distributed Denial-of-Service Attack)</h2>
+<ul>
+<li><p><strong>정의</strong>: 분산 서비스 거부 공격. 여러 대의 공격자를 통해 <strong>동시에 다발적으로 DoS 공격</strong>을 수행하는 방식.</p>
+</li>
+<li><p><strong>위법성 및 정책 위반</strong></p>
+<ul>
+<li><strong>IAB</strong>의 '정당한 인터넷 사용 정책'에 위배.</li>
+<li><strong>대다수 ISP의 정책</strong>에서도 허용되지 않음.</li>
+<li><strong>각국 법률</strong>에도 저촉됨.</li>
+</ul>
+</li>
+</ul>
+<h3 id="📌-iab-internet-architecture-board">📌 IAB (Internet Architecture Board)</h3>
+<ul>
+<li><p><strong>설명</strong>: ISOC 산하의 인터넷 기술·엔지니어링 감독 위원회.</p>
+</li>
+<li><p><strong>주요 역할</strong></p>
+<ul>
+<li><strong>IRTF</strong> (Internet Research Task Force)와
+<strong>IETF</strong> (Internet Engineering Task Force) 등의 <strong>기술 위원회 감독</strong>.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="72-포트-스캔을-이용한-ddos-attack">7.2 포트 스캔을 이용한 DDoS Attack</h2>
+<h3 id="개요-11">개요</h3>
+<p><code>DNS Server</code>에 <code>DDoS Attack</code>을 감행하고 네트워크(망)을 마비시키는 작업이다.</p>
+<h3 id="실습환경-host-only">실습환경 (Host-only)</h3>
+<ul>
+<li><code>Kali</code>(Attacker)<ul>
+<li><code>192.168.10.130</code> / <code>C Class</code> / <code>192.168.10.128</code> / <code>192.168.10.128</code></li>
+</ul>
+</li>
+<li><code>CentOS</code>(Victim)<ul>
+<li><code>192.168.10.128</code> / <code>C Class</code> / <code>192.168.10.128</code> / <code>192.168.10.130, 192.168.10.131</code></li>
+</ul>
+</li>
+<li><code>Windows 10</code>(Zombie PC)<ul>
+<li><code>192.168.10.131</code> / <code>C Class</code> / <code>192.168.10.128</code> / <code>192.168.10.128</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="hping3">hping3</h3>
+<ul>
+<li><p>개요</p>
+<ul>
+<li><p><code>ping</code> 명령과 달리 <code>ICMP</code> 패킷을 포함한 <code>TCP/UDP/ICMP</code> 등의 패킷 전송을 할 수 있다.</p>
+</li>
+<li><p>주로 Port Scanning을 하거나 <code>MTU</code>(Maximum Transmission Unit)를 확인할 수 있다.</p>
+</li>
+</ul>
+</li>
+<li><p>사용법</p>
+<pre><code class="language-bash">hping3 [옵션] &lt;Target IP Address&gt;</code></pre>
+</li>
+<li><p>실습 1. <code>Kali</code> -&gt; <code>CentOS DNS</code></p>
+<ul>
+<li><p>개요</p>
+<ul>
+<li><code>TCP Sync</code> (TCP(요청과 응답이 공존. UDP(요청)) 프로토콜과 연동되고 있는) 패킷을 보내면 <code>flags=SA(Sync/Ack)</code>로 응답이 온다.</li>
+</ul>
+</li>
+<li><p>실행</p>
+<ul>
+<li><code>sudo hping3 -S www.gusiya.com -p 80 -c 5</code></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/a718b738-8907-4804-bc6f-2c6dde8967ea/image.png" /></li>
+</ul>
+</li>
+<li><p>결론</p>
+<ul>
+<li><code>동기 신호 전송(Sync)</code>후 <code>반송(Sync/Ack)</code> 되면 <code>TCP</code>가 완료<code>(3-Way HandShake)</code>되고 다시 전송을 하기 위해 연결 준비 상태(RST, Connection Reset)로 전환된다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>실습 2. <code>Kali</code> -&gt; <code>Windows 10</code></p>
+<ul>
+<li><p><code>테스트 1.</code> 기본 상태(포트를 별도로 지정하지 않은 상태)</p>
+<ul>
+<li><code>sudo hping3 -S 192.168.10.131 -c 5</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0fbcf04e-3b3d-4918-9e2c-379098faf66a/image.png" /></li>
+<li>동기 신호 전송(Sync)만 전송 되고 반송 및 리셋 패킷은 나오지 않는다.</li>
+</ul>
+</li>
+<li><p><code>테스트 2.</code> 임의 포트(포트를 2개 ~ 3개 추가)</p>
+<ul>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/c1c54a19-bc6d-433d-a3c8-8a14ac6dea05/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/675a6ea0-4a05-49da-b9f6-66f00cdfe87d/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/79315489-edd2-4cca-bc91-06eba6646c91/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/19647f1d-9797-4443-b882-f26970df6df7/image.png" /></li>
+<li><code>sudo hping3 -S 192.168.10.131 -p 21 -c 5</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/c74d2bea-2177-4bc8-92f2-4aa55bf043b4/image.png" /></li>
+<li>포트만 추가되었고 실제 서비스가 동작중이지 않기 때문에 <code>테스트 1</code>과 별다른 차이점이 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>실습 3. (DDoS Attack) <code>공격 대상 시스템 (CentOS)</code>에 <code>무작위(Random)</code>의 IP 주소를 계속 보낸다.</p>
+<ul>
+<li>개요 <ul>
+<li><code>DNS Server</code>에 <code>DDos Attack</code>을 감행하고 네트워크(망)을 마비시키는 작업이다.</li>
+</ul>
+</li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/efc9842b-5181-4f37-8e23-0a6a9c139d3d/image.png" /></li>
+<li><code>sudo hping3 --rand-source 192.168.10.128 -p 1-1024 -S --flood</code> <ul>
+<li><code>--rand-source</code> <code>(무작위)</code></li>
+<li><code>192.168.10.129</code> <code>(공격 대상 IP)</code></li>
+<li><code>-p 1-1024</code> <code>(스캐닝할 포트)</code></li>
+<li><code>-S</code> <code>(TCP flag SYN)</code></li>
+<li><code>--flood</code> <code>(플로딩, Flooding)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h1 id="span-style--colorskyblue08-vpnspan"><span style="color: skyblue;">08. VPN</span></h1>
+<h2 id="81-일반">8.1 일반</h2>
+<h3 id="개요-12">개요</h3>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0286a6c1-4304-40ae-9766-122b60d19566/image.png" /></p>
+<ul>
+<li>가상 사설망을 말한다.</li>
+<li>회사의 본사와 지사들의 네트워크를 독점적으로 구성하는 <code>기업 전용선</code>의 <code>장점</code>을 그대로 이용하고 <code>단점</code>인 비용이 비싸다는 문제를 해결해주는 서비스를 말한다.</li>
+<li>큰 범위에서의 <code>인트라넷(Intranet)</code>과 같은 망 구성을 가지고 있다.</li>
+</ul>
+<h2 id="82-실습-1">8.2 실습 1.</h2>
+<h3 id="시스템-구성">시스템 구성</h3>
+<ul>
+<li><p><code>VPN Server 1대(SRV100)</code>의 <code>VPN Client 1대(Client100)</code></p>
+<blockquote>
+<ul>
+<li><code>VPN Server(SRV100)</code></li>
+</ul>
+</blockquote>
+<ul>
+<li>기본 설정<ul>
+<li><code>라우팅 및 원격 액세스</code> -&gt; <code>SRV100</code> 우클릭 후 사용 안 함 -&gt; 구성 및 사용 </li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ada0dfca-6fb5-406a-96e0-919b64e9988b/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/256030fb-4073-452b-a857-ec075d5fd3be/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/04f52269-122b-486a-9d8b-cb0a65a6f4f9/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4aa61747-5931-4358-8a6d-eb8172591a60/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ccc28758-5c26-4a3f-9d9e-edb7f3360daf/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8eaca739-5198-460e-964e-9ff33dfc961b/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/73191a5b-ae05-4ced-ba37-ce01fbd9aecc/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/94076cc9-a509-4cc5-8dc1-ad3af848f8b3/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ed8f3249-4505-4bf5-b20d-2c07f5b672a7/image.png" /></li>
+</ul>
+</li>
+<li><code>VPN Service</code>를 사용할 사용자 생성 <code>(SRV100)</code><ul>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/28a757ff-329c-45e7-94e7-e28ce243a0c5/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/c7b4531b-0a5e-46c0-9b5f-a36e437d648d/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/96cfd964-8dbc-4724-bffa-6ad511a3cfee/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/228c9cdb-cffb-4e53-8f2b-7ff69833066a/image.png" /></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>VPN Client(Client 100)</code></p>
+<ul>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4de8cd44-12c7-46d8-a2f3-26d0158be8e9/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/104869a7-9976-4df4-99d5-116d80976caf/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b848091b-e613-4168-a6f1-f7c6d727c38d/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/acd9f216-357d-496b-9fef-9e10939f6e1e/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ab3e42d7-c070-4931-91bf-91ecd7500ec4/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/348f0553-5a52-4d5d-9ce3-54e3ce047af8/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/3c385906-5e99-4701-9e6c-afdae4dd579d/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/22482be6-734b-4803-b39e-2495cee47833/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0dde78a7-b0f3-42e1-b22b-9c5163185172/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f8546b23-9b61-4656-9e24-6f57183fd07c/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4d9c411d-70a2-42e2-bdeb-af16e3bd3b8e/image.png" /></li>
+<li><code>server</code>에서 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4523be65-a3e2-465f-8547-1c549867ddf5/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0d86c879-e2e9-4343-bf48-375b094b7c6b/image.png" /></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h1 id="span-style--colorskyblue09ipsec-internet-protocol-securityspan"><span style="color: skyblue;">09.IPSec (Internet Protocol Security)</span></h1>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9cc9f501-562c-4923-b7a3-50107b48e72c/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/c57a6bb0-1288-4c9f-9a78-57e6d49e8804/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/de5e49a0-c805-43a5-8939-a5385e35eac7/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/368025dc-2788-42db-abe4-b1c728b74830/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f6e42fbd-1972-41a0-b2c2-62108e62f980/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4ae05461-f279-4dae-b9db-1747adc7f246/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f681a2f3-8160-4b50-96d6-12e871de7e80/image.png" /></p>
+<h2 id="91-일반">9.1 일반</h2>
+<h3 id="개요-13">개요</h3>
+<h2 id="92-실습">9.2 실습</h2>
+<h3 id="psk">PSK</h3>
+<ul>
+<li><p>시스템 구성</p>
+<ul>
+<li><code>SRV 100</code> , <code>Client100</code></li>
+</ul>
+</li>
+<li><p>환경 구성</p>
+<ul>
+<li><code>HtoH</code>, <code>wf(x)</code> + <code>PSK</code></li>
+</ul>
+</li>
+<li><p>설정 및 테스트</p>
+<ul>
+<li><p>Step 1.<code>SRV100</code> 또는 <code>Clinet100</code>에서 <code>wireshark</code>를 실행한 상태에서 <code>ping</code> 테스트를 실행한다.</p>
+</li>
+<li><p>Step 2. <code>wireshark</code>에 올라온 <code>Protocol</code>을 확인<code>(ICMP)</code> <code>SRV100</code>과 <code>Client100</code> 모두 동일한 결과가 나타난다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b2027c42-371e-4aea-8e4b-155507914c18/image.png" /></p>
+</li>
+<li><p>Step 3. <code>SRV100</code>에서 <code>로컬 보안 정책(secpol.msc)</code>을 </p>
+</li>
+<li><p>Step 4. <code>보안 설정</code> 하단에 있는 <code>IP 보안 정책</code>의 우측에서 우클릭 후<code>IP 보안 정책 만들기</code>를 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/1a699d21-ad66-4769-8360-5d78513e77f2/image.png" /></p>
+</li>
+<li><p>Step 5. 기본값으로 둔 상태에서 계속 진행한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9a27876c-f7ca-419e-80c9-f2f863397209/image.png" /></p>
+</li>
+<li><p>Step 6. <code>새 IP 보안 정책 속성</code>창이 출력되면 하단에 있는 <code>추가</code>를 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9aea2cd0-5b76-4577-9fdb-b493fdf632c8/image.png" /></p>
+</li>
+<li><p>Step 7. <code>IP 필터 목록</code> 탭 하단에 있는 <code>추가</code>를 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/a99bfa97-ce09-4e1e-8915-82aedbb1b72a/image.png" /></p>
+</li>
+<li><p>Step 8. 상단에 있는 <code>추가</code>를 클릭한다. 이 때 하단에 있는 <code>추가 마법사 사용</code>은 반드시 <code>체크 해제</code>해야 한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/1aa5514c-55f4-4777-8317-436c03c2ddb1/image.png" /></p>
+</li>
+<li><p>Step 9. <code>주소</code> 탭에서 다음과 같이 선택, 입력한다.
+<code>원본 주소</code> → <code>내 IP 주소</code>를 선택한다. <code>대상 주소</code> → <code>특정 IP 주소 또는 서브네트</code>를 선택한다. <code>(192.168.100.20)</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/17cd5b1b-e453-430d-bd22-b426e1d83081/image.png" /></p>
+</li>
+<li><p>Step 10. <code>확인</code>을 몇 번 누르면 <code>IP 필터 목록</code> 탭 하단에 추가된 필터가 보인다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/38a690f5-eef6-40ab-9c8f-ac6fca75a26b/image.png" /></p>
+</li>
+<li><p>Step 11. 이 목록을 체크한 후 <code>필터 동작</code> 탭을 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f2ba813c-a020-435c-b5f0-9959fcc72e4e/image.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>Step 12. 하단에 있는 추가를 클릭한다. 이 때 하단에 있는 <code>추가 마법사 사용</code>은 반드시 <code>체크 해제</code>해야 한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/1757f639-a078-40bc-b0f5-a3603f097a57/image.png" /></p>
+</li>
+<li><p>Step 13. <code>보관 방법</code>에서 <code>추가</code>를 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/61e92194-a062-4d08-bd40-2b208e1d7b8e/image.png" /></p>
+</li>
+<li><p>Step 14. 하단에 있는 <code>사용자 지정</code>에서 <code>설정</code>을 클릭한다.<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7aab2fa2-34a0-4fb2-81ae-dcc3903ea5f8/image.png" /></p>
+</li>
+<li><p>Step 15.  암호화되지 않은 데이터 및 주소 무결성'만 체크한 후 <code>확인</code>을 클릭한다.<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/06ffe5dd-56fd-4150-a952-2b0e3de386b9/image.png" /></p>
+</li>
+<li><p>Step 16. <code>확인</code>을 <code>두 번</code> 클릭한 후 <code>필터 동작</code> 탭을 보면 추가된 목록이 보인다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/703ac4eb-4a65-4d46-a14d-ebb3d626a2f2/image.png" /></p>
+</li>
+</ul>
+<ul>
+<li><p>Step 17. 이 목록을 체크한 후 <code>인증 방법</code> 탭을 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/60ad39c1-af06-47c9-bbb0-f69734b9f278/image.png" /></p>
+</li>
+<li><p>Step 18. 여기서는 새로 <code>추가</code>하지 말고 목록에 있는 <code>Kerberos</code>를 클릭한 후 <code>편집</code>을 이용해서 변경하도록 한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8655b2a4-97b6-4c46-8ff3-a9bd711ea4aa/image.png" /></p>
+</li>
+<li><p>Step 19. 하단에 있는 <code>이 문자열 사용(미리 공유한 키)</code>를 체크한 후 하단에 있는 빈 칸에 <code>P@ssw0rd</code>를 입력한 후 <code>확인</code>을 클릭한다.<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0ff5974f-941f-46ae-9266-1607bf01b18c/image.png" /></p>
+</li>
+<li><p>Step 20.<code>적용</code>을 클릭한 후 <code>확인</code>을 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/017d599c-0948-47ec-b949-a6d2af3b64ba/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/cbcebb03-f711-4726-a339-a94a7308083a/image.png" /></p>
+</li>
+</ul>
+<ul>
+<li><p>Step 21. <code>새 IP 보안 정책 속성</code>창의 <code>규칙</code> 탭 하단에 추가된 <code>보안 규칙</code>이 보인다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/09842dc0-6b7f-4bc4-8395-02fcebb9fca9/image.png" /></p>
+</li>
+<li><p>Step 22. <code>확인</code>을 클릭하면 <code>IP 보안 정책</code>의 우측에서 추가된 목록이 보인다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2ea9885d-49e2-4162-adcc-ea16a084a8d1/image.png" /></p>
+</li>
+</ul>
+<ul>
+<li><p><code>Client100</code>에서의 작업</p>
+<ul>
+<li><code>SRV100</code>과 동일한 방법으로 설정한다.</li>
+<li><code>100.10</code> 으로 바꾸는 것 제외하고 동일 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7a3150c2-6558-4981-824e-35bb5c562a4a/image.png" /></li>
+</ul>
+</li>
+<li><p><code>테스트 2.</code></p>
+<ul>
+<li><code>SRV100</code> 또는 <code>Clinet100</code>에서 <code>wireshark</code>를 실행한 상태에서 <code>ping</code> 테스트를 실행한다.</li>
+<li><code>wireshark</code>에 올라온 <code>Protocol</code>을 확인해보면 <code>테스트 1.</code>과 마찬가지로 <code>ICMP</code>로 나타난다. 즉, 보안 설정이 적용이 되지 않았다는 것을 알 수 있다. <ul>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/616882fd-1bdf-43a3-b88d-b2d7a54b3fba/image.png" /></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>SRV100</code>과 <code>Client100</code>에서의 <code>보안 적용</code>을 위한 추가 작업</p>
+</li>
+<li><p><code>테스트 3.</code></p>
+<ul>
+<li><code>새 IP 보안 정책</code> 우클릭 후 <code>할당</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7082d5d9-5cea-4c12-8da8-fa1bf3edc47b/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4ff1abbb-0968-44a0-9b69-60161ba95f49/image.png" /></li>
+<li><code>기밀성</code>이 적용 됨 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9aa1040f-efe7-428a-af46-b538d942ff93/image.png" /></li>
 </ul>
 </li>
 </ul>
