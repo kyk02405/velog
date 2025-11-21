@@ -1577,10 +1577,6 @@ sudo: fragrouter: 명령이 없습니다
 </li>
 <li><p>Step 11. 이 목록을 체크한 후 <code>필터 동작</code> 탭을 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f2ba813c-a020-435c-b5f0-9959fcc72e4e/image.png" /></p>
 </li>
-</ul>
-</li>
-</ul>
-<ul>
 <li><p>Step 12. 하단에 있는 추가를 클릭한다. 이 때 하단에 있는 <code>추가 마법사 사용</code>은 반드시 <code>체크 해제</code>해야 한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/1757f639-a078-40bc-b0f5-a3603f097a57/image.png" /></p>
 </li>
 <li><p>Step 13. <code>보관 방법</code>에서 <code>추가</code>를 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/61e92194-a062-4d08-bd40-2b208e1d7b8e/image.png" /></p>
@@ -1591,8 +1587,6 @@ sudo: fragrouter: 명령이 없습니다
 </li>
 <li><p>Step 16. <code>확인</code>을 <code>두 번</code> 클릭한 후 <code>필터 동작</code> 탭을 보면 추가된 목록이 보인다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/703ac4eb-4a65-4d46-a14d-ebb3d626a2f2/image.png" /></p>
 </li>
-</ul>
-<ul>
 <li><p>Step 17. 이 목록을 체크한 후 <code>인증 방법</code> 탭을 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/60ad39c1-af06-47c9-bbb0-f69734b9f278/image.png" /></p>
 </li>
 <li><p>Step 18. 여기서는 새로 <code>추가</code>하지 말고 목록에 있는 <code>Kerberos</code>를 클릭한 후 <code>편집</code>을 이용해서 변경하도록 한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8655b2a4-97b6-4c46-8ff3-a9bd711ea4aa/image.png" /></p>
@@ -1600,16 +1594,16 @@ sudo: fragrouter: 명령이 없습니다
 <li><p>Step 19. 하단에 있는 <code>이 문자열 사용(미리 공유한 키)</code>를 체크한 후 하단에 있는 빈 칸에 <code>P@ssw0rd</code>를 입력한 후 <code>확인</code>을 클릭한다.<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0ff5974f-941f-46ae-9266-1607bf01b18c/image.png" /></p>
 </li>
 <li><p>Step 20.<code>적용</code>을 클릭한 후 <code>확인</code>을 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/017d599c-0948-47ec-b949-a6d2af3b64ba/image.png" /></p>
-<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/cbcebb03-f711-4726-a339-a94a7308083a/image.png" /></p>
 </li>
 </ul>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/cbcebb03-f711-4726-a339-a94a7308083a/image.png" /></p>
 <ul>
 <li><p>Step 21. <code>새 IP 보안 정책 속성</code>창의 <code>규칙</code> 탭 하단에 추가된 <code>보안 규칙</code>이 보인다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/09842dc0-6b7f-4bc4-8395-02fcebb9fca9/image.png" /></p>
 </li>
 <li><p>Step 22. <code>확인</code>을 클릭하면 <code>IP 보안 정책</code>의 우측에서 추가된 목록이 보인다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2ea9885d-49e2-4162-adcc-ea16a084a8d1/image.png" /></p>
 </li>
 </ul>
-<ul>
+</li>
 <li><p><code>Client100</code>에서의 작업</p>
 <ul>
 <li><code>SRV100</code>과 동일한 방법으로 설정한다.</li>
@@ -1641,3 +1635,41 @@ sudo: fragrouter: 명령이 없습니다
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d770f104-4657-4ad8-9408-8abfed8a52e6/image.png" /></p>
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/6e12ac5a-fe20-43c4-bea8-6c9c24c4d7a8/image.png" /></p>
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/bb33b0c3-5d37-4eb9-8796-9086fcb7cc4c/image.png" /></p>
+<p><code>Client100</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/a564aa6e-5eef-4582-bcea-b93d6c784acf/image.png" /></p>
+<p><code>SRV100</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e64ce1d7-cce3-453e-80a5-8d707b1cb2e1/image.png" /></p>
+<p><code>SRV200</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2b17cbe1-037b-4d7d-aec4-37c21b3a478d/image.png" /></p>
+<p><code>Client200</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/45c7ed03-03c2-425a-934e-93e6ee3659b5/image.png" /></p>
+<blockquote>
+<h3 id="결론-1">결론</h3>
+<p><code>Client100</code> 네트워크(192.168.100.x)와 <code>Client200</code> 네트워크(192.168.200.x)가 서로 <code>ping</code>이 되고,
+중간에 있는 <code>SRV100</code> ↔ <code>SRV200</code> 구간은 ESP로 암호화되어 안전하게 통신되고 있음.
+이게 전형적인 사이트 간 <code>VPN</code> (Site-to-Site IPsec VPN) 실습 결과. 실무에서도 RRAS나 강력한 장비(Fortigate, Cisco, Palo Alto 등)로 똑같이 구성합니다.</p>
+</blockquote>
+<hr />
+<h3 id="kerberos-생략">Kerberos (생략)</h3>
+<hr />
+<h3 id="ca-인증서">CA 인증서</h3>
+<ul>
+<li><p>시스템 구성</p>
+<ul>
+<li><code>SRV 100</code> , <code>Client100</code>, <code>SRV200</code>, <code>Client200</code></li>
+</ul>
+</li>
+<li><p>환경 구성</p>
+<ul>
+<li><code>StoS</code>, <code>wf(o)</code> + <code>CA</code></li>
+</ul>
+</li>
+<li><p>설정 및 테스트</p>
+<ul>
+<li><p>인증기관 설치</p>
+<ul>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/daf9f8de-a49f-4fc6-accb-e469af4329d2/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/3e6fc674-5412-4b17-ac4c-2d31e32dbfe6/image.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
