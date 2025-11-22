@@ -1662,11 +1662,131 @@ sudo: fragrouter: 명령이 없습니다
 </li>
 <li><p>설정 및 테스트</p>
 <ul>
-<li><p>인증기관 설치</p>
+<li><p>인증기관 설치 및 확인</p>
 <ul>
-<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/daf9f8de-a49f-4fc6-accb-e469af4329d2/image.png" /></p>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/daf9f8de-a49f-4fc6-accb-e469af4329d2/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/3e6fc674-5412-4b17-ac4c-2d31e32dbfe6/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/91c98001-76ee-4337-bf85-f41b278de905/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f3a9917f-194d-4632-a0a4-bc40e5ece73d/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/90459d82-ed0a-49f4-9320-451d7ae68d56/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/fccf14a3-17ad-44b9-9407-8c74c5496113/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/46894afe-7adc-476e-b31f-5655c9483d15/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/6bf85a32-9dfe-4129-a365-9c29b51f7558/image.png" /></li>
+</ul>
 </li>
-<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/3e6fc674-5412-4b17-ac4c-2d31e32dbfe6/image.png" /></p>
+<li><p>인증서 설정 1. 확인</p>
+<ul>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ee92fa4e-9b45-40dd-9088-bafefc88cd51/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/1f4836c2-0b63-4527-967a-3adb513dcd29/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b4ef3d5d-bade-4581-98d5-ae639eb8b09e/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d0d74dbe-e560-4f05-a991-11615e5a6da2/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/83aaf665-74f6-421c-a2bd-131c70fc63e5/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5795dc46-0524-4923-9cbb-823cbec022cd/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/41437359-392a-4109-9529-fceedebe8bc2/image.png" /></li>
+</ul>
+</li>
+<li><p>인증서 신청</p>
+<ul>
+<li><code>internet explorer</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/c5099f1b-596b-4249-90a6-f3df50e51d3d/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5f482b45-fc70-4140-9e78-35e7b37050e9/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/c5123080-73db-4885-9856-43c88470279c/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4f8d7206-7192-4c1e-8a4d-2fa00b1ffaee/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/029ac8e8-c7b0-4865-92c5-bb510e8c6755/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2f0e905f-c0bd-463b-9059-b188113d9cd7/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/17b62ebd-a576-4cc0-a7ab-3ea0fa771b04/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7db502f5-f65a-40fc-9743-010091b2cd47/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8ecdf6bd-ac50-4c7a-abd2-5a4f83a1f3ce/image.png" /></li>
+<li>위 설정이 안되어있으면 <code>제출</code>이 <code>활성화</code>가 안됨 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f5c125b9-a67a-4096-89fd-a5a2d2066d43/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/fd439cff-010f-467e-b5fe-f9a33c2e48cc/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8b7f1cc5-6c57-4c88-96a8-f38bf042b676/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/53cef412-da19-41ce-abc7-0dfc0ab7761d/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e825af16-f6f7-4311-bb53-cd4aae01aa4d/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/213f5a42-8007-4cc0-acba-130b577c8c8a/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5f40bf20-b6d4-4484-ab5f-14e23279f4e5/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4243d283-c4d2-4b2f-9dbd-eb29477bc3b5/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/da9cb248-469d-4a93-a5b0-f5fe7fb26f2b/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f1915eca-af69-4430-8d4d-0abc17136c57/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ebb2fc0d-c8d4-4a54-adb7-b05c6d92d2ec/image.png" /></li>
+<li>개인용에서 <code>F5</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5414fd76-fbc9-4626-a9fb-1a1b15b6f829/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/90e0ff92-398b-4ece-83c2-2a9cccf9e000/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/35699c9c-e97e-4e66-b96b-a4205d8916b6/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/a873772c-547e-419d-a9c4-d58684488241/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0321d895-d6aa-4327-a932-8127aa8d71a7/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ff380927-0f33-492c-8af6-256b45640879/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2c46d159-6150-458a-a845-611aa592c5c5/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b8e2e863-513b-4599-8ff4-79afe9be3cee/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/84ec3cf9-b63e-4d29-9fdd-fdd16dacd293/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5a5eca92-ec10-4c5e-ae6a-362e649f1b99/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2d834732-7c7e-4aa8-9648-ba61004eca4a/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/51109773-eef6-4152-9450-c524c2da945f/image.png" /></li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/1d826dc9-f7d3-4f71-9521-9d2801269950/image.png" /></li>
+</ul>
+</li>
+<li><p><code>Client100</code>에서 작업</p>
+<ul>
+<li><p><code>mmc</code>에서 사용자 , 로컬 컴퓨터 추가 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d205d828-b399-4a69-923e-51718a7f1f64/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f6bb2889-be61-4ba2-a56b-dc05c83aa71a/image.png" /></p>
+</li>
+<li><p>인터넷 옵션에서 허용 설정</p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/84937f32-e2b8-432a-993f-b47860e29d34/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/94a8a14a-1624-4277-b0ec-987c4212ce34/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/131bdda8-dad5-4d89-85c8-51f92dd0b62e/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/04087a46-2abd-4839-8060-87fcfadf62e1/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/62e7b40d-b146-4b88-8047-0c31ffbc2e94/image.png" /></p>
+</li>
+<li><p><code>F5</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7a16a033-779a-4abf-bc07-72039067dca3/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2d69de53-9903-47b8-a5d4-38c5cbb06497/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/3d6976db-8ff6-49d6-9624-a88c737e37ce/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/c0f72fbb-7109-4517-89dc-1d5d85e50078/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8ecdf6bd-ac50-4c7a-abd2-5a4f83a1f3ce/image.png" /></p>
+</li>
+<li><p><code>SRV100</code>에서 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/80230f23-3323-4eed-85ff-d977a06fb858/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2919fd3c-69f9-4eae-81e7-3344878b7d23/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7254cb4a-be6b-45b8-aec9-db421597a75a/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4e923a56-3de5-48d3-abda-e6a29d46e86b/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/45ff6e6f-ae44-4526-b72d-804ffdf7bced/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/dd5da0e3-012b-4d33-bfe3-fff0480f61d9/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/bb95ccfd-18ea-4887-878e-2f035d1b3844/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/11dc138d-003b-47a1-9b82-a4fe03f5e689/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/1887e7ba-d485-4c73-84f7-f271645093e5/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/1674df1c-fada-42b4-84df-ce97db1baf3d/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e97f3328-12fd-43c4-a1fe-c135bf432b65/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4f99dbc2-a5a2-46be-94b7-0e47efa33da8/image.png" /></p>
+</li>
+<li><p><code>H to H</code>만 된상태<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ab701a7e-756b-4f85-bfa0-c232798e6270/image.png" /></p>
+</li>
+<li><p><code>secpol.msc</code>에서 작업<code>(srv100)도 작업</code></p>
+<ul>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/a7911161-9ead-4747-a47d-db3cfc2b44d0/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5bf3e3f4-e53e-4dbe-9b74-077acaff1ad9/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/94129b42-ea8a-4862-b0aa-240ff4fe6d4d/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4006be5a-5103-4931-870f-ff140900deda/image.png" /></p>
+</li>
+</ul>
 </li>
 </ul>
 </li>
