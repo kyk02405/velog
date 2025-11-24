@@ -2094,8 +2094,21 @@ sudo: fragrouter: 명령이 없습니다
 </ul>
 <h3 id="실습-1">실습</h3>
 <ul>
-<li><code>테스트 1. without DB</code><ul>
-<li><code>Windows 10</code>에서의 <code>Proxy</code> 설정</li>
+<li><p><code>테스트 1. without DB</code></p>
+<ul>
+<li><code>Windows 10</code>에서의 <code>Proxy</code> 설정<ul>
+<li>수정 전 <code>(http=127.0.0.1:50000;https=127.0.0.1:50000 / x )</code></li>
+<li>수정 후 <code>(127.0.0.1 / 8080 )</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/1ebe4739-4ded-43c1-88f4-11133f8b9a1e/image.png" /></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>테스트 2.</code></p>
+<ul>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/042c6881-479a-4373-987b-91cae2fe1b23/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/70a2d7b8-33c3-45d3-91e9-ef72ce4ae2b5/image.png" /></p>
+</li>
 </ul>
 </li>
 </ul>
