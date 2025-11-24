@@ -2057,17 +2057,19 @@ sudo: fragrouter: 명령이 없습니다
 </ul>
 <h3 id="java-관련">Java 관련</h3>
 <ul>
-<li><code>Java</code> 설치<ul>
+<li><p><code>Java</code> 설치</p>
+<ul>
 <li><code>JDK</code> 다운로드 및 설치<ul>
 <li>다운로드</li>
 <li>설치</li>
 <li>확인</li>
 </ul>
 </li>
-<li>시스템 환경 변수 설정 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d3ac6ada-8551-4c09-a176-aa818148b152/image.png" /></li>
+<li>시스템 환경 변수 설정 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/490c03a6-8ee3-40aa-9ece-d74dd03a7df7/image.png" /></li>
 </ul>
 </li>
-<li><code>Apache ANT</code> 설치<ul>
+<li><p><code>Apache ANT</code> 설치</p>
+<ul>
 <li>개요<ul>
 <li>'Apache ANT'는 '자바 프로그래밍 언어'에서 사용하는 '자동화 된 소프트웨어 빌드(소스파일을 사용할 수 있도록 해주는 과정) 도구'를 말한다.</li>
 <li>자바 프로젝트들을 '빌드(코드 분석, 동작할 수 있는 파일로 만들어 주는 과정)'하는데 표준으로 사용된다.</li>
@@ -2076,9 +2078,24 @@ sudo: fragrouter: 명령이 없습니다
 <li>기본적인 빌드 파일명은, 'build.xml'이다.</li>
 </ul>
 </li>
-<li>프로그램 다운로드 및 설치</li>
-<li>시스템 환경 변수 설정<h3 id="paros-설치">Paros 설치</h3>
+<li>프로그램 다운로드 및 설치<ul>
+<li><code>apache-ant-1.10.15-bin.zip</code></li>
+</ul>
 </li>
+<li>시스템 환경 변수 설정 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/cef9d4d6-081d-47c0-8c1c-0384fae187ca/image.png" /></li>
+</ul>
+</li>
+</ul>
+<h3 id="paros-설치">Paros 설치</h3>
+<ul>
+<li>다운로드 <code>Paros 3.2.13</code></li>
+<li>설치</li>
+<li>실행 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0cc14216-baab-4cef-b303-13b35ca031e4/image.png" /></li>
+</ul>
+<h3 id="실습-1">실습</h3>
+<ul>
+<li><code>테스트 1. without DB</code><ul>
+<li><code>Windows 10</code>에서의 <code>Proxy</code> 설정</li>
 </ul>
 </li>
 </ul>
