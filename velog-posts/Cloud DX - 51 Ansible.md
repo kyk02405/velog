@@ -723,10 +723,71 @@ tcp6       0      0 :::80                   :::*                    LISTEN      
 ...
 }</code></pre><p>}</p>
 <pre><code>- `사이트 출력`
-  - 출력 1. `Controller Server`의 `firefox`에서 `Node Servere들`의 `IP주소`를 차례로 입력, 출력한다.
+  - (오류)출력 1. `Controller Server`의 `firefox`에서 `Node Servere들`의 `IP주소`를 차례로 입력, 출력한다.
+  - 출력 2. CLI Mode로 출력(확인)
+```bash
+[root@controller ~]# systemctl restart httpd
+[root@controller ~]#
+[root@controller ~]# curl http://192.168.10.129
+curl: (7) Failed connect to 192.168.10.129:80; 호스트로 갈 루트가 없음
+[root@controller ~]#
+[root@controller ~]# curl http://192.168.10.130
+curl: (7) Failed connect to 192.168.10.130:80; 호스트로 갈 루트가 없음
 
+[root@controller ~]# ansible all -m shell -a &quot;firewall-cmd --add-service=http --permanent&quot;
+192.168.10.130 | CHANGED | rc=0 &gt;&gt;
+success
+192.168.10.129 | CHANGED | rc=0 &gt;&gt;
+success
 
+[root@controller ~]# ansible all -m shell -a &quot;firewall-cmd --add-port=80/tcp --permanent&quot;
+192.168.10.129 | CHANGED | rc=0 &gt;&gt;
+success
+192.168.10.130 | CHANGED | rc=0 &gt;&gt;
+success
 
+[root@controller ~]# ansible all -m shell -a &quot;firewall-cmd --reload&quot;
+192.168.10.130 | CHANGED | rc=0 &gt;&gt;
+success
+192.168.10.129 | CHANGED | rc=0 &gt;&gt;
+success
+
+[root@controller ~]# curl http://192.168.10.129
+Hello have a nice day
+
+[root@controller ~]# curl http://192.168.10.130
+Hello have a nice day</code></pre><ul>
+<li><code>패키지 삭제</code>
+```bash
+[root@controller ~]# ansible all -m yum -a &quot;name=httpd state=absent&quot;</li>
+</ul>
+<p>192.168.10.129 | CHANGED =&gt; {</p>
+<pre><code>&quot;ansible_facts&quot;: {
+    &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;
+},
+&quot;changed&quot;: true,
+&quot;changes&quot;: {
+    &quot;removed&quot;: [
+        &quot;httpd&quot;
+ ...</code></pre><p>   ]
+}</p>
+<p>192.168.10.130 | CHANGED =&gt; {</p>
+<pre><code>&quot;ansible_facts&quot;: {
+    &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;
+},
+&quot;changed&quot;: true,
+&quot;changes&quot;: {
+    &quot;removed&quot;: [
+        &quot;httpd&quot;
+ ...</code></pre><p>   ]
+}</p>
+<p>[root@controller ~]# ansible all -m shell -a &quot;rpm -qa | grep httpd&quot;
+192.168.10.129 | CHANGED | rc=0 &gt;&gt;
+httpd-tools-2.4.6-99.el7.centos.1.x86_64
+192.168.10.130 | CHANGED | rc=0 &gt;&gt;
+httpd-tools-2.4.6-99.el7.centos.1.x86_64</p>
+<p>[root@controller ~]# ansible all -m yum -a &quot;name=httpd-tools state=absent&quot;</p>
+<pre><code>
 
 
 
@@ -734,3 +795,142 @@ tcp6       0      0 :::80                   :::*                    LISTEN      
 </ul>
 </li>
 </ul>
+<hr />
+<h3 id="실습-4-작업할-내용을-파일로-작성플레이북-playbook">실습 4. 작업할 내용을 파일로 작성(플레이북, Playbook)</h3>
+<ul>
+<li><p>지금까지 <code>Ansible</code>로 웹 서버를 설치하기 위해 총 <strong>5단계 작업</strong>이 필요하다는 것을 확인했다.
+(예: 기본 페이지 다운로드/업로드, 패키지 설치, httpd 데몬 실행, 방화벽 설정, 사이트 출력 확인 등)</p>
+</li>
+<li><p>이렇게 여러 단계를 순서대로 수행해야 하는 작업에 대해 Ansible은 <strong>플레이북(Playbook)</strong>이라는 기능을 제공한다.</p>
+</li>
+<li><p><strong>플레이북(Playbook)</strong>의 사전적 의미는
+<em>각본, 작전, 계획(Plan, Script)</em>
+그중에서도 Ansible과 가장 잘 맞는 의미는 <strong>“각본(Script)”</strong>이다.</p>
+</li>
+<li><p>이유는 아주 간단하다.
+👉 <strong>Playbook은 미리 정의된 작업을 지정한 순서대로 자동 실행하는 ‘절차적 실행 계획’</strong>이기 때문이다.
+즉, 사람이 직접 명령어를 하나씩 입력하지 않아도
+<strong>Ansible이 플레이북에 적힌 대로 순서대로 자동 수행</strong>하는 구조다.</p>
+</li>
+<li><p>본격적으로 웹 서버 설치 과정을 Playbook으로 변환하여 실행하면서,
+<strong>플레이북이 어떤 구조로 작성되고 어떤 방식으로 동작하는지</strong> 직접 살펴볼 것이다.</p>
+</li>
+<li><p>그 전에 Playbook을 구성하는 핵심 요소 두 가지를 먼저 알고 가야 한다:</p>
+</li>
+</ul>
+<hr />
+<h3 id="🔑--yamlyaml-형식">🔑  YAML(Yaml) 형식</h3>
+<ul>
+<li>Ansible Playbook은 <strong>YAML 포맷</strong>으로 작성된다.</li>
+<li>YAML은 사람이 읽기 쉽게 설계된 데이터 표현 방식으로, 들여쓰기와 구조가 매우 중요하다.</li>
+<li>JSON보다 직관적이고 간단하기 때문에 Playbook 작성에 적합하다.</li>
+</ul>
+<hr />
+<h3 id="🔑--멱등성idempotence">🔑  멱등성(Idempotence)</h3>
+<ul>
+<li><p>Ansible에서 가장 중요한 원리.</p>
+</li>
+<li><p>“<strong>한 번 실행하든, 여러 번 실행하든 결과가 항상 동일</strong>하다”는 의미이다.</p>
+</li>
+<li><p>예:</p>
+<ul>
+<li>httpd가 이미 설치되어 있다면, 다시 설치하지 않는다.</li>
+<li>서비스가 이미 실행 중이면 start 명령을 또 실행해도 시스템 상태는 변하지 않는다.</li>
+</ul>
+</li>
+<li><p>즉, <strong>Playbook을 여러 번 실행해도 안전하게 유지되는 것</strong>이 Ansible의 강점이다.</p>
+</li>
+</ul>
+<hr />
+<h3 id="예제를-통한-이해">예제를 통한 이해</h3>
+<h4 id="멱등성이-없는-경우">멱등성이 없는 경우</h4>
+<h4 id="멱등성이-있는-경우">멱등성이 있는 경우</h4>
+<ul>
+<li><p>개요</p>
+<ul>
+<li><code>shell</code> 모듈은 명령을 그대로 전달하기 때문에 멱등성이 고려되지 않기 때문에 <code>lineinfile</code> 모듈을 사용한다.</li>
+<li><code>Ansible</code>에서 제공하는 거의 대부분의 모듈은 멱등성이 적용되어 있지만 (중요) <code>shell</code>과 같은 명령어를 그대로 전달하는 경우에는 멱등성이 없다.</li>
+<li><code>path=&lt;경로를 포함한 파일&gt;</code>, <code>line=&lt;추가할 내용&gt;</code>을 의미한다.</li>
+</ul>
+</li>
+<li><p>명령
+```bash
+[root@controller Ansible]# ansible localhost -c local -m lineinfile -a &quot;path=customized_inven.lst line=192.168.10.132&quot;
+localhost | CHANGED =&gt; {
+  &quot;backup&quot;: &quot;&quot;,
+  &quot;changed&quot;: true,
+  &quot;msg&quot;: &quot;line added&quot;
+}
+[root@controller Ansible]# cat customized_inven.lst</p>
+</li>
+</ul>
+<p>192.168.10.129
+192.168.10.130
+192.168.10.131
+192.168.10.131
+192.168.10.132
+[root@controller Ansible]# ansible localhost -c local -m lineinfile -a &quot;path=customized_inven.lst line=192.168.10.132&quot;localhost | SUCCESS =&gt; {
+    &quot;backup&quot;: &quot;&quot;,
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;&quot;
+}
+[root@controller Ansible]# cat customized_inven.lst
+192.168.10.129
+192.168.10.130
+192.168.10.131
+192.168.10.131
+192.168.10.132 # 더 이상 추가되지 않음</p>
+<pre><code>---
+
+### 플레이북 (PlayBook)
+- 개요
+  - `플레이북 (PlayBook)`은 `Ansible PlayBook(ansible-playbook)`이라는 파일로 실행된다.
+  -  기존에 웹 서버를 설치하기 위해 수행했던 부분들을 모두 `플레이북(PlayBook)` 안에 녹여내고 `Ansible PlayBook(ansible-playbook)`으로 실행하도록 한다.
+- 코드 생성
+```bash
+[root@controller Ansible]# vi nginx_install.yml
+
+- name: Install nginx on linux
+  hosts: nginx
+  gather_facts: no
+
+  tasks:
+    - name: install epel-release
+      yum: name=epel-release state=latest
+    - name: install nginx web server
+      yum: name=nginx state=present
+    - name: upload default index.html for web server
+      get_url: url=https://www.nginx.com dest=/usr/share/nginx/html/ mode=0644
+    - name: start nginx web server
+      service: name=nginx state=started</code></pre><ul>
+<li>실행 1. 오류<pre><code class="language-bash">[root@controller Ansible]# ansible-playbook nginx_install.yml
+[WARNING]: Could not match supplied host pattern, ignoring: nginx
+</code></pre>
+</li>
+</ul>
+<p>PLAY [Install nginx on linux] <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>
+skipping: no hosts matched</p>
+<p>PLAY RECAP <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>*****</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p>
+<pre><code>- `/etc/ansible/hosts` 첫줄 `[nginx]` 추가 후 실행
+```bash
+[root@controller Ansible]# cat /etc/ansible/hosts
+[nginx] 
+192.168.10.129
+192.168.10.130
+# This is the default ansible 'hosts' file.
+#</code></pre><ul>
+<li>실행 2. 정상<pre><code class="language-bash">[root@controller Ansible]# ansible-playbook nginx_install.yml
+</code></pre>
+</li>
+</ul>
+<p>PLAY [Install nginx on linux] <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p>
+<p>TASK [install epel-release] <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>****</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>
+changed: [192.168.10.130]
+changed: [192.168.10.129]
+...</p>
+<pre><code>- 설명
+  - `---`
+    - `플레이북`의 처음은 `---`으로 시작하여 `yml`파일임을 명시한다.
+    - `Shell Scripting`에서의 맨 첫줄에 `#!/bin/bash` 등과 유사하다.
+    - 일반적으로 말하는 `컴퓨터 언어(C/C++, Java, ...)`에서의 `Header File 선언(#include &lt;stdio.h&gt;`과도 유사하다.
+</code></pre>
