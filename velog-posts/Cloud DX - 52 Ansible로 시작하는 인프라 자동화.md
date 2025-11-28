@@ -1,7 +1,7 @@
 # Cloud DX - 52 Ansible로 시작하는 인프라 자동화
 
 - 📅 Published: Fri, 28 Nov 2025 08:41:42 GMT
-- 🔗 [Read on Velog](https://velog.io/@kyk02405/Cloud-DX-52-Ansible%EB%A1%9C-%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94-%EC%9D%B8%ED%94%84%EB%9D%BC-%EC%9E%90%EB%8F%99%ED%99%94)
+- 🔗 [Read on Velog](https://velog.io/@kyk02405/Cloud-DX-52-%EC%95%A4%EC%84%9C%EB%B8%94%EB%A1%9C-%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94-%EC%9D%B8%ED%94%84%EB%9D%BC-%EC%9E%90%EB%8F%99%ED%99%94)
 
 <h1 id="03-교재-앤서블로-시작하는-인프라-자동화">03 (교재) 앤서블로 시작하는 인프라 자동화</h1>
 <h2 id="31-vm을-활용한-실습-환경-준비하기">3.1 VM을 활용한 실습 환경 준비하기</h2>
