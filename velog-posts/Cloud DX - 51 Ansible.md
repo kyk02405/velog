@@ -659,3 +659,78 @@ Permission denied (publickey,gssapi-keyex,gssapi-with-mic).</code></pre>
 </ul>
 </li>
 </ul>
+<hr />
+<ul>
+<li><p><code>Service</code> 모듈</p>
+<ul>
+<li><p>개요</p>
+<ul>
+<li><code>서비스(데몬)</code>을 관리하는 모듈이다.</li>
+</ul>
+</li>
+<li><p>작업</p>
+<ul>
+<li><code>Apache Daemon</code> 실행<pre><code class="language-bash">[root@controller ~]# ansible all -m service -a &quot;name=httpd state=started&quot;
+</code></pre>
+</li>
+</ul>
+<p>192.168.10.129 | SUCCESS =&gt; {</p>
+<pre><code>&quot;ansible_facts&quot;: {
+    &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;
+},
+&quot;changed&quot;: false,
+&quot;name&quot;: &quot;httpd&quot;,
+&quot;state&quot;: &quot;started&quot;,
+&quot;status&quot;: {
+    ...
+}</code></pre><p>}
+192.168.10.130 | UNREACHABLE! =&gt; {</p>
+<pre><code>&quot;changed&quot;: false,
+&quot;msg&quot;: &quot;Failed to connect to the host via ssh: Host key verification failed.&quot;,
+&quot;unreachable&quot;: true</code></pre><p>}</p>
+<p>[root@controller ~]# ansible all -m shell -a &quot;ps -ef | grep httpd&quot;
+192.168.10.129 | CHANGED | rc=0 &gt;&gt;
+root       2101   2096  0 09:54 pts/1    00:00:00 /bin/sh -c ps -ef | grep httpd
+root       2103   2101  0 09:54 pts/1    00:00:00 /bin/sh -c ps -ef | grep httpd
+192.168.10.130 | CHANGED | rc=0 &gt;&gt;
+root       2192   2187  0 09:54 pts/1    00:00:00 /bin/sh -c ps -ef | grep httpd
+root       2194   2192  0 09:54 pts/1    00:00:00 grep httpd</p>
+<p>[root@controller ~]# ansible all -m shell -a &quot;netstat -atunp | grep httpd&quot;
+192.168.10.129 | CHANGED | rc=0 &gt;&gt;
+tcp6       0      0 :::80                   :::*                    LISTEN      2224/httpd
+192.168.10.130 | CHANGED | rc=0 &gt;&gt;
+tcp6       0      0 :::80                   :::*                    LISTEN      2318/httpd</p>
+<p>[root@controller ~]# systemctl restart httpd</p>
+<p>[root@controller ~]# ansible all -m service -a &quot;name=httpd state=started&quot;
+192.168.10.129 | SUCCESS =&gt; {</p>
+<pre><code>&quot;ansible_facts&quot;: {
+    &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;
+},
+&quot;changed&quot;: false,
+&quot;name&quot;: &quot;httpd&quot;,
+&quot;state&quot;: &quot;started&quot;,
+&quot;status&quot;: {
+...</code></pre><p>   }
+}</p>
+<p>192.168.10.130 | SUCCESS =&gt; {</p>
+<pre><code>&quot;ansible_facts&quot;: {
+    &quot;discovered_interpreter_python&quot;: &quot;/usr/bin/python&quot;
+},
+&quot;changed&quot;: false,
+&quot;name&quot;: &quot;httpd&quot;,
+&quot;state&quot;: &quot;started&quot;,
+&quot;status&quot;: {
+...
+}</code></pre><p>}</p>
+<pre><code>- `사이트 출력`
+  - 출력 1. `Controller Server`의 `firefox`에서 `Node Servere들`의 `IP주소`를 차례로 입력, 출력한다.
+
+
+
+
+
+
+</code></pre></li>
+</ul>
+</li>
+</ul>
