@@ -283,10 +283,19 @@ dnf install ansible</code></pre>
 </ul>
 <h3 id="323-인벤토리-확인">3.2.3 인벤토리 확인</h3>
 <h3 id="ansible-관련-파일-3개">Ansible 관련 파일 3개</h3>
-<p>/</p>
-<h3 id="인벤토리-그룹-구성">인벤토리 그룹 구성</h3>
 <ul>
-<li>인벤토리 파일 생성</li>
+<li><p>Ansible의 환경설정</p>
+<p>  <code>/etc/ansible/ansible.cfg</code></p>
+</li>
+<li><p>사용자 지정 인벤토리</p>
+<p>  <code>/임의의 디렉토리/inventory/customized_inven.lst</code></p>
+</li>
+<li><p>기본 인벤토리</p>
+<p>  <code>cat /etc/ansible/hosts</code></p>
+<h3 id="인벤토리-그룹-구성">인벤토리 그룹 구성</h3>
+</li>
+<li><p>인벤토리 파일 생성</p>
+</li>
 </ul>
 <pre><code>[root@ansible-server ~]# cd my-ansible/
 [root@ansible-server my-ansible]# vi ./inventory
@@ -346,4 +355,21 @@ db</code></pre><ul>
 [root@ansible-server my-ansible]# cat ansible.cfg
 [defaults]
 inventory = ./inventory</code></pre><hr />
-<h2 id="33-첫-번째-플레이북-사용하기">3.3 첫 번째 플레이북 사용하기</h2>
+<h2 id="33-첫-번째-플레이북-작성하기">3.3 첫 번째 플레이북 작성하기</h2>
+<h3 id="331-기본-설정-파일과-사용자-지정-설정-파일의-차이점">3.3.1 기본 설정 파일과 사용자 지정 설정 파일의 차이점</h3>
+<h3 id="앤서블-플레이북-환경-설정">앤서블 플레이북 환경 설정</h3>
+<h3 id="앤서블-접근을-위한-ssh-인증-구성">앤서블 접근을 위한 SSH 인증 구성</h3>
+<ul>
+<li>개요<ul>
+<li>앤서블은 로컬 사용자에게 개인 <code>SSH 키</code>가 있거나 관리 호스트에서 원작 사용자임을 인증 가능한 키가 구성된 경우 자동으로 로그인된다.</li>
+</ul>
+</li>
+</ul>
+<p><code>SSH 키</code> 기반의 인증을 구성할 때는 <code>ssh-keygen</code> 명령어를 이용하여 다음과 같이 생성할 수 있다.<br />또한 <code>ssh-copy-id</code> 명령어를 이용하여 <code>SSH 공개키</code>를 해당 호스트로 복사할 수 있다.</p>
+<hr />
+<h4 id="ssh-key-설치">SSH Key 설치</h4>
+<ul>
+<li><code>키 생성</code>(Controller Server)<pre><code class="language-bash">[root@localhost yum.repos.d]# ssh-keygen
+[root@localhost chapter_05.1]# for i in {5..7}; do ssh-copy-id root@192.168.100.$i; done</code></pre>
+</li>
+</ul>
