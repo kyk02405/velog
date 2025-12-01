@@ -221,28 +221,129 @@ dnf install ansible</code></pre>
 </ul>
 <hr />
 <h3 id="322-역할에-따른-호스트-그룹-설정">3.2.2 역할에 따른 호스트 그룹 설정</h3>
+<h3 id="개요-1">개요</h3>
 <ul>
-<li><p>개요</p>
-<ul>
-<li>작업을 하다 보면 호스트별로 <code>롤(역할)</code>을 주고 <code>롤</code>별로 특정 작업을 수행해야 하는 경우가 있다.</li>
+<li>작업을 하다 보면 호스트별로 '롤(역할)'을 주고 '롤'별로 특정 작업을 수행해야 하는 경우가 있다.</li>
 <li>웹 서비스 구성을 예로 들면 웹 서비스를 구성하기 위해서는 웹 서버와 데이터베이스 서버가 필요하다.</li>
-<li>그런데 이런 서버들을 <code>고가용성(High Availability, HA)</code>을 위해 여러 대로 구성할 경우 인벤토리도 유형별로 호스트를 설정할 수 있다.</li>
+<li>그런데 이런 서버들을 '고가용성(High Availability, HA)'을 위해 여러 대로 구성할 경우 인벤토리도 유형별로 호스트를 설정할 수 있다.</li>
 </ul>
-</li>
-<li><p>그룹별 호스트 설정</p>
+<h3 id="그룹별-호스트-설정">그룹별 호스트 설정</h3>
 <ul>
-<li><code>Ansible Playbook</code> <code>실행(ansible-playbook)</code> 시 그룹별로 작업을 처리할 수 있기 때문에
-  좀 더 효과적이라고 할 수 있다.</li>
-<li>이 경우 그룹명을 <code>대괄호([])</code> 내에 작성하고 해당 그룹에 속하는 호스트명이나 IP를
-  한 줄에 하나씩 나열한다.</li>
-<li>다음의 인벤토리는 두 개의 호스트 그룹인 <code>webservers</code>와 <code>db-servers</code>를 정의한 것이다.</li>
+<li><p>'Ansible Playbook' '실행(ansible-playbook)' 시 그룹별로 작업을 처리할 수 있기 때문에 좀 더 효과적이라고 할 수 있다.</p>
+</li>
+<li><p>이 경우 그룹명을 '대괄호([])' 내에 작성하고 해당 그룹에 속하는 호스트명이나 IP를 한 줄에 하나씩 나열한다.</p>
+</li>
+<li><p>다음의 인벤토리는 두 개의 호스트 그룹인 'webservers'와 'db-servers'를 정의한 것이다.</p>
+<pre><code class="language-bash">  [webservers]
+  webl.example.com
+  web2.example com
+
+  [db-servers]
+  dbl.example.com
+  db2.example com
+
+  [east-datacenter] 
+  web1.example.com 
+  db01.examole.com
+
+  [west-datacenter] 
+  web2.example.com 
+  db02.example.com
+
+  [production] 
+  web1.example.com 
+  web2.example.com 
+  db01.example.com 
+  db02.example.com
+
+  [development]
+  192.0.2.42</code></pre>
+</li>
+<li><p>중첩 그룹</p>
+<ul>
+<li><p>'Ansible Inventory'는 호스트 그룹에 기존에 정의한 호스트 그룹을 포함할 수도 있다.</p>
+</li>
+<li><p>이 경우 호스트 그룹 이름 생성시 ':children'이라는 접미사를 추가하면 된다.</p>
+</li>
+<li><p>다음은 'webservers' 및 'db-servers' 그룹의 모든 호스트를 포함하는 'datacenter' 그룹을 생성하는 예이다.</p>
+<pre><code class="language-bash">  [webservers]
+  web1.example.com
+  web2.example.com
+
+  [db-servers]
+  db01.example.com
+  db02.example.com
+
+  [datacenter:children]
+  webservers
+  dbservers</code></pre>
+</li>
 </ul>
 </li>
 </ul>
-<pre><code class="language-bash">[webservers]
-webl.example.com
-web2.example com
+<h3 id="323-인벤토리-확인">3.2.3 인벤토리 확인</h3>
+<h3 id="ansible-관련-파일-3개">Ansible 관련 파일 3개</h3>
+<p>/</p>
+<h3 id="인벤토리-그룹-구성">인벤토리 그룹 구성</h3>
+<ul>
+<li>인벤토리 파일 생성</li>
+</ul>
+<pre><code>[root@ansible-server ~]# cd my-ansible/
+[root@ansible-server my-ansible]# vi ./inventory
+[root@ansible-server my-ansible]# cat inventory
 
-[db-servers]
-dbl.example.com
-db2.example com</code></pre>
+[web]
+tnode-1centos.exp.com
+tnode2-ubuntu.exp.com
+
+[db]
+tnode3-rhel.exp.com
+
+[all:children]
+web
+db</code></pre><ul>
+<li>생성한 인벤토리 확인 및 특정 인벤토리로 지정</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# ansible-inventory -i ./inventory --list
+{
+    &quot;_meta&quot;: {
+        &quot;hostvars&quot;: {}
+    },
+    &quot;all&quot;: {
+        &quot;children&quot;: [
+            &quot;ungrouped&quot;,
+            &quot;web&quot;,
+            &quot;db&quot;
+        ]
+    },
+    &quot;db&quot;: {
+        &quot;hosts&quot;: [
+            &quot;tnode3-rhel.exp.com&quot;
+        ]
+    },
+    &quot;web&quot;: {
+        &quot;hosts&quot;: [
+            &quot;tnode-1centos.exp.com&quot;,
+            &quot;tnode2-ubuntu.exp.com&quot;
+        ]
+    }
+}
+</code></pre><ul>
+<li>인벤토리 정보를 트리상태로 확인퍄</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# ansible-inventory -i ./inventory --graph
+@all:
+  |--@ungrouped:
+  |--@web:
+  |  |--tnode-1centos.exp.com
+  |  |--tnode2-ubuntu.exp.com
+  |--@db:
+  |  |--tnode3-rhel.exp.com
+</code></pre><ul>
+<li><code>Ansible</code> 환경 설정 파일을 이용한 인벤토리 구성</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# vi ansible.cfg
+[root@ansible-server my-ansible]# cat ansible.cfg
+[defaults]
+inventory = ./inventory</code></pre><hr />
+<h2 id="33-첫-번째-플레이북-사용하기">3.3 첫 번째 플레이북 사용하기</h2>
