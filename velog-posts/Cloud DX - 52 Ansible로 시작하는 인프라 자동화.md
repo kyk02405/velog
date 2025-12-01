@@ -1,7 +1,7 @@
 # Cloud DX - 52 Ansible로 시작하는 인프라 자동화
 
 - 📅 Published: Fri, 28 Nov 2025 08:41:42 GMT
-- 🔗 [Read on Velog](https://velog.io/@kyk02405/Cloud-DX-52-Ansible%EB%A1%9C-%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94-%EC%9D%B8%ED%94%84%EB%9D%BC-%EC%9E%90%EB%8F%99%ED%99%94)
+- 🔗 [Read on Velog](https://velog.io/@kyk02405/Cloud-DX-52-%EC%95%A4%EC%84%9C%EB%B8%94%EB%A1%9C-%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94-%EC%9D%B8%ED%94%84%EB%9D%BC-%EC%9E%90%EB%8F%99%ED%99%94)
 
 <h1 id="03-교재-앤서블로-시작하는-인프라-자동화">03 (교재) 앤서블로 시작하는 인프라 자동화</h1>
 <h2 id="vm-을-활용한-실습-환경-준비하기-1-linux환경-with-kvm">VM 을 활용한 실습 환경 준비하기 1. Linux환경 with KVM</h2>
@@ -373,3 +373,5 @@ inventory = ./inventory</code></pre><hr />
 [root@localhost chapter_05.1]# for i in {5..7}; do ssh-copy-id root@192.168.100.$i; done</code></pre>
 </li>
 </ul>
+<h3 id="332-첫-번째-플레이북-작성하기">3.3.2 첫 번째 플레이북 작성하기</h3>
+<pre><code class="language-bash">/home/samadal/my-ansible/Easy-Ansible/chapter_05.2</code></pre>
