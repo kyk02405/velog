@@ -4,7 +4,7 @@
 - 🔗 [Read on Velog](https://velog.io/@kyk02405/Cloud-DX-52-Ansible%EB%A1%9C-%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94-%EC%9D%B8%ED%94%84%EB%9D%BC-%EC%9E%90%EB%8F%99%ED%99%94)
 
 <h1 id="03-교재-앤서블로-시작하는-인프라-자동화">03 (교재) 앤서블로 시작하는 인프라 자동화</h1>
-<h2 id="31-vm을-활용한-실습-환경-준비하기">3.1 VM을 활용한 실습 환경 준비하기</h2>
+<h2 id="vm-을-활용한-실습-환경-준비하기-1-linux환경-with-kvm">VM 을 활용한 실습 환경 준비하기 1. Linux환경 with KVM</h2>
 <h3 id="개요">개요</h3>
 <ul>
 <li><code>Controller Server</code> 1대와 <code>Node Server</code> 3대로 구성되어 있다.</li>
@@ -26,7 +26,7 @@
 <li><code>ubuntu 20.04.6 / 2(CPU) / 4(RAM) / 50GB / 192.168.100.6</code></li>
 </ul>
 </li>
-<li><code>tnode3-rhel</code><ul>
+<li><code>tnode3-rhel(rocky)</code><ul>
 <li><code>RHEL 8.10 / 2(CPU) / 4(RAM) / 50GB / 192.168.100.7</code> </li>
 </ul>
 </li>
@@ -91,9 +91,20 @@ tmpfs           5.0M     0  5.0M    0% /run/lock
 tmpfs           3.9G     0  3.9G    0% /run/qemu
 tmpfs           790M   92K  790M    1% /run/user/120
 tmpfs           790M   80K  790M    1% /run/user/1000</p>
-<pre><code>## ‘VM’ 을 활용한 실습 환경 준비하기 2. Windows 환경 with Oracle VirtualBox
+<pre><code>
+---
+## VM 을 활용한 실습 환경 준비하기 2. Windows 환경 with Oracle VirtualBox
 
-### ‘가상 머신 생성’을 위한 시스템 구성
+
+### 시스템 구성 
+- `ansible-server`
+  - `CentOS Stream 9 / 2(CPU) / 4(RAM) / 100GB / 192.168.100.4` 
+- `tnode1-centos`
+  - `CentOS Stream 9 / 2(CPU) / 4(RAM) / 50GB / 192.168.100.5`
+- `tnode2-ubuntu`
+  - `ubuntu 20.04.6 / 2(CPU) / 4(RAM) / 50GB / 192.168.100.6`
+- `tnode3-rhel(rocky)`
+  - `RHEL 8.10 / 2(CPU) / 4(RAM) / 50GB / 192.168.100.7` 
 
 - Step 1. `3_VMs` 폴더에 `Ansible` 이라는 이름의 폴더를 생성한다. 
 - Step 2. `VirtualBox`를 실행한 후 상단에 있는 `새로 만들기`를 클릭한다.
@@ -133,8 +144,83 @@ tmpfs           790M   80K  790M    1% /run/user/1000</p>
   - `Ansible`이 설치되는 시스템인 `ansible-server`을 선택한 후 상단에 있는 `설정`을 클릭한다.
 
 ---
+## ansible-server에 ansible 설치
+- 개요
+  - 기본적으로 외부로의 통신이 되지 않기 때문에 시스템별 IP 설정을 'DHCP'로 변경 후 설치하면 된다.
+  -
+
+
+---
 ## 3.2 Ansible 기본 사용법
-### 3.2.1 인벤토리를 이용한 자동화 대상 호스트 설정
+### 3.2.1 인벤토리를 이용한 자동화 대상 호스트 설정 (p50~)
+
+#### 파일 생성 방법 1. IP를 이용한 인벤토리 파일 생성
+
+- ‘my-ansible’ 디렉토리 생성 / p50
+
+    ```bash
+    [root@localhost ~]# df -h
+    Filesystem           Size  Used Avail Use% Mounted on
+    devtmpfs             4.0M     0  4.0M   0% /dev
+    tmpfs                1.8G     0  1.8G   0% /dev/shm
+    tmpfs                732M  9.3M  722M   2% /run
+    /dev/mapper/cs-root   64G  5.3G   59G   9% /
+    /dev/vda1            960M  436M  525M  46% /boot
+    /dev/mapper/cs-home   32G  255M   31G   1% /home
+    tmpfs                366M   92K  366M   1% /run/user/0
+
+    # ‘my-ansible’ 디렉토리 생성
+    [root@localhost ~]# mkdir my-ansible
+    [root@localhost ~]# 
+    [root@localhost ~]# cd my-ansible/
+    [root@localhost my-ansible]# 
+    [root@localhost my-ansible]# ll
+    합계 0
+
+    # IP를 이용한 'invenroty' 파일 생성
+    [root@localhost my-ansible]# vi inventory
+    [root@localhost my-ansible]# 
+    [root@localhost my-ansible]# cat inventory 
+    192.168.100.5
+    192.168.100.6
+    192.168.100.7
+
+    ```
+
+
+#### 파일 생성 방법 2. 호스트명을 이용한 인벤토리 파일 생성
+
+- 둘 중에 하나만 사용
+
+    ```bash
+    root@localhost my-ansible]# vi /etc/hosts
+    [root@localhost my-ansible]# 
+    [root@localhost my-ansible]# cat /etc/hosts
+    127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+    ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+    192.168.100.5   tnode1-centos.exp.com
+    192.168.100.6   tnode2-ubuntu.exp.com
+    192.168.100.7   tnode3-rhel.exp.com
+    [root@localhost my-ansible]# ls -l
+    합계 4
+    -rw-r--r--. 1 root root 42 12월  1 11:57 inventory
+    [root@localhost my-ansible]# 
+    [root@localhost my-ansible]# vi inventory 
+    [root@localhost my-ansible]# 
+    [root@localhost my-ansible]# cp -p /etc/hosts inventory 
+    cp: overwrite 'inventory'? y
+    [root@localhost my-ansible]# vi inventory 
+    [root@localhost my-ansible]# 
+    [root@localhost my-ansible]# cat inventory 
+    tnode1-centos.exp.com
+    tnode2-ubuntu.exp.com
+    tnode3-rhel.exp.com
+    [root@localhost my-ansible]# 
+
+    ```
+
+
+---
 ### 3.2.2 역할에 따른 호스트 그룹 설정
 
 - 개요
