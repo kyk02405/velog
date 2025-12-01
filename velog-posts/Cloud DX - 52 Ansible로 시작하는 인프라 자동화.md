@@ -142,101 +142,104 @@ tmpfs           790M   80K  790M    1% /run/user/1000</p>
       - 나머지 3개 시스템도 동일하게 작업한다.
 - Step 6. 포트포워딩
   - `Ansible`이 설치되는 시스템인 `ansible-server`을 선택한 후 상단에 있는 `설정`을 클릭한다.
+  - 아래와 같이 변경 ![](https://velog.velcdn.com/images/kyk02405/post/b3d07c94-7b16-41d0-a6c1-2ceca2a136d7/image.png)
+  - 이후 각 가상머신에서 `ping`이 외부로 되는지 확인
+  ```bash 
+  ping 8.8.8.8</code></pre><hr />
+<h2 id="ansible-server에-ansible-설치">ansible-server에 ansible 설치</h2>
+<ul>
+<li>개요<ul>
+<li>기본적으로 외부로의 통신이 되지 않기 때문에 시스템별 IP 설정을 <code>DHCP</code>로 변경 후 설치하면 된다.</li>
+</ul>
+</li>
+<li>설치<pre><code class="language-bash">dnf install epel-release
+dnf install ansible</code></pre>
+</li>
+</ul>
+<hr />
+<h2 id="32-ansible-기본-사용법">3.2 Ansible 기본 사용법</h2>
+<h3 id="321-인벤토리를-이용한-자동화-대상-호스트-설정-p50">3.2.1 인벤토리를 이용한 자동화 대상 호스트 설정 (p50~)</h3>
+<h4 id="파일-생성-방법-1-ip를-이용한-인벤토리-파일-생성">파일 생성 방법 1. IP를 이용한 인벤토리 파일 생성</h4>
+<ul>
+<li><p>‘my-ansible’ 디렉토리 생성 / p50</p>
+<pre><code class="language-bash">  [root@localhost ~]# df -h
+  Filesystem           Size  Used Avail Use% Mounted on
+  devtmpfs             4.0M     0  4.0M   0% /dev
+  tmpfs                1.8G     0  1.8G   0% /dev/shm
+  tmpfs                732M  9.3M  722M   2% /run
+  /dev/mapper/cs-root   64G  5.3G   59G   9% /
+  /dev/vda1            960M  436M  525M  46% /boot
+  /dev/mapper/cs-home   32G  255M   31G   1% /home
+  tmpfs                366M   92K  366M   1% /run/user/0
 
----
-## ansible-server에 ansible 설치
-- 개요
-  - 기본적으로 외부로의 통신이 되지 않기 때문에 시스템별 IP 설정을 'DHCP'로 변경 후 설치하면 된다.
-  -
+  # ‘my-ansible’ 디렉토리 생성
+  [root@localhost ~]# mkdir my-ansible
+  [root@localhost ~]# 
+  [root@localhost ~]# cd my-ansible/
+  [root@localhost my-ansible]# 
+  [root@localhost my-ansible]# ll
+  합계 0
 
-
----
-## 3.2 Ansible 기본 사용법
-### 3.2.1 인벤토리를 이용한 자동화 대상 호스트 설정 (p50~)
-
-#### 파일 생성 방법 1. IP를 이용한 인벤토리 파일 생성
-
-- ‘my-ansible’ 디렉토리 생성 / p50
-
-    ```bash
-    [root@localhost ~]# df -h
-    Filesystem           Size  Used Avail Use% Mounted on
-    devtmpfs             4.0M     0  4.0M   0% /dev
-    tmpfs                1.8G     0  1.8G   0% /dev/shm
-    tmpfs                732M  9.3M  722M   2% /run
-    /dev/mapper/cs-root   64G  5.3G   59G   9% /
-    /dev/vda1            960M  436M  525M  46% /boot
-    /dev/mapper/cs-home   32G  255M   31G   1% /home
-    tmpfs                366M   92K  366M   1% /run/user/0
-
-    # ‘my-ansible’ 디렉토리 생성
-    [root@localhost ~]# mkdir my-ansible
-    [root@localhost ~]# 
-    [root@localhost ~]# cd my-ansible/
-    [root@localhost my-ansible]# 
-    [root@localhost my-ansible]# ll
-    합계 0
-
-    # IP를 이용한 'invenroty' 파일 생성
-    [root@localhost my-ansible]# vi inventory
-    [root@localhost my-ansible]# 
-    [root@localhost my-ansible]# cat inventory 
-    192.168.100.5
-    192.168.100.6
-    192.168.100.7
-
-    ```
-
-
-#### 파일 생성 방법 2. 호스트명을 이용한 인벤토리 파일 생성
-
-- 둘 중에 하나만 사용
-
-    ```bash
-    root@localhost my-ansible]# vi /etc/hosts
-    [root@localhost my-ansible]# 
-    [root@localhost my-ansible]# cat /etc/hosts
-    127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
-    ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-    192.168.100.5   tnode1-centos.exp.com
-    192.168.100.6   tnode2-ubuntu.exp.com
-    192.168.100.7   tnode3-rhel.exp.com
-    [root@localhost my-ansible]# ls -l
-    합계 4
-    -rw-r--r--. 1 root root 42 12월  1 11:57 inventory
-    [root@localhost my-ansible]# 
-    [root@localhost my-ansible]# vi inventory 
-    [root@localhost my-ansible]# 
-    [root@localhost my-ansible]# cp -p /etc/hosts inventory 
-    cp: overwrite 'inventory'? y
-    [root@localhost my-ansible]# vi inventory 
-    [root@localhost my-ansible]# 
-    [root@localhost my-ansible]# cat inventory 
-    tnode1-centos.exp.com
-    tnode2-ubuntu.exp.com
-    tnode3-rhel.exp.com
-    [root@localhost my-ansible]# 
-
-    ```
-
-
----
-### 3.2.2 역할에 따른 호스트 그룹 설정
-
-- 개요
-  - 작업을 하다 보면 호스트별로 `롤(역할)`을 주고 `롤`별로 특정 작업을 수행해야 하는 경우가 있다.
-  - 웹 서비스 구성을 예로 들면 웹 서비스를 구성하기 위해서는 웹 서버와 데이터베이스 서버가 필요하다.
-  - 그런데 이런 서버들을 `고가용성(High Availability, HA)`을 위해 여러 대로 구성할 경우 인벤토리도 유형별로 호스트를 설정할 수 있다.
-
-- 그룹별 호스트 설정
-  - `Ansible Playbook` `실행(ansible-playbook)` 시 그룹별로 작업을 처리할 수 있기 때문에
-      좀 더 효과적이라고 할 수 있다.
-  - 이 경우 그룹명을 `대괄호([])` 내에 작성하고 해당 그룹에 속하는 호스트명이나 IP를
-      한 줄에 하나씩 나열한다.
-  - 다음의 인벤토리는 두 개의 호스트 그룹인 `webservers`와 `db-servers`를 정의한 것이다.
-
-```bash
-[webservers]
+  # IP를 이용한 'invenroty' 파일 생성
+  [root@localhost my-ansible]# vi inventory
+  [root@localhost my-ansible]# 
+  [root@localhost my-ansible]# cat inventory 
+  192.168.100.5
+  192.168.100.6
+  192.168.100.7
+</code></pre>
+</li>
+</ul>
+<h4 id="파일-생성-방법-2-호스트명을-이용한-인벤토리-파일-생성">파일 생성 방법 2. 호스트명을 이용한 인벤토리 파일 생성</h4>
+<ul>
+<li><p>둘 중에 하나만 사용</p>
+<pre><code class="language-bash">  root@localhost my-ansible]# vi /etc/hosts
+  [root@localhost my-ansible]# 
+  [root@localhost my-ansible]# cat /etc/hosts
+  127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+  ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+  192.168.100.5   tnode1-centos.exp.com
+  192.168.100.6   tnode2-ubuntu.exp.com
+  192.168.100.7   tnode3-rhel.exp.com
+  [root@localhost my-ansible]# ls -l
+  합계 4
+  -rw-r--r--. 1 root root 42 12월  1 11:57 inventory
+  [root@localhost my-ansible]# 
+  [root@localhost my-ansible]# vi inventory 
+  [root@localhost my-ansible]# 
+  [root@localhost my-ansible]# cp -p /etc/hosts inventory 
+  cp: overwrite 'inventory'? y
+  [root@localhost my-ansible]# vi inventory 
+  [root@localhost my-ansible]# 
+  [root@localhost my-ansible]# cat inventory 
+  tnode1-centos.exp.com
+  tnode2-ubuntu.exp.com
+  tnode3-rhel.exp.com
+  [root@localhost my-ansible]# 
+</code></pre>
+</li>
+</ul>
+<hr />
+<h3 id="322-역할에-따른-호스트-그룹-설정">3.2.2 역할에 따른 호스트 그룹 설정</h3>
+<ul>
+<li><p>개요</p>
+<ul>
+<li>작업을 하다 보면 호스트별로 <code>롤(역할)</code>을 주고 <code>롤</code>별로 특정 작업을 수행해야 하는 경우가 있다.</li>
+<li>웹 서비스 구성을 예로 들면 웹 서비스를 구성하기 위해서는 웹 서버와 데이터베이스 서버가 필요하다.</li>
+<li>그런데 이런 서버들을 <code>고가용성(High Availability, HA)</code>을 위해 여러 대로 구성할 경우 인벤토리도 유형별로 호스트를 설정할 수 있다.</li>
+</ul>
+</li>
+<li><p>그룹별 호스트 설정</p>
+<ul>
+<li><code>Ansible Playbook</code> <code>실행(ansible-playbook)</code> 시 그룹별로 작업을 처리할 수 있기 때문에
+  좀 더 효과적이라고 할 수 있다.</li>
+<li>이 경우 그룹명을 <code>대괄호([])</code> 내에 작성하고 해당 그룹에 속하는 호스트명이나 IP를
+  한 줄에 하나씩 나열한다.</li>
+<li>다음의 인벤토리는 두 개의 호스트 그룹인 <code>webservers</code>와 <code>db-servers</code>를 정의한 것이다.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-bash">[webservers]
 webl.example.com
 web2.example com
 
