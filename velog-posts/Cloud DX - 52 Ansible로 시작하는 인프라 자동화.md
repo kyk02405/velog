@@ -1122,4 +1122,661 @@ tnode3-rhel.exp.com        : ok=2    changed=0    unreachable=0    failed=0    s
 </li>
 </ul>
 <hr />
-<h1 id="35-반복문과-조건문을-이용한-제어문">3.5 반복문과 조건문을 이용한 제어문</h1>
+<h1 id="35-반복문과-조건문을-이용한-제어문-구현하기">3.5 반복문과 조건문을 이용한 제어문 구현하기</h1>
+<h2 id="351-반복문-rootmy-ansibleeasy-ansiblechapter_071">3.5.1 반복문 (/root/my-ansible/Easy-Ansible/chapter_07.1)</h2>
+<h3 id="단순-반복문">단순 반복문</h3>
+<ul>
+<li>Step 1. ‘sshd 서비스’와 ‘rsyslog 서비스’의 ‘상태를 체크’하는 ‘Playbook’</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# vi check-services.yml
+[root@ansible-server my-ansible]# cat check-services.yml
+---
+- hosts: all
+  tasks:
+    - name: Check sshd state
+      ansible.builtin.service:
+        name: sshd
+        state: started
+
+    - name: Check rsyslog state
+      ansible.builtin.service:
+        name: rsyslog
+        state: started</code></pre><ul>
+<li>Step 2. ‘Ansible Playbook’ 실행</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# ansible-playbook check-services.yml
+
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [tnode3-rhel.exp.com]
+ok: [tnode2-ubuntu.exp.com]
+ok: [tnode1-centos.exp.com]
+
+TASK [Check sshd state] ********************************************************
+ok: [tnode2-ubuntu.exp.com]
+ok: [tnode3-rhel.exp.com]
+ok: [tnode1-centos.exp.com]
+
+TASK [Check rsyslog state] *****************************************************
+ok: [tnode2-ubuntu.exp.com]
+ok: [tnode1-centos.exp.com]
+ok: [tnode3-rhel.exp.com]
+
+PLAY RECAP *********************************************************************
+tnode1-centos.exp.com      : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+tnode2-ubuntu.exp.com      : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+tnode3-rhel.exp.com        : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 </code></pre><ul>
+<li>Step 3. ‘loop’ 반복문 소스 코드</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# vi check-services1.yml
+[root@ansible-server my-ansible]# cat check-services1.yml
+---
+- hosts: all
+  tasks:
+    - name: Check sshd and rsyslog state
+      ansible.builtin.service:
+        name: &quot;{{ item }}&quot;
+        state: started
+      loop:
+        - sshd
+        - rsyslog</code></pre><ul>
+<li>Step 4. ‘Ansible Playbook’ 실행</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# ansible-playbook check-services1.yml
+
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [tnode2-ubuntu.exp.com]
+ok: [tnode3-rhel.exp.com]
+ok: [tnode1-centos.exp.com]
+
+TASK [Check sshd and rsyslog state] ********************************************
+ok: [tnode2-ubuntu.exp.com] =&gt; (item=sshd)
+ok: [tnode3-rhel.exp.com] =&gt; (item=sshd)
+ok: [tnode1-centos.exp.com] =&gt; (item=sshd)
+ok: [tnode2-ubuntu.exp.com] =&gt; (item=rsyslog)
+ok: [tnode3-rhel.exp.com] =&gt; (item=rsyslog)
+ok: [tnode1-centos.exp.com] =&gt; (item=rsyslog)
+
+PLAY RECAP *********************************************************************
+tnode1-centos.exp.com      : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+tnode2-ubuntu.exp.com      : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+tnode3-rhel.exp.com        : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 </code></pre><ul>
+<li>Step 5. ‘ loop’문에 사용되는 아이템을 변수에 저장하는 소스 코드</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# vi check-services2.yml
+[root@ansible-server my-ansible]# cat check-services2.yml
+---
+- hosts: all
+  vars:
+    services:
+      - sshd
+      - rsyslog
+
+  tasks:
+    - name: Check sshd and rsyslog state
+      ansible.builtin.service:
+        name: &quot;{{ item }}&quot;
+        state: started
+      loop: &quot;{{ services }}&quot;</code></pre><ul>
+<li>Step 6. ‘Ansible Playbook’ 실행</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# ansible-playbook check-services2.yml 
+
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [tnode1-centos.exp.com]
+ok: [tnode3-rhel.exp.com]
+ok: [tnode2-ubuntu.exp.com]
+
+TASK [Check sshd and rsyslog state] ********************************************
+ok: [tnode2-ubuntu.exp.com] =&gt; (item=sshd)
+ok: [tnode3-rhel.exp.com] =&gt; (item=sshd)
+ok: [tnode1-centos.exp.com] =&gt; (item=sshd)
+ok: [tnode2-ubuntu.exp.com] =&gt; (item=rsyslog)
+ok: [tnode3-rhel.exp.com] =&gt; (item=rsyslog)
+ok: [tnode1-centos.exp.com] =&gt; (item=rsyslog)
+
+PLAY RECAP *********************************************************************
+tnode1-centos.exp.com      : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+tnode2-ubuntu.exp.com      : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+tnode3-rhel.exp.com        : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  </code></pre><h3 id="사전-목록에-의한-반복문">사전 목록에 의한 반복문</h3>
+<ul>
+<li>Step 1. 소스코드 생성</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# vi make-file.yml
+[root@ansible-server my-ansible]# cat make-file.yml
+---
+
+- hosts: all
+
+  tasks:
+    - name: Create files
+      ansible.builtin.file:
+        path: &quot;{{ item['log-path'] }}&quot;
+        mode: &quot;{{ item['log-mode'] }}&quot;
+        state: touch
+      loop:
+        - log-path: /var/log/test1.log
+          log-mode: '0644'
+        - log-path: /var/log/test2.log
+          log-mode: '0600'</code></pre><ul>
+<li>Step 2. ‘Ansible Playbook’ 실행</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# ansible-playbook make-file.yml
+
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [tnode2-ubuntu.exp.com]
+ok: [tnode1-centos.exp.com]
+ok: [tnode3-rhel.exp.com]
+
+TASK [Create files] ************************************************************
+changed: [tnode2-ubuntu.exp.com] =&gt; (item={'log-path': '/var/log/test1.log', 'log-mode': '0644'})
+changed: [tnode3-rhel.exp.com] =&gt; (item={'log-path': '/var/log/test1.log', 'log-mode': '0644'})
+changed: [tnode1-centos.exp.com] =&gt; (item={'log-path': '/var/log/test1.log', 'log-mode': '0644'})
+changed: [tnode2-ubuntu.exp.com] =&gt; (item={'log-path': '/var/log/test2.log', 'log-mode': '0600'})
+changed: [tnode3-rhel.exp.com] =&gt; (item={'log-path': '/var/log/test2.log', 'log-mode': '0600'})
+changed: [tnode1-centos.exp.com] =&gt; (item={'log-path': '/var/log/test2.log', 'log-mode': '0600'})
+
+PLAY RECAP *********************************************************************
+tnode1-centos.exp.com      : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+tnode2-ubuntu.exp.com      : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+tnode3-rhel.exp.com        : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0</code></pre><ul>
+<li>확인</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# ansible all -m shell -a &quot;ls -l /var/log/test*&quot;
+tnode2-ubuntu.exp.com | CHANGED | rc=0 &gt;&gt;
+-rw-r--r-- 1 root root 0 12월  2 17:11 /var/log/test1.log
+-rw------- 1 root root 0 12월  2 17:11 /var/log/test2.log
+tnode3-rhel.exp.com | CHANGED | rc=0 &gt;&gt;
+-rw-r--r--. 1 root root 0 12월  2 17:11 /var/log/test1.log
+-rw-------. 1 root root 0 12월  2 17:11 /var/log/test2.log
+tnode1-centos.exp.com | CHANGED | rc=0 &gt;&gt;
+-rw-r--r--. 1 root root 0 12월  2 17:11 /var/log/test1.log
+-rw-------. 1 root root 0 12월  2 17:11 /var/log/test2.log</code></pre><h3 id="생략-이전-ansible-style-반복문">(생략) 이전 Ansible Style 반복문</h3>
+<h3 id="반복문과-register-변수-사용">반복문과 Register 변수 사용</h3>
+<ul>
+<li>개요<ul>
+<li>‘Register 변수’는 반복 실행되는 작업의 출력을 캡처할 수 있다.</li>
+<li>이를 통해 반복되는 작업들이 모두 잘 수행되었는지 확인할 수 있다.</li>
+<li>이 값을 이용해서 다음 작업을 수행할 수 있다.</li>
+</ul>
+</li>
+<li>Step 1. 소스 코드 생성</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# vi loop_register.yml
+[root@ansible-server my-ansible]# cat loop_register.yml
+---
+- hosts: localhost
+  tasks:
+    - name: Loop echo test
+      ansible.builtin.shell: &quot;echo 'I can speak {{ item }}'&quot;
+      loop:
+        - Korean
+        - English
+      register: result
+
+    - name: Show result
+      ansible.builtin.debug:
+        var: result
+</code></pre><ul>
+<li>Step 2. ‘Ansible Playbook’ 실행</li>
+</ul>
+<pre><code>[root[root@ansible-server my-ansible]# ansible-playbook loop_register.yml
+
+PLAY [localhost] ***************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Loop echo test] **********************************************************
+changed: [localhost] =&gt; (item=Korean)
+changed: [localhost] =&gt; (item=English)
+
+TASK [Show result] *************************************************************
+ok: [localhost] =&gt; {
+    &quot;result&quot;: {
+        &quot;changed&quot;: true,
+        &quot;msg&quot;: &quot;All items completed&quot;,
+        &quot;results&quot;: [
+            {
+                &quot;ansible_loop_var&quot;: &quot;item&quot;,
+                &quot;changed&quot;: true,
+                &quot;cmd&quot;: &quot;echo 'I can speak Korean'&quot;,
+                &quot;delta&quot;: &quot;0:00:00.002419&quot;,
+                &quot;end&quot;: &quot;2025-12-02 17:22:37.185116&quot;,
+                &quot;failed&quot;: false,
+                &quot;invocation&quot;: {
+                    &quot;module_args&quot;: {
+                        &quot;_raw_params&quot;: &quot;echo 'I can speak Korean'&quot;,
+                        &quot;_uses_shell&quot;: true,
+                        &quot;argv&quot;: null,
+                        &quot;chdir&quot;: null,
+                        &quot;creates&quot;: null,
+                        &quot;executable&quot;: null,
+                        &quot;removes&quot;: null,
+                        &quot;stdin&quot;: null,
+                        &quot;stdin_add_newline&quot;: true,
+                        &quot;strip_empty_ends&quot;: true
+                    }
+                },
+                &quot;item&quot;: &quot;Korean&quot;,
+                &quot;msg&quot;: &quot;&quot;,
+                &quot;rc&quot;: 0,
+                &quot;start&quot;: &quot;2025-12-02 17:22:37.182697&quot;,
+                &quot;stderr&quot;: &quot;&quot;,
+                &quot;stderr_lines&quot;: [],
+                &quot;stdout&quot;: &quot;I can speak Korean&quot;,
+                &quot;stdout_lines&quot;: [
+                    &quot;I can speak Korean&quot;
+                ]
+            },
+            {
+                &quot;ansible_loop_var&quot;: &quot;item&quot;,
+                &quot;changed&quot;: true,
+                &quot;cmd&quot;: &quot;echo 'I can speak English'&quot;,
+                &quot;delta&quot;: &quot;0:00:00.002279&quot;,
+                &quot;end&quot;: &quot;2025-12-02 17:22:37.318576&quot;,
+                &quot;failed&quot;: false,
+                &quot;invocation&quot;: {
+                    &quot;module_args&quot;: {
+                        &quot;_raw_params&quot;: &quot;echo 'I can speak English'&quot;,
+                        &quot;_uses_shell&quot;: true,
+                        &quot;argv&quot;: null,
+                        &quot;chdir&quot;: null,
+                        &quot;creates&quot;: null,
+                        &quot;executable&quot;: null,
+                        &quot;removes&quot;: null,
+                        &quot;stdin&quot;: null,
+                        &quot;stdin_add_newline&quot;: true,
+                        &quot;strip_empty_ends&quot;: true
+                    }
+                },
+                &quot;item&quot;: &quot;English&quot;,
+                &quot;msg&quot;: &quot;&quot;,
+                &quot;rc&quot;: 0,
+                &quot;start&quot;: &quot;2025-12-02 17:22:37.316297&quot;,
+                &quot;stderr&quot;: &quot;&quot;,
+                &quot;stderr_lines&quot;: [],
+                &quot;stdout&quot;: &quot;I can speak English&quot;,
+                &quot;stdout_lines&quot;: [
+                    &quot;I can speak English&quot;
+                ]
+            }
+        ],
+        &quot;skipped&quot;: false
+    }
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0</code></pre><h2 id="352-조건문">3.5.2 조건문</h2>
+<h3 id="조건-작업-구문">조건 작업 구문</h3>
+<ul>
+<li>Step 1. 소스 코드 생성</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# vi when_task.yml 
+[root@ansible-server my-ansible]# cat when_task.yml 
+---
+
+- hosts: localhost
+  vars:
+    run_my_task: true
+
+  tasks:
+    - name: echo message
+      ansible.builtin.shell: &quot;echo test&quot;
+      when: run_my_task
+</code></pre><ul>
+<li>Step 2. ‘Ansible Playbook’ 실행</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# ansible-playbook when_task.yml
+
+PLAY [localhost] ***************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [echo message] ************************************************************
+changed: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 </code></pre><h3 id="조건-연산자">조건 연산자</h3>
+<ul>
+<li>개요<ul>
+<li>‘OS’ 종류에 따라 ‘TASK’를 수행하는 예제이다.</li>
+</ul>
+</li>
+<li>Step 1. 소스 코드 생성</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# vi check-os.yml
+[root@ansible-server my-ansible]# cat check-os.yml
+---
+
+- hosts: all
+  vars:
+    supported_distros:
+      - RedHat
+      - CentOS
+
+  tasks:
+    - name: Print supported os
+      ansible.builtin.debug:
+        msg: &quot;This {{ ansible_facts['distribution'] }} need to use dnf&quot;
+      when: ansible_facts['distribution'] in supported_distros</code></pre><ul>
+<li>Step 2. ‘Ansible Playbook’ 실행</li>
+</ul>
+<pre><code>[root@ansible-server my-ansible]# ansible-playbook check-os.yml
+
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [tnode2-ubuntu.exp.com]
+ok: [tnode3-rhel.exp.com]
+ok: [tnode1-centos.exp.com]
+
+TASK [Print supported os] ******************************************************
+ok: [tnode1-centos.exp.com] =&gt; {
+    &quot;msg&quot;: &quot;This CentOS need to use dnf&quot;
+}
+skipping: [tnode2-ubuntu.exp.com]
+skipping: [tnode3-rhel.exp.com]
+
+PLAY RECAP *********************************************************************
+tnode1-centos.exp.com      : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+tnode2-ubuntu.exp.com      : ok=1    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+tnode3-rhel.exp.com        : ok=1    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+</code></pre><h1 id="36-자동화">3.6 자동화</h1>
+<h2 id="361-시스템-구축-자동화">3.6.1 시스템 구축 자동화</h2>
+<h3 id="사용자-계정-생성하기-rootmy-ansibleeasy-ansiblechapter_091">사용자 계정 생성하기 (/root/my-ansible/Easy-Ansible/chapter_09.1)</h3>
+<ul>
+<li>디렉토리 구조도</li>
+</ul>
+<pre><code>[root@ansible-server chapter_09.1]# tree
+.
+├── ansible.cfg
+├── create_user.yml
+├── inventory
+└── vars
+    ├── secret.yml
+    └── vault-pass
+
+1 directory, 5 files</code></pre><ul>
+<li><p>‘Playbook’ 개발</p>
+<ul>
+<li><p>Step 1. 작업에 필요한 소스 파일 및 디렉토리</p>
+<pre><code>[root@ansible-server chapter_09.1]# vi inventory
+[root@ansible-server chapter_09.1]# cat inventory
+tnode1-centos.exp.com 
+tnode2-ubuntu.exp.com 
+tnode3-rhel.exp.com</code></pre></li>
+<li><p>Step 2. 암호화된 파일을 ‘ansible-vault’ 명령어로 사용자 계정 정보가 정의된 변수 파일 생성</p>
+<pre><code>[root@ansible-server chapter_09.1]# ansible-vault create vars/secret.yml
+New Vault password: P@ssw0rd!
+Confirm New Vault password: P@ssw0rd!
+[root@ansible-server chapter_09.1]# ansible-vault view vars/secret.yml
+Vault password: </code></pre></li>
+</ul>
+<hr />
+<p>  user_info:</p>
+<pre><code>- userid: &quot;ansible&quot;
+  userpw: &quot;ansiblePw1!&quot;
+- userid: &quot;stack&quot;
+  userpw: &quot;stackPw1!&quot;</code></pre><pre><code>
+  - Step 3. 사용자 생성 관련 ‘Playbook’ 작성
+</code></pre><p>  [root@ansible-server chapter_09.1]# vi create_user.yml</p>
+<h2 id="rootansible-server-chapter_091-cat-create_useryml">  [root@ansible-server chapter_09.1]# cat create_user.yml</h2>
+<ul>
+<li><p>hosts: all</p>
+<p>vars_files:</p>
+<ul>
+<li>vars/secret.yml</li>
+</ul>
+<p>tasks:</p>
+<ul>
+<li>name: Create user
+ansible.builtin.user:
+  name: &quot;{{ item.userid }}&quot;
+  password: &quot;{{ item.userpw | password_hash('sha512', 'mysecret') }}&quot;
+  state: present
+loop: &quot;{{ user_info }}&quot;</li>
+</ul>
+<pre><code></code></pre></li>
+</ul>
+</li>
+<li><p>‘Playbook’ 실행</p>
+<ul>
+<li><p>Step 1. 사용자 생성 관련 암호화 된 문서 파일의 문법 체크</p>
+<pre><code>[root@ansible-server chapter_09.1]# ansible-playbook --syntax-check create_user.yml
+ERROR! Attempting to decrypt but no vault secrets found  -&gt; 암호화 된 파일을 수정하고 'Playbook'을 실행했을 때 오류가 발생한다면 아래와 같이 입력하고 실행하면 된다.
+[root@ansible-server chapter_09.1]# ansible-playbook --syntax-check --vault-id @prompt create_user.yml
+Vault password (default): 
+
+playbook: create_user.yml</code></pre></li>
+<li><p>Step 2. ‘--ask-vault-pass’ 옵션과 함께 ‘Playbook’ 실행</p>
+<pre><code>[root@ansible-server chapter_09.1]# ansible-playbook --ask-vault-pass create_user.yml
+Vault password: P@ssw0rd!
+
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [tnode2-ubuntu.exp.com]
+ok: [tnode3-rhel.exp.com]
+ok: [tnode1-centos.exp.com]
+
+TASK [Create user] *************************************************************
+[DEPRECATION WARNING]: Encryption using the Python crypt module is deprecated. 
+The Python crypt module is deprecated and will be removed from Python 3.13. 
+Install the passlib library for continued encryption functionality. This 
+feature will be removed in version 2.17. Deprecation warnings can be disabled 
+by setting deprecation_warnings=False in ansible.cfg.
+[DEPRECATION WARNING]: Encryption using the Python crypt module is deprecated. 
+The Python crypt module is deprecated and will be removed from Python 3.13. 
+Install the passlib library for continued encryption functionality. This 
+feature will be removed in version 2.17. Deprecation warnings can be disabled 
+by setting deprecation_warnings=False in ansible.cfg.
+[DEPRECATION WARNING]: Encryption using the Python crypt module is deprecated. 
+The Python crypt module is deprecated and will be removed from Python 3.13. 
+Install the passlib library for continued encryption functionality. This 
+feature will be removed in version 2.17. Deprecation warnings can be disabled 
+by setting deprecation_warnings=False in ansible.cfg.
+changed: [tnode2-ubuntu.exp.com] =&gt; (item={'userid': 'ansible', 'userpw': 'ansiblePw1!'})
+changed: [tnode3-rhel.exp.com] =&gt; (item={'userid': 'ansible', 'userpw': 'ansiblePw1!'})
+changed: [tnode1-centos.exp.com] =&gt; (item={'userid': 'ansible', 'userpw': 'ansiblePw1!'})
+changed: [tnode2-ubuntu.exp.com] =&gt; (item={'userid': 'stack', 'userpw': 'stackPw1!'})
+changed: [tnode3-rhel.exp.com] =&gt; (item={'userid': 'stack', 'userpw': 'stackPw1!'})
+changed: [tnode1-centos.exp.com] =&gt; (item={'userid': 'stack', 'userpw': 'stackPw1!'})
+
+PLAY RECAP *********************************************************************
+tnode1-centos.exp.com      : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+tnode2-ubuntu.exp.com      : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+tnode3-rhel.exp.com        : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 </code></pre></li>
+<li><p>Step 3. 생성된 계정 확인</p>
+<pre><code>[root@ansible-server chapter_09.1]# ansible all -m shell -a &quot;cat /etc/passwd | grep -E 'ansible|stack'&quot;
+tnode2-ubuntu.exp.com | CHANGED | rc=0 &gt;&gt;
+tss:x:106:111:TPM software stack,,,:/var/lib/tpm:/bin/false
+ansible:x:1001:1001::/home/ansible:/bin/sh
+ansible2:x:1002:1002::/home/ansible2:/bin/sh
+ansible4:x:1003:1003::/home/ansible4:/bin/sh
+ansible5:x:1004:1004::/home/ansible5:/bin/sh
+stack:x:1005:1005::/home/stack:/bin/sh
+tnode1-centos.exp.com | CHANGED | rc=0 &gt;&gt;
+ansible:x:1001:1001::/home/ansible:/bin/bash
+ansible2:x:1002:1002::/home/ansible2:/bin/bash
+ansible4:x:1003:1003::/home/ansible4:/bin/bash
+ansible5:x:1004:1004::/home/ansible5:/bin/bash
+stack:x:1005:1005::/home/stack:/bin/bash
+tnode3-rhel.exp.com | CHANGED | rc=0 &gt;&gt;
+ansible:x:1001:1001::/home/ansible:/bin/bash
+ansible1:x:1002:1002::/home/ansible1:/bin/bash
+ansible2:x:1003:1003::/home/ansible2:/bin/bash
+ansible4:x:1004:1004::/home/ansible4:/bin/bash
+ansible5:x:1005:1005::/home/ansible5:/bin/bash
+ansible6:x:1006:1006::/home/ansible6:/bin/bash
+stack:x:1007:1007::/home/stack:/bin/bash</code></pre></li>
+</ul>
+</li>
+</ul>
+<h3 id="ssh-키-생성-및-복사하기-rootmy-ansibleeasy-ansiblechapter_092">SSH 키 생성 및 복사하기 (/root/my-ansible/Easy-Ansible/chapter_09.2)</h3>
+<ul>
+<li><p>상황</p>
+<ul>
+<li>시스템을 구축하거나 애플리케이션을 설치하는 경우 해당 애플리케이션을 사용하는 서버들 간에
+'SSH' 접속을 할 때는 패스워드 대신 'SSH 키'를 주로 사용한다.</li>
+<li>앤서블 역시 대상 노드에 접속하여 모듈을 실행할 경우 'SSH' 접근을 하는데 이때 'SSH 키'를
+사용하여 접근하면 쉽게 작업할 수 있다.</li>
+<li>이렇게 생성한 'SSH 공개 키'를 여러 서버에 복사할 때도 앤서블을 이용할 수 있다.</li>
+</ul>
+</li>
+<li><p>작업 순서</p>
+<ul>
+<li>먼저 앤서블 콘텐츠 컬렉션의 어떤 모듈을 사용하면 'SSH 키'를 생성하고 복사할 수 있는지를
+'사전 분석'을 통해 플레이북 설계와 개발에 필요한 모듈을 찾아본다.</li>
+<li>사용자 아이디는 외부 변수로 받는다.</li>
+<li>'ansible-server'에서 'ansible 계정'을 만들고 'SSH 키'를 생성한다.</li>
+<li>'ansible-server'에 생성된 'SSH 공개 키'를 각 'tnode'에 복사한다.</li>
+<li>계정을 생성할 때는 'ansible.builtin.user' 모듈을, 'SSH 공개 키'를 복사할 때는       'ansible.posix.authorized_key' 모듈을 이용한다.</li>
+</ul>
+</li>
+<li><p>플레이북 설계</p>
+<ul>
+<li>앤서블 공식 문서의 콘텐츠 컬렉션에서 플레이북 개발에 필요한 'SSH 키 생성 모듈'과
+'SSH 키 복사 모듈'을 찾았다면, 해당 모듈의 예제와 파라미터 정보를 이용해 플레이북을 설계한다.</li>
+<li>예제에서 플레이북명은 'create_sshkey.yml'로 설정한다.</li>
+<li>해당 플레이북은 'Create ssh key' 태스크와 'Copy SSH Pub key'라는 2개의 태스크를 갖고 있다.</li>
+<li>(핵심) 이 때 'Create ssh key 태스크'는 'localhost'에서 실행하고, 'Copy SSH Pub key 태스크'는
+'tnode'에서 실행한다.</li>
+<li>인벤토리에는 다음과 같이 'tnode'라는 그룹을 만든 다음 모든 관리 노드를 'tnode' 그룹으로 정의한다.</li>
+<li><a href="https://docs.ansible.com/projects/ansible/latest/collections_guide/index.html?utm_source=chatgpt.com">https://docs.ansible.com/projects/ansible/latest/collections_guide/index.html?utm_source=chatgpt.com</a></li>
+</ul>
+</li>
+<li><p>플레이북 개발</p>
+<ul>
+<li><p>Step 1. 인벤토리 파일 수정</p>
+<pre><code>[root@ansible-server chapter_09.2]# vi inventory 
+[root@ansible-server chapter_09.2]# cat inventory 
+[tnode]
+tnode1-centos.exp.com 
+tnode2-ubuntu.exp.com 
+tnode3-rhel.exp.com</code></pre></li>
+<li><p>Step 2. SSH 키 생성 및 복사</p>
+<pre><code>[root@ansible-server chapter_09.2]# vi create_sshkey.yml
+[root@ansible-server chapter_09.2]# cat create_sshkey.yml</code></pre></li>
+</ul>
+<hr />
+<ul>
+<li><p>hosts: localhost
+tasks:</p>
+<ul>
+<li>name : Create ssh key
+ansible.builtin.user:
+  name: &quot;{{ userid }}&quot;
+  generate_ssh_key: true
+  ssh_key_bits: 2048
+  ssh_key_file: /home/{{ userid }}/.ssh/id_rsa</li>
+</ul>
+</li>
+<li><p>hosts: tnode 
+tasks:</p>
+<ul>
+<li>name: Copy SSH Pub key
+ansible.posix.authorized_key:
+  user: &quot;{{ userid }}&quot;
+  state: present
+  key: &quot;{{ lookup('file', '/home/{{ userid }}/.ssh/id_rsa.pub') }}&quot;<pre><code></code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>플레이북 실행</p>
+<ul>
+<li><p>Step 1. 문법 체크</p>
+<pre><code>[root@ansible-server chapter_09.2]# ansible-playbook --syntax-check create_sshkey.yml
+
+playbook: create_sshkey.yml</code></pre></li>
+<li><p>Step 2. ‘Playbook’ 실행 시 외부 변수와 함께 실행</p>
+<pre><code>[root@ansible-server chapter_09.2]# ansible-playbook -e userid=ansible create_sshkey.yml
+
+PLAY [localhost] ***************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Create ssh key] **********************************************************
+changed: [localhost]
+
+PLAY [tnode] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [tnode1-centos.exp.com]
+ok: [tnode3-rhel.exp.com]
+ok: [tnode2-ubuntu.exp.com]
+
+TASK [Copy SSH Pub key] ********************************************************
+changed: [tnode2-ubuntu.exp.com]
+changed: [tnode3-rhel.exp.com]
+changed: [tnode1-centos.exp.com]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+tnode1-centos.exp.com      : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+tnode2-ubuntu.exp.com      : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+tnode3-rhel.exp.com        : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 </code></pre></li>
+<li><p>Step 3. 확인 및 점검</p>
+<p>```
+[root@ansible-server chapter_09.2]# ansible all -m shell -a &quot;ls -l /home/ansible/.ssh&quot;
+tnode2-ubuntu.exp.com | CHANGED | rc=0 &gt;&gt;
+합계 4</p>
+</li>
+<li><p>rw------- 1 ansible ansible 417 12월  3 11:16 authorized_keys
+tnode3-rhel.exp.com | CHANGED | rc=0 &gt;&gt;
+합계 4</p>
+</li>
+<li><p>rw-------. 1 ansible ansible 417 12월  3 11:16 authorized_keys
+tnode1-centos.exp.com | CHANGED | rc=0 &gt;&gt;
+합계 4</p>
+</li>
+<li><p>rw-------. 1 ansible ansible 417 12월  3 11:16 authorized_keys</p>
+<pre><code></code></pre></li>
+<li><p>Step 4. ‘Node Server’에 ‘SSH를 이용한 원격 접속’</p>
+<ul>
+<li><p>tnode1-centos.exp.com</p>
+<pre><code>[root@ansible-server chapter_09.2]# ssh tnode1-centos.exp.com
+Activate the web console with: systemctl enable --now cockpit.socket
+Last login: Wed Dec  3 11:37:36 2025 from 192.168.100.4</code></pre></li>
+<li><p>tnode2-ubuntu.exp.com</p>
+<pre><code>[root@ansible-server chapter_09.2]# ssh tnode2-ubuntu.exp.com
+Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.15.0-139-generic x86_64)
+* Documentation:  https://help.ubuntu.com
+* Management:     https://landscape.canonical.com
+* Support:        https://ubuntu.com/advantage
+* Introducing Expanded Security Maintenance for Applications.
+ Receive updates to over 25,000 software packages with your
+ Ubuntu Pro subscription. Free for personal use.
+   https://ubuntu.com/pro        
+Expanded Security Maintenance for Infrastructure is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Infra to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+Your Hardware Enablement Stack (HWE) is supported until April 2025.
+Last login: Wed Dec  3 11:37:36 2025 from 192.168.100.4       </code></pre></li>
+<li><p>tnode3-rhel.exp.com</p>
+<pre><code>[root@ansible-server chapter_09.2]# ssh tnode3-rhel.exp.com
+Activate the web console with: systemctl enable --now cockpit.socket
+
+Last login: Wed Dec  3 11:37:34 2025 from 192.168.100.4</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="41">4.1</h1>

@@ -3,8 +3,8 @@
 - 📅 Published: Wed, 03 Dec 2025 04:06:46 GMT
 - 🔗 [Read on Velog](https://velog.io/@kyk02405/Cloud-DX-53-Vagrant%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-Ansible-%EC%84%9C%EB%B2%84-%EA%B4%80%EB%A6%AC-%EC%9E%90%EB%8F%99%ED%99%94)
 
-<h1 id="04-vagrant를-이용한-ansible-서버-관리-자동화">04. Vagrant를 이용한 Ansible 서버 관리 자동화</h1>
-<h2 id="41-실습-환경-구성">4.1 실습 환경 구성</h2>
+<h1 id="05-vagrant를-이용한-ansible-서버-관리-자동화">05. Vagrant를 이용한 Ansible 서버 관리 자동화</h1>
+<h2 id="51-실습-환경-구성">5.1 실습 환경 구성</h2>
 <h3 id="개요">개요</h3>
 <ul>
 <li><p><code>Vagrant</code>는 사용자의 요구에 맞게 시스템 자원을 할당, 배치, 배치해 두었다가 필요할 때에 시스템을 사용할 수 있는 상태로 만들어 준다.</p>
@@ -189,10 +189,54 @@ vagrant plugin list</p>
 ==&gt; default: Destroying VM and associated drives...</p>
 <p>D:\3_VMs\HashiCorp&gt;</p>
 <p>```</p>
-<h2 id="42-ansible-server에-ansible-실행-환경-구성하기">4.2 Ansible Server에 Ansible 실행 환경 구성하기</h2>
+<h2 id="52-ansible-server에-ansible-실행-환경-구성하기">5.2 Ansible Server에 Ansible 실행 환경 구성하기</h2>
 <h3 id="개요-2">개요</h3>
 <ul>
-<li><code>Vagrant</code> 파일을 수정해서 자동으로 손쉽게 <code>Ansible</code> 서버를 구축하는 방법에 대한 내용을 알아본다. 즉, <code>Ansible</code> 서버가 구동될 수 있는 수준으로 환경을 자동 구성하도록 한다.<h3 id="ansible-server-환경-구성하기">Ansible Server 환경 구성하기</h3>
+<li>'Vagrant' 파일을 수정해서 자동으로 손쉽게 'Ansible' 서버를 구축하는 방법에 대한 내용을 알아본다. 즉, 'Ansible' 서버가 구동될 수 있는 수준으로 환경을 자동 구성하도록 한다.</li>
+</ul>
+<h3 id="ansible-server-환경-구성하기">Ansible Server 환경 구성하기</h3>
+<ul>
+<li><p>구성하기 1. 예제 스크립트 자동 생성</p>
+<ul>
+<li><p>소스 코드 및 명령어 참고 사이트</p>
+<ul>
+<li>‘18.04 LTS’ 버전을 설치 완료한 후 ‘20.04.6 LTS’ 버전으로 진행한다.</li>
+</ul>
 </li>
-<li>구성하기 1. 예제 스크립트 자동 생성</li>
+<li><p>‘Vagrant’로 ‘Provisioning’ 하기 위한 ‘파일(Vagrantfile)’ 생성 및 확인</p>
+<ul>
+<li><p>코드 입력 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/422f12ed-8723-4406-af25-ee7cb22d1c44/image.png" /></p>
+</li>
+<li><p>변경사항 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/bd1cf13c-3ecf-42ae-b7e8-9747e609c704/image.png" /></p>
+<ul>
+<li>가상 머신 생성</li>
+</ul>
+</li>
+<li><p>설치 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/69217a27-3e4d-4894-aeb3-eaa590997972/image.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>원격 접속</p>
+<ul>
+<li><p>Step 1. 우분투에 접속 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5442e3a8-0b84-4637-bd97-2504d3f8c7b1/image.png" /></p>
+</li>
+<li><p>Step 2. 기본 환경 설정</p>
+<pre><code class="language-bash"> sudo apt update
+
+ sudo apt upgrade
+
+ cat /etc/issue
+
+ sudo reboot
+
+ sudo do-release-upgrade</code></pre>
+</li>
+<li><p>Step 3. 모든 테스트를 완료한 후 가상 머신 관련 모든 내용 삭제</p>
+</li>
+</ul>
+</li>
 </ul>
