@@ -38,12 +38,56 @@
 <ul>
 <li><code>Vargrant</code>로 <code>Provisioning</code>하기 위해서는 <code>스크립트</code>를 작성해야 한다.<h3 id="provisioning을-위한-vagrant-명령어">Provisioning을 위한 Vagrant 명령어</h3>
 </li>
+<li><code>Provisioning</code>을 위한 예제 스크립트를 생성한다.</li>
 </ul>
+<pre><code>vagrant init</code></pre><ul>
+<li><code>Vagrant</code> 파일을 읽어 들여서 <code>Provisioning</code>을 진행한다. 가상 머신을 생성한다.</li>
+</ul>
+<pre><code>vagrant up</code></pre><ul>
+<li><code>Vagrant</code>에서 다루는 가상 머신들을 삭제한다.</li>
+</ul>
+<pre><code>vagrant halt</code></pre><ul>
+<li><code>Vagrant</code>에서 관리하는 가상 머신들을 삭제한다.</li>
+</ul>
+<pre><code>vagrant destroy</code></pre><ul>
+<li><code>Vagrant</code>에서 관리하는 가상 머신에 SSH로 접속한다.</li>
+</ul>
+<pre><code>vagrant ssh</code></pre><ul>
+<li><code>Vagrant</code>에서 관리하는 가상 머신에 변경된 설정을 적용한다.</li>
+</ul>
+<pre><code>vagrant provision</code></pre><hr />
 <h3 id="작업">작업</h3>
 <ul>
-<li>Step 1. 스크립트 생성<ul>
+<li><p>Step 1. 스크립트 생성</p>
+<ul>
 <li>폴더<code>D:\3_VMs\HashiCorp\Vagrant</code>생성</li>
 <li>실행창에서 경로 이동</li>
+<li><code>Vagrant</code> 초기화 명령(<code>init</code>)을 통해서 예제 스크립트 생성</li>
 </ul>
+</li>
+<li><p>Step 2. 가상 머신 생성 1. <code>OS Image</code>가 로딩되어 있지 않은 경우</p>
+<ul>
+<li><p>(안 나타날 수도 있다)실행 1. <code>Hype-V</code> 적용 유무에 따른 오류</p>
+</li>
+<li><p>실행 2. base 이미지</p>
+<ul>
+<li>해당 이미지를 <code>Vagrant</code>가 찾지 못해서 발생하는 오류</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Step 3. 가상 머신 생성 2. <code>OS Iamge</code>가 로딩 및 다운로드, 설치가 되어 있는 경우</p>
+<ul>
+<li><p>작업 진행</p>
+<ul>
+<li>설치 할 <code>OS Image</code>를 선택하기 위해서 <code>config.vm.box = &quot;base&quot;</code>에서 <code>base</code>에 사용자가 설치할 가상 머신을 기입하면 된다.</li>
+<li><code>Vagrant</code>에서는 설치할 수 있는 가상 머신들을 사용자들이 올려서 공유할 수 있도록 하는 공간을 제공하고 있다.</li>
+<li>CentOS를 설치 할 예정이기 때문에 <code>https://app.vagrantup.com/boxes/search</code>에서 <code>centos</code>를 검색한다</li>
+<li><code>Discover Vagrant Boxes</code> 하단에 있는 <code>centos/7</code>을 확인한다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Step 4. 확인</p>
 </li>
 </ul>
