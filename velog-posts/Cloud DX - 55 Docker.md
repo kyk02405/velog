@@ -196,7 +196,68 @@
 </tbody></table>
 <hr />
 <h2 id="62-설치">6.2 설치</h2>
-<h3 id="621-docker-engine-설치를-위한-guest-os-설치">6.2.1 'Docker Engine' 설치를 위한 'Guest OS' 설치</h3>
+<h3 id="621-docker-engine-설치를-위한-guest-os-설치">6.2.1 Docker Engine 설치를 위한 Guest OS 설치</h3>
 <ul>
-<li>신경 써야 할 내용</li>
+<li><p>신경 써야 할 내용</p>
+</li>
+<li><p><code>Ubuntu</code> 설치</p>
+<ul>
+<li><p>환경 설정 및 설치</p>
+<pre><code class="language-bash">sudo apt update
+sudo apt upgrade
+sudo apt auto-remove
+sudo ufw allow 22/tcp
+sudo ufw reload</code></pre>
+</li>
+<li><p>설치 후 해야 할 기본 작업</p>
+</li>
+<li><p>네트워크 설정</p>
+<ul>
+<li><code>192.168.10.128</code></li>
+</ul>
+</li>
+<li><p>원격 접속</p>
+</li>
+</ul>
+</li>
+<li><p><code>Docker Engine</code> 설치</p>
+<ul>
+<li><p><code>Docker</code> 설치를 위한 관련 패키지 설치</p>
+<pre><code class="language-bash">sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</code></pre>
+</li>
+<li><p><code>Docker</code>의 <code>공식 apt 저장소</code> 추가</p>
+<pre><code class="language-bash">sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;</code></pre>
+</li>
+<li><p>시스템 패키지 업데이트</p>
+<pre><code class="language-bash">sudo apt update
+sudo apt upgrdae</code></pre>
+</li>
+<li><p>설치 및 확인</p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo apt install docker-ce docker-ce-cli containerd.io
+samadal@CloudDX:~$ sudo docker -v
+Docker version 29.1.2, build 890dcca
+samadal@CloudDX:~$ sudo ps -ef | grep docker
+...
+samadal@CloudDX:~$ sudo systemctl status docker
+...
+</code></pre>
+</li>
+</ul>
+<pre><code>- `Docker Engine` 버전 확인
+```bash
+samadal@CloudDX:~$ sudo docker version
+Client: Docker Engine - Community
+...
+Server: Docker Engine - Community
+...</code></pre></li>
+<li><p>테스트</p>
+<ul>
+<li><code>Docker</code> 이미지를 이용해서 컨테이너를 생성<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker run hello-world
+</code></pre>
+</li>
+</ul>
+<p>samadal@CloudDX:~$ sudo docker images           </p>
+<pre><code>![](https://velog.velcdn.com/images/kyk02405/post/ed1fb33e-8e71-45dd-a6e9-0b436b745b0f/image.png)
+![](https://velog.velcdn.com/images/kyk02405/post/940ea429-2c3e-4dfa-89dc-f69d6f62941d/image.png)</code></pre></li>
 </ul>
