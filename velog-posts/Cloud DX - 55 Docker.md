@@ -611,6 +611,7 @@ docker run -it --name hmcloud centos:7.samadal /bin/bash</code></pre><p><img alt
 <li><p>대표 컨테이너 이미지를 이용해서 컨테이너를 생성하고 컨테이너 이미지를 생성한다.</p>
 <ul>
 <li><p>도커 허브에 로그인</p>
+<pre><code class="language-bash">root@CloudDX:~# docker login -u kyk02405</code></pre>
 </li>
 <li><p>컨테이너 생성</p>
 </li>
@@ -626,8 +627,46 @@ docker run -it --name hmcloud centos:7.samadal /bin/bash</code></pre><p><img alt
 </li>
 </ul>
 </li>
+<li><p>작업 2. 정상</p>
+<ul>
+<li><p>잘못 만든 컨테이너 이미지 삭제</p>
+</li>
+<li><p>컨테이너 이미지 생성</p>
+<pre><code class="language-bash">docker container commit dockersam (컨테이너명)samadalwho(도커허브계정명)/hmcloud</code></pre>
+</li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>생성된 컨테이너 이미지를 도커 허브에 업로드</p>
+<ul>
+<li>도커 허브에 업로드<pre><code class="language-bash">sudo docker push kyk02405(식별자)/hmcloud(이미지명)</code></pre>
+</li>
+<li>도커 허브에서 업로드된 이미지 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5db123a8-ec4c-443a-b5dc-fafdedaa6153/image.png" /></li>
+</ul>
+</li>
+<li><p>도커 허브에서 컨테이너 이미지 다운로드 하기</p>
+<ul>
+<li>도커 허브에서 다운로드 받고자 하는 이미지를 미리 삭제</li>
+<li>도커 허브에서 이미지를 다운로드 한다<pre><code class="language-bash">docker pull kyk02405/hmcloud</code></pre>
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/13ba95ef-4469-4c6c-95d2-3421d95639b4/image.png" /></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="66-실전-테스트">6.6 실전 테스트</h2>
+<h2 id="661">6.6.1</h2>
+<h3 id="step-1-작업-개요">Step 1. 작업 개요</h3>
+<ul>
+<li>임의의 서비스<code>(mariadb)</code>가 동작되는 컨테이너를 생성한다.<ul>
+<li>패키지를 설치하고 <code>usersamadal</code>를 생성</li>
+<li>관리자와 사용자로 로그인이 잘 되는지 테스트한다.</li>
+<li>이 컨테이너를 이미지로 생성한 후 도커 허브에 업로드한다.</li>
+<li>로컬에 있는 컨테이너 및 이미지를 모두 삭제한다.</li>
+<li>도커 허브에 올려놓은 이미지를 다운로드 한 후 컨테이너를 활성화한다.</li>
+<li>앞에서 작업한 관리자(root), 사용자(usersamadal)로 로그인이 잘 되는지 테스트한다.</li>
 </ul>
 </li>
 </ul>
