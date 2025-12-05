@@ -660,13 +660,62 @@ docker run -it --name hmcloud centos:7.samadal /bin/bash</code></pre><p><img alt
 <h2 id="661">6.6.1</h2>
 <h3 id="step-1-작업-개요">Step 1. 작업 개요</h3>
 <ul>
-<li>임의의 서비스<code>(mariadb)</code>가 동작되는 컨테이너를 생성한다.<ul>
+<li><p>임의의 서비스<code>(mariadb)</code>가 동작되는 컨테이너를 생성한다.</p>
+<ul>
 <li>패키지를 설치하고 <code>usersamadal</code>를 생성</li>
 <li>관리자와 사용자로 로그인이 잘 되는지 테스트한다.</li>
 <li>이 컨테이너를 이미지로 생성한 후 도커 허브에 업로드한다.</li>
 <li>로컬에 있는 컨테이너 및 이미지를 모두 삭제한다.</li>
 <li>도커 허브에 올려놓은 이미지를 다운로드 한 후 컨테이너를 활성화한다.</li>
-<li>앞에서 작업한 관리자(root), 사용자(usersamadal)로 로그인이 잘 되는지 테스트한다.</li>
+<li>앞에서 작업한 관리자(root), 사용자(usersamadal)로 로그인이 잘 되는지 테스트한다.<h3 id="step-2-도커-컨테이너-작업-1">Step 2. 도커 컨테이너 작업 1.</h3>
+</li>
+</ul>
+</li>
+<li><p>작업 환경</p>
+<ul>
+<li>컨테이너에<code>CentOS 7</code>이 설치된 경우에는 데몬 실행 시 오류가 발생한다.</li>
+</ul>
+</li>
+<li><p>초기상태</p>
+<ul>
+<li>도커 이미지 삭제하고 추가</li>
+<li>도커 활성화/비활성화 되어 있는 모든 컨테이너 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ad8a1654-477a-4ac4-85e2-be4de41cf43a/image.png" /></li>
+</ul>
+</li>
+<li><p>컨테이너 생성 (데몬 실행 오류)</p>
+<ul>
+<li>도커 컨테이너 생성<pre><code class="language-bash">docker run -it --name mariadb_server centos:7 /bin/bash</code></pre>
+</li>
+<li>도커 컨테이너에 접속<pre><code class="language-bash">docker start mariadb_server
+docker attach mariadb_server</code></pre>
+</li>
+<li>시스템 업데이트<pre><code class="language-bash">sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+yum -y install epel-release
+yum -y update
+yum -y install firewalld
+</code></pre>
+</li>
+</ul>
+<pre><code></code></pre></li>
+<li><p>데몬 재실행</p>
+</li>
+</ul>
+<h3 id="step-3-도커-컨테이너-작업-2">Step 3. 도커 컨테이너 작업 2.</h3>
+<ul>
+<li><p>작업 환경</p>
+<ul>
+<li>컨테이너에 <code>Rocky Linux 8.10</code>이 설치된 경우에는 데몬 실행 시 오류가 발생한다.</li>
+</ul>
+</li>
+<li><p><span style="color: red;"><strong>매우 중요</strong></span></p>
+<ul>
+<li><code>컨테이너(mariadb_server)</code> 생성 시 생성되는 컨테이너에 <code>커널(init)까지 접근 가능</code>하도록 <code>권한(--privileged)</code>을 부여한다.
+왜? 명령을 실행하면 오류 메시지와 동시에 화면이 멈추는데 <code>privileged</code>와 <code>init</code>는 백그라운드에서 동작이 되어야 하는 것이기 때문이다.</li>
+<li><code>centos:latest</code>로 하지 않고 <code>centos:7</code> 또는 <code>centos:7.9.2007</code>로 하면 <code>D-bus</code> 오류가 발생한다. <code>latest</code>는 <code>CentOS 8.x</code>가 적용된다.</li>
+<li>그러나 <code>centos:latest</code>, <code>centos:7</code>, <code>centos:7.9.2007</code> 등 3가지 모두 <code>D-Bus</code> 오류가 발생한다.</li>
+<li>따라서 <code>Rocky Linux 8</code>으로 설치를 진행한다.</li>
+<li>(중요) 따라서 멈춘 화면은 <code>작업 표시줄</code>로 내리고 <code>신규 터미널창</code>을 하나 더 열고 작업하면 된다.</li>
 </ul>
 </li>
 </ul>
