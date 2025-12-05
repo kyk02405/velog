@@ -502,8 +502,10 @@ docker attach &lt;NAMES&gt;</code></pre>
 <h2 id="641-image-관련-명령어">6.4.1 Image 관련 명령어</h2>
 <h3 id="사용자가-생성한-컨테이너를-이용한-이미지-생성">사용자가 생성한 컨테이너를 이용한 이미지 생성</h3>
 <ul>
-<li>Step 1. 앞에서 작업했던 이미지, 컨테이너 모두 제거</li>
-<li>Step 2. 사전 작업<ul>
+<li><p>Step 1. 앞에서 작업했던 이미지, 컨테이너 모두 제거</p>
+</li>
+<li><p>Step 2. 사전 작업</p>
+<ul>
 <li>이미지를 검색하고 다운로드<pre><code class="language-bash">docker search centos
 docker pull centos:7</code></pre>
 </li>
@@ -518,4 +520,63 @@ yum -y update
 <li>확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b620eb3a-48d7-4e10-a230-9fa8e94b696e/image.png" /></li>
 </ul>
 </li>
+<li><p>Step 3. 이미지 생성</p>
+<ul>
+<li>부모 이미지(centos:7)와 파생된 컨테이너의 파일 시스템 간의 변경 사항 확인</li>
+<li>이미지 생성</li>
 </ul>
+<pre><code class="language-bash">docker diff beb787
+docker commit beb787 centos:7.samadal</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f30cf663-b541-4531-9d4e-d7f03468b2d3/image.png" /></p>
+<ul>
+<li>생성한 이미지를 이용해서 컨테이너를 생성<pre><code class="language-bash">docker run -it --name hmcloud centos:7.samadal /bin/bash</code></pre>
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/252b9406-0c20-4e66-8358-0755ad16aa8f/image.png" /></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="642-생성한-도커-이미지-관련-작업">6.4.2 생성한 도커 이미지 관련 작업</h2>
+<h3 id="도커-루트-디렉토리-관련-확인할-사항">도커 루트 디렉토리 관련 확인할 사항</h3>
+<ul>
+<li>도커 구성 정보 확인<pre><code class="language-bash">root@CloudDX:~# docker info
+...
+Docker Root Dir: /var/lib/docker
+...</code></pre>
+</li>
+<li>도커 이미지와 컨테이너 저장소 위치 확인
+```bash
+root@CloudDX:~# cd /var/lib/docker/
+root@CloudDX:/var/lib/docker# ls -l
+합계 40
+drwx--x--x 4 root root 4096 12월  4 18:01 buildkit
+drwx--x--- 4 root root 4096 12월  5 12:42 containers</li>
+<li>rw------- 1 root root   36 12월  4 18:01 engine-id
+drwxr-x--- 3 root root 4096 12월  4 18:01 network
+drwx------ 3 root root 4096 12월  4 18:01 plugins
+drwx--x--- 3 root root 4096 12월  4 18:13 rootfs
+drwx------ 2 root root 4096 12월  4 18:01 runtimes
+drwx------ 2 root root 4096 12월  4 18:01 swarm
+drwx------ 2 root root 4096 12월  4 18:01 tmp
+drwx-----x 2 root root 4096 12월  4 18:01 volumes
+```</li>
+<li><code>tree 구조 확인</code><pre><code>root@CloudDX:/var/lib/docker# tree -L 1
+</code></pre></li>
+</ul>
+<p>root@CloudDX:/var/lib/docker# tree -L 1
+.
+├── buildkit
+├── containers
+├── engine-id
+├── network
+├── plugins
+├── rootfs
+├── runtimes
+├── swarm
+├── tmp
+└── volumes</p>
+<p>10 directories, 1 file</p>
+<pre><code>---
+## 6.4.3 도커 이미지와 컨테이너 생성 및 검사
+### 이미지 다운로드 및 컨테이너 생성 방법
+- 방법 1. 이미지 다운로드 후 컨테이너 생성
+- 방법 2. 이미지 다운로드와 컨테이너 생성을 한번에 동작시키는 방법</code></pre>
