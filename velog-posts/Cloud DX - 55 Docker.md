@@ -259,5 +259,117 @@ Server: Docker Engine - Community
 </ul>
 <p>samadal@CloudDX:~$ sudo docker images           </p>
 <pre><code>![](https://velog.velcdn.com/images/kyk02405/post/ed1fb33e-8e71-45dd-a6e9-0b436b745b0f/image.png)
-![](https://velog.velcdn.com/images/kyk02405/post/940ea429-2c3e-4dfa-89dc-f69d6f62941d/image.png)</code></pre></li>
+![](https://velog.velcdn.com/images/kyk02405/post/940ea429-2c3e-4dfa-89dc-f69d6f62941d/image.png)
+</code></pre></li>
+</ul>
+<hr />
+<h2 id="63-명령어">6.3 명령어</h2>
+<h2 id="631-image-관련-명령어">6.3.1 Image 관련 명령어</h2>
+<hr />
+<h3 id="search">Search</h3>
+<ul>
+<li><p>개요</p>
+<ul>
+<li><code>Docker Hub</code>에서 이미지를 검색한다.</li>
+</ul>
+</li>
+<li><p>문법</p>
+<pre><code class="language-bash">docker search &lt;이미지명&gt;[:태그]</code></pre>
+</li>
+<li><p>실습 </p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker search centos</code></pre>
+<ul>
+<li><p><code>CentOS</code> 관련 모든 이미지를 검색하고 출력</p>
+</li>
+<li><p>검색 1. 공식 이미지 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ed43f826-02d2-4981-91ce-ec22ca4bcf4e/image.png" /></p>
+<pre><code class="language-bash">docker search centos</code></pre>
+<ul>
+<li>공식이미지는 <code>centos</code> 뒤에 아무것도 안써있음, <code>OFFICAIL</code> = <code>OK</code></li>
+</ul>
+</li>
+<li><p>검색 2. <code>CentOS</code>의 버전이 <code>7</code>인 이미지를 검색 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/c32ae4fa-4dd4-4566-b1e2-ea987a70227d/image.png" /></p>
+<pre><code class="language-bash">docker search centos:7</code></pre>
+</li>
+<li><p>검색 3. <code>CentOS</code>의 마지막 버전의 이미지를 검색 with 태그 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8b46727f-5699-446d-ba69-72ff1dcb321c/image.png" /></p>
+<pre><code class="language-bash">docker search centos:lastest</code></pre>
+</li>
+<li><p>검색 4. <code>Ubuntu</code>의 마지막 버전이 <code>24.04</code>인 이미지를 검색 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/81d335bf-2c02-4f71-87f0-8526c671c409/image.png" /></p>
+<pre><code class="language-bash">docker search ubuntu:24.04</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="images"><code>images</code></h3>
+<ul>
+<li>개요<ul>
+<li>현재 다운로드한 이미지의 목록을 확인</li>
+<li>필요할 때마다 한 개씩 불러와서 사용</li>
+</ul>
+</li>
+<li>문법<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/15a28a23-4d91-489d-9dc7-d650fc684477/image.png" /></li>
+</ul>
+<pre><code class="language-bash">docker images</code></pre>
+<hr />
+<h3 id="pull">pull</h3>
+<ul>
+<li><p>개요</p>
+<ul>
+<li>도커 이미지를 다운로드</li>
+</ul>
+</li>
+<li><p>문법</p>
+<pre><code class="language-bash">docker pull &lt;이미지명&gt;[:태그]</code></pre>
+</li>
+<li><p>실습 </p>
+<ul>
+<li><p>버전을 지정해서 다운로드 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2eda8c06-2328-4d0f-bf4f-bcde5ab50ee7/image.png" /></p>
+<pre><code class="language-bash">docker pull centos:7</code></pre>
+</li>
+<li><p>확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/828a328c-31d9-45b9-95ec-124cc5c26383/image.png" /></p>
+</li>
+<li><p>최정 버전을 지정해서 다운로드 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7389fb17-7e71-4f68-9648-9be8917528df/image.png" /></p>
+<pre><code class="language-bash">docker pull centos:lastest</code></pre>
+</li>
+<li><p>(참고) 컨테이너 목록등을 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/04ea1112-1ab5-432b-9205-c85266d90bb9/image.png" /></p>
+<pre><code class="language-bash">docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+df -h</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="rmi">rmi</h3>
+<ul>
+<li>개요<ul>
+<li>도커 이미지를 삭제</li>
+<li>태그가 있는 상태로 다운로드 했다면 이미지를 태그와 함께 삭제</li>
+<li>해당 이미지를 이용해서 생성된 컨테이너가 활성 또는 비활성 상태일 때는 삭제가 안되기 때문에 관련 컨테이너를 목록에서 제거</li>
+</ul>
+</li>
+<li>문법<pre><code class="language-bash">docker rmi</code></pre>
+</li>
+<li>실습 <ul>
+<li>이미지 삭제<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b125882d-0f7f-4ec8-aa9d-929c38e5a09a/image.png" /><pre><code class="language-bash">docker rmi centos:7
+docker rmi ubuntu:24.04</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="632-container-관련-명령어">6.3.2 Container 관련 명령어</h2>
+<h3 id="run">run</h3>
+<ul>
+<li>개요 <ul>
+<li>도커 이미지를 이용해서 컨테이너 생성</li>
+<li>(특징) 기본적으로 컨테이너 생성과 동시에 컨테이너 안에 접속</li>
+</ul>
+</li>
+<li>문법<pre><code class="language-bash">docker run &lt;옵션1&gt;&lt;서브옵션1&gt; ... --name &lt;컨테이너명&gt; &lt;이미지명&gt;[:태그] &lt;명령어&gt;</code></pre>
+```bash</li>
+<li>i(Interactive)
+```</li>
 </ul>
