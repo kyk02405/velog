@@ -363,13 +363,159 @@ docker rmi ubuntu:24.04</code></pre>
 <h2 id="632-container-관련-명령어">6.3.2 Container 관련 명령어</h2>
 <h3 id="run">run</h3>
 <ul>
-<li>개요 <ul>
+<li><p>개요 </p>
+<ul>
 <li>도커 이미지를 이용해서 컨테이너 생성</li>
 <li>(특징) 기본적으로 컨테이너 생성과 동시에 컨테이너 안에 접속</li>
 </ul>
 </li>
-<li>문법<pre><code class="language-bash">docker run &lt;옵션1&gt;&lt;서브옵션1&gt; ... --name &lt;컨테이너명&gt; &lt;이미지명&gt;[:태그] &lt;명령어&gt;</code></pre>
+<li><p>문법</p>
+<pre><code class="language-bash">docker run &lt;옵션1&gt;&lt;서브옵션1&gt; ... --name &lt;컨테이너명&gt; &lt;이미지명&gt;[:태그] &lt;명령어&gt;</code></pre>
+<ul>
+<li>옵션
 ```bash</li>
-<li>i(Interactive)
+<li>i (Interactive, 직접 타이핑해서 사용)</li>
+<li>t (가상 터미널, Pseudo-tty)</li>
+<li><ul>
+<li>name (컨테이너 이름)
+centos:7 (이미지명과 태그)
+/bin/bash (일반적으로 Shell을 지정)
 ```</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>실습</p>
+<ul>
+<li>도커 이미지를 다운로드 및 확인<pre><code class="language-bash">docker pull centos:7</code></pre>
+</li>
+<li>이미지로 컨테이너 생성 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/935f816c-0656-44a7-a6fa-5831ae5cfd18/image.png" /></li>
+</ul>
+<pre><code class="language-bash">docker run -i -t --name samadal centos:7 /bin/bash</code></pre>
+</li>
+</ul>
+<hr />
+<h3 id="ps">ps</h3>
+<ul>
+<li>개요<ul>
+<li>활성 또는 비활성 상태의 컨테이너를 모두 출력</li>
+<li><code>옵션(a)</code> 사용 유무<ul>
+<li>사용 (도커 컨테이너 <code>전체 목록(활성 및 비활성)</code>을 출력)</li>
+<li>미사용 (도커 컨테이너 <code>활성 상태(동작중인)</code>목록을 출력)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>문법<pre><code class="language-bash">docker ps -a
+docker ps</code></pre>
+</li>
+<li>실습 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5aacc68f-695a-406a-baa5-29dcb8873d81/image.png" /></li>
+</ul>
+<hr />
+<h3 id="create">create</h3>
+<ul>
+<li>개요<ul>
+<li><code>run</code>과 달리 컨테이너만 생성</li>
+</ul>
+</li>
+<li>문법<ul>
+<li><code>run</code> 명령 실행 시 내용은 같고 <code>run</code> 대신 <code>create</code>만 사용하면 된다.</li>
+</ul>
+</li>
+<li>실습 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e9eaaf67-8560-4127-bf0f-30ea72187235/image.png" /></li>
+</ul>
+<pre><code class="language-bash">docker create -it --name madal centos:7 /bin/bash</code></pre>
+<hr />
+<h3 id="rm">rm</h3>
+<ul>
+<li>개요<ul>
+<li>컨테이너를 삭제</li>
+</ul>
+</li>
+<li>문법<pre><code class="language-bash">docker rm &lt;CONTAINER ID&gt;
+docker rm &lt;NAMES&gt;</code></pre>
+</li>
+<li>실습 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/bfe93f84-83da-4387-bcb4-75f688bb68de/image.png" /></li>
+</ul>
+<pre><code class="language-bash">docker rm 0e8e3be7971e
+docker rm samadal</code></pre>
+<hr />
+<h3 id="start--restart--stop">start / restart / stop</h3>
+<ul>
+<li>개요 <ul>
+<li>컨테이너를 <code>실행</code>(활성화) / <code>재실행</code> /<code>중지</code>(비활성화)</li>
+</ul>
+</li>
+<li>문법 <pre><code class="language-bash">docker start / restart / stop &lt;CONTAINER ID&gt;
+docker start / restart / stop &lt;NAMES&gt;</code></pre>
+</li>
+<li>실습 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/63400dc2-3917-4b22-b735-7f9ee4d6a922/image.png" /></li>
+</ul>
+<hr />
+<h3 id="attach">attach</h3>
+<ul>
+<li><p>개요</p>
+<ul>
+<li>컨테이너에 접속한다.</li>
+</ul>
+</li>
+<li><p>문법</p>
+<pre><code class="language-bash">docker attach &lt;CONTAINER ID&gt;
+docker attach &lt;NAMES&gt;</code></pre>
+</li>
+<li><p>실습 </p>
+<ul>
+<li><p>기존 <code>eixt는</code> 비활성 상태로 만들고 빠져나옴 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d038cc01-6ef5-4670-be3d-76f0a5a6b8b6/image.png" /></p>
+</li>
+<li><p>활성상태를 유지하면서 빠져나오기   <code>^ + p + q</code><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/47b41282-0950-4b7b-86c0-b378cd3239bc/image.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="exec">exec</h3>
+<ul>
+<li>개요<ul>
+<li>현재 설정된 <code>/bin/bash/(로컬)</code>이 아닌 외부 접속으로 컨테이너 안의 명령 실행</li>
+<li>호스트 시스템에서 컨테이너에 접속하지 않고 컨테이너 안의 명령 실행</li>
+</ul>
+</li>
+<li>문법<pre><code class="language-bash">docker exec &lt;컨테이너 이름&gt; &lt;명령&gt; &lt;매개변수&gt;</code></pre>
+</li>
+<li>실습 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/db9d0111-6bad-4df7-8dc9-7f810ccb35b8/image.png" /></li>
+</ul>
+<pre><code class="language-bash">docker exec samadal echo &quot;Hi, Cloud...&quot;</code></pre>
+<hr />
+<h3 id="container-관련-통합-실습">Container 관련 통합 실습</h3>
+<ul>
+<li><p>커널 버전 확인</p>
+<ul>
+<li><p>호스트 OS에서 <code>Kernel</code> 버전 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/503607f7-0193-4521-ad6d-7707a16ebbae/image.png" /></p>
+</li>
+<li><p>컨테이너에서 <code>Kernel</code> 버전 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d72c98de-8ad1-4de2-b88d-54443d12320a/image.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="64-컨테이너를-이용한-이미지">6.4 컨테이너를 이용한 이미지</h2>
+<h2 id="641-image-관련-명령어">6.4.1 Image 관련 명령어</h2>
+<h3 id="사용자가-생성한-컨테이너를-이용한-이미지-생성">사용자가 생성한 컨테이너를 이용한 이미지 생성</h3>
+<ul>
+<li>Step 1. 앞에서 작업했던 이미지, 컨테이너 모두 제거</li>
+<li>Step 2. 사전 작업<ul>
+<li>이미지를 검색하고 다운로드<pre><code class="language-bash">docker search centos
+docker pull centos:7</code></pre>
+</li>
+<li>컨테이너 생성<pre><code class="language-bash">docker run -it --name samdocker centos:7 /bin/bash</code></pre>
+</li>
+<li>컨테이너에 들어간 후 필요한 패키지(kernel 업데이트)를 모두 설치한다.<pre><code class="language-bash">sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+yum -y install epel-release
+yum -y update
+^ + p + q</code></pre>
+</li>
+<li>확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b620eb3a-48d7-4e10-a230-9fa8e94b696e/image.png" /></li>
+</ul>
+</li>
 </ul>
