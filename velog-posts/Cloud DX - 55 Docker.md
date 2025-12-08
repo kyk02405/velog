@@ -657,20 +657,23 @@ docker run -it --name hmcloud centos:7.samadal /bin/bash</code></pre><p><img alt
 </ul>
 <hr />
 <h2 id="66-실전-테스트">6.6 실전 테스트</h2>
-<h2 id="661">6.6.1</h2>
+<h2 id="661-실전-테스트-1">6.6.1 실전 테스트 1.</h2>
+<hr />
 <h3 id="step-1-작업-개요">Step 1. 작업 개요</h3>
 <ul>
-<li><p>임의의 서비스<code>(mariadb)</code>가 동작되는 컨테이너를 생성한다.</p>
-<ul>
+<li>임의의 서비스<code>(mariadb)</code>가 동작되는 컨테이너를 생성한다.<ul>
 <li>패키지를 설치하고 <code>usersamadal</code>를 생성</li>
 <li>관리자와 사용자로 로그인이 잘 되는지 테스트한다.</li>
 <li>이 컨테이너를 이미지로 생성한 후 도커 허브에 업로드한다.</li>
 <li>로컬에 있는 컨테이너 및 이미지를 모두 삭제한다.</li>
 <li>도커 허브에 올려놓은 이미지를 다운로드 한 후 컨테이너를 활성화한다.</li>
-<li>앞에서 작업한 관리자(root), 사용자(usersamadal)로 로그인이 잘 되는지 테스트한다.<h3 id="step-2-도커-컨테이너-작업-1">Step 2. 도커 컨테이너 작업 1.</h3>
-</li>
+<li>앞에서 작업한 관리자(root), 사용자(usersamadal)로 로그인이 잘 되는지 테스트한다.</li>
 </ul>
 </li>
+</ul>
+<hr />
+<h3 id="step-2-도커-컨테이너-작업-1">Step 2. 도커 컨테이너 작업 1.</h3>
+<ul>
 <li><p>작업 환경</p>
 <ul>
 <li>컨테이너에<code>CentOS 7</code>이 설치된 경우에는 데몬 실행 시 오류가 발생한다.</li>
@@ -701,6 +704,7 @@ yum -y install firewalld
 <li><p>데몬 재실행</p>
 </li>
 </ul>
+<hr />
 <h3 id="step-3-도커-컨테이너-작업-2">Step 3. 도커 컨테이너 작업 2.</h3>
 <ul>
 <li><p>작업 환경</p>
@@ -724,6 +728,7 @@ yum -y install firewalld
 <li><p>앞에서 작업했던 모든 것을 다 제거한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f01699ca-8e77-4b33-adb6-d3d1f90268be/image.png" /></p>
 </li>
 <li><p>명령 실행 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f9bd43ff-6000-4262-b61d-693a993ae931/image.png" /> </p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker run -it --privileged --name mariadb_server rockylinux:8 init</code></pre>
 </li>
 <li><p>신규 터미널을 새로 띄우고 컨테이너에 접속 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ebb014a0-6ceb-47c0-a938-4ac110524a78/image.png" /></p>
 </li>
@@ -748,7 +753,114 @@ yum -y install firewalld
 </ul>
 </li>
 <li><p><code>Database Server 작업 1. 사용자(usersamadal) 생성</code></p>
+<pre><code class="language-bash">MariaDB [mysql]&gt; CREATE USER 'usersamadal'@'%' IDENTIFIED BY 'pwsamadal';</code></pre>
+</li>
+<li><p><code>Database Server 작업 2. 사용자(usersamadal) 접속 테스트</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/afaef6f7-0a4d-4c24-b7ac-cbf16aacf533/image.png" /></p>
 </li>
 </ul>
+</li>
+</ul>
+<hr />
+<h3 id="step-4-도커-허브에-도커-컨테이너-이미지-업로드">Step 4. 도커 허브에 도커 컨테이너 이미지 업로드</h3>
+<ul>
+<li><p>컨테이너 생성하기 전에 확인할 내용 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/85e6bfc1-38e7-4c6f-ab52-aac649b5e606/image.png" /></p>
+</li>
+<li><p>도커 허브에 접속 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/10c013a2-cab1-41a0-ba47-fee227bdd157/image.png" /></p>
+</li>
+<li><p>도커 허브에 생성 및 업로드 1. without TAG</p>
+<ul>
+<li><p>이미지 생성 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7ec25961-9ed1-485e-958f-845c89b5622e/image.png" /></p>
+</li>
+<li><p>업로드 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/435177ba-4ee3-49cd-8bbe-b6d285f4bf8b/image.png" /></p>
+</li>
+<li><p>사이트에서 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/54e8a189-6b84-4551-8e36-60d6accc937e/image.png" /></p>
+</li>
+</ul>
+</li>
+<li><p>도커 허브에 생성 및 업로드 2. with TAG</p>
+<ul>
+<li><p>이미지 생성 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0a5befb7-a550-4c8c-9d4d-81febc10900c/image.png" /></p>
+</li>
+<li><p>업로드 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/1ccfe3db-eb20-4142-b30e-f8987cafb222/image.png" /></p>
+</li>
+<li><p>사이트에서 확인<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/6b4fafd0-2c23-4ae1-a34f-81b3d9c5543d/image.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="step-5-도커-허브에-업로드-한-도커-컨테이너-이미지를-다운로드-한-후-컨테이너-활성화">Step 5. 도커 허브에 업로드 한 도커 컨테이너 이미지를 다운로드 한 후 컨테이너 활성화</h3>
+<ul>
+<li>로컬에 있는 이미지 및 컨테이너 모두 제거 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/eb51c160-4873-4524-9568-155bf3cb8247/image.png" /></li>
+<li>다운로드 후 활성화 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0d76a7ef-f79a-440f-9aa2-2e6f95f1888c/image.png" /><pre><code class="language-bash">samadal@CloudDX:~$ sudo docker run -it --name mariadb_server kyk02405/mariadb:1.0 /bin/bash</code></pre>
+</li>
+<li><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0e348dfb-c266-423c-b52a-e62d7e5dcedd/image.png" /></li>
+</ul>
+<hr />
+<h2 id="662-실전테스트-2-도커에서-ssh-접속">6.6.2 실전테스트 2. 도커에서 SSH 접속</h2>
+<h3 id="접속-1-호스트-시스템에서-도커-컨테이너로-ssh를-이용한-접속-1-기본-포트22">접속 1. 호스트 시스템에서 도커 컨테이너로 SSH를 이용한 접속 1. 기본 포트(22)</h3>
+<ul>
+<li>Step 1. 도커 컨테이너 확인 후 제거<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker stop mariadb_server
+samadal@CloudDX:~$ sudo docker rm mariadb_server</code></pre>
+</li>
+<li>Step 2. 도커 컨테이너 등록<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker pull centos:7
+samadal@CloudDX:~$ sudo docker create -it --privileged --name mdb kyk02405/mariadb:1.0 init
+9251eb815b46f027c5c5ba5085f6825e5876222f4a9e29cd04a7ed6bb63ab596
+</code></pre>
+</li>
+</ul>
+<pre><code>- Step 3. 도커 컨테이너 접속
+```bash
+samadal@CloudDX:~$ sudo docker start mdb
+mdb
+samadal@CloudDX:~$ sudo docker exec -it mdb /bin/bash
+[root@9251eb815b46 /]#</code></pre><blockquote>
+<ul>
+<li><code>init</code>으로 생성한 컨테이너 접속시에는 <code>exec</code> 사용</li>
+</ul>
+</blockquote>
+<pre><code class="language-bash">sudo docker exec -it mdb /bin/bash</code></pre>
+<ul>
+<li><p>그외는 <code>attach</code> 사용</p>
+<pre><code class="language-bash">sudo docker attach mdb</code></pre>
+</li>
+<li><p>Step 4. 도커 컨테이너 IP 확인</p>
+<pre><code class="language-bash">[root@9251eb815b46 /]# yum -y install net-tools</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/727b81aa-483a-48ff-b531-6a95f10d70e9/image.png" /></p>
+</li>
+<li><p>Step 51. <code>호스트 시스템(Ubuntu)</code>에서 SSH를 이용한 컨테이너 접속 1. 신규 터미널 창(호스트 시스템) <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/c47fdbf7-a0ed-4a0e-8b8d-4c4d459ee671/image.png" /></p>
+<ul>
+<li>시스템간 통신 확인</li>
+<li>도커 컨테이너에 접속 (접속 거부 오류 발생)<ul>
+<li><code>ping</code>은 되지만 접속 거부 됨</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Step 52. <code>호스트 시스템(Ubuntu)</code>에서 SSH를 이용한 컨테이너 접속 2. 기존 터미널창(도커 컨테이너 터미널 창)</p>
+<ul>
+<li>패키지 설치 (<code>openssh-*</code>)<pre><code class="language-bash">[root@9251eb815b46 /]# yum -y install openssh-*</code></pre>
+</li>
+<li>방화벽 해제 (<code>vi /etc/selinux/config</code> 수정) <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/1df05d6e-4acb-4a01-bc04-55128ba5f71b/image.png" /></li>
+<li>서비스 및 데몬 재실행<pre><code class="language-bash">[root@9251eb815b46 /]# systemctl enable sshd
+[root@9251eb815b46 /]# systemctl restart sshd</code></pre>
+</li>
+</ul>
+</li>
+<li><p>Step 53. <code>호스트 시스템(Ubuntu)</code>에서 SSH를 이용한 컨테이너 접속 3. 신규 터미널창(호스트 시스템)</p>
+<ul>
+<li>도커 컨테이너에 접속 (관리자 접속 거부 오류 발생) <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/974a6854-62c9-468f-a6a9-6fb88a8b23c0/image.png" /></li>
+</ul>
+</li>
+<li><p>Step 54. <code>호스트 시스템(Ubuntu)</code>에서 SSH를 이용한 컨테이너 접속 4. 기존 터미널창(도커 컨테이너 터미널 창)</p>
+<ul>
+<li><code>관리자(root)</code>의 비밀번호 지정과 <code>신규 사용자(samadal)</code>를 생성하고 비밀번호를 지정<pre><code class="language-bash">[root@9251eb815b46 /]# yum -y install passwd
+[root@9251eb815b46 /]# passwd
+[root@9251eb815b46 /]# useradd samadal
+[root@9251eb815b46 /]# passwd samadal</code></pre>
+</li>
+</ul>
+</li>
+<li><p>Step 55. <code>호스트 시스템(Ubuntu)</code>에서 SSH를 이용한 컨테이너 접속 5. 신규 터미널창(호스트 시스템)</p>
 </li>
 </ul>
