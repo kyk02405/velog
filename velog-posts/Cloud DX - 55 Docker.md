@@ -931,6 +931,59 @@ passwd samadal</code></pre>
 <li><code>^ + p + q</code></li>
 </ul>
 </li>
+<li><p><code>SSH</code> 접속</p>
+<ul>
+<li>다른 포트로 접속할 때는 <code>IP</code>가 아닌 <code>localhost</code>로 접속해야 한다.<pre><code class="language-bash">samadal@CloudDX:~$ sudo ssh -p 8081 root@localhost</code></pre>
+</li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="접속-3-도커-컨테이너에서-호스트-시스템에-ssh를-이용한-접속">접속 3. 도커 컨테이너에서 호스트 시스템에 SSH를 이용한 접속</h3>
+<ul>
+<li><p>Step 1. 기본 작업</p>
+<ul>
+<li>등록된 이미지 및 컨테이너 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/a4047dc2-47a7-441f-af35-8eea24a83de7/image.png" /></li>
+<li>호스트와의 통신 상태 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7ad3ac77-56c7-4017-9384-e91d069324d0/image.png" /></li>
+</ul>
+</li>
+<li><p>Step 2. 도커 컨테이너 생성 후 접속 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e25e1e50-8980-458f-9789-de34fe468380/image.png" /></p>
+</li>
+</ul>
+<ul>
+<li>Step 3. 호스트 시스템에 접속한 상태에서 컨테이너 상태 확인<pre><code class="language-bash">ssh samadal@192.168.10.128</code></pre>
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/14188377-b11d-4993-b08c-70ce91147a5d/image.png" /></li>
+</ul>
+<hr />
+<h2 id="663-실전테스트-3-docker에서의-apache-web-server">6.6.3 실전테스트 3. Docker에서의 Apache Web Server</h2>
+<h3 id="실습-1-osrocky-linux-810에서-지원하는-기능httpd-패키지을-이용한-도커-컨테이너">실습 1. OS(Rocky Linux 8.10)에서 지원하는 기능(httpd 패키지)을 이용한 도커 컨테이너</h3>
+<h3 id="apache-webe-server-접속을-위한-설정-커널-모드-사용">Apache Webe Server 접속을 위한 설정 (커널 모드 사용)</h3>
+<ul>
+<li><p>Step 1. 도커 이미지 및 컨테이너 확인 <code>(UP 상태 확인)</code><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/82c57526-f6ab-45e7-8ddc-19c6cced011c/image.png" /></p>
+</li>
+<li><p>Step 2.방화벽 포트 추가</p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo ufw allow 8014/tcp</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/02ef2b1b-1a97-4b3f-ab67-df4ba8bd8634/image.png" /></p>
+</li>
+<li><p>Step 3. 도커 컨테이너 생성</p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker create -it --privileged -p 8014:80 --name websamadal rockylinux:8 init</code></pre>
+</li>
+</ul>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/70ea74ec-8f24-4949-9de4-fde4da645e15/image.png" /></p>
+<ul>
+<li>Step 4. 도커 컨테이너 접속<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker start websamadal
+websamadal
+samadal@CloudDX:~$ sudo docker exec -it websamadal /bin/bash
+[root@e82d7900f0ec /]#</code></pre>
+<h3 id="도커-컨테이너-접속-후-기본-작업">도커 컨테이너 접속 후 기본 작업</h3>
+</li>
+<li>시스템 업데이트</li>
+<li>네트워크 확인</li>
+<li>방화벽 관련 작업</li>
+<li>패키지 관련 작업</li>
+<li>포트 활성 상태 확인<h3 id="사이트-출력">사이트 출력</h3>
+</li>
+<li></li>
 </ul>
