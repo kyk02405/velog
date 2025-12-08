@@ -973,17 +973,72 @@ passwd samadal</code></pre>
 </ul>
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/70ea74ec-8f24-4949-9de4-fde4da645e15/image.png" /></p>
 <ul>
-<li>Step 4. 도커 컨테이너 접속<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker start websamadal
+<li><p>Step 4. 도커 컨테이너 접속</p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker start websamadal
 websamadal
 samadal@CloudDX:~$ sudo docker exec -it websamadal /bin/bash
 [root@e82d7900f0ec /]#</code></pre>
 <h3 id="도커-컨테이너-접속-후-기본-작업">도커 컨테이너 접속 후 기본 작업</h3>
 </li>
-<li>시스템 업데이트</li>
-<li>네트워크 확인</li>
-<li>방화벽 관련 작업</li>
-<li>패키지 관련 작업</li>
-<li>포트 활성 상태 확인<h3 id="사이트-출력">사이트 출력</h3>
+<li><p>시스템 업데이트</p>
+<pre><code class="language-bash">[root@e82d7900f0ec /]# dnf -y update</code></pre>
 </li>
-<li></li>
+<li><p>네트워크 확인</p>
+<pre><code class="language-bash">[root@e82d7900f0ec /]# dnf -y install net-tools
+[root@e82d7900f0ec /]# dnf -y install iproute</code></pre>
+</li>
+<li><p>방화벽 관련 작업</p>
+<pre><code class="language-bash">[root@e82d7900f0ec /]# dnf -y install firewalld</code></pre>
+</li>
+<li><p>패키지 관련 작업</p>
+<pre><code class="language-bash">[root@e82d7900f0ec /]# dnf -y install httpd-*
+[root@e82d7900f0ec /]# systemctl enable httpd
+[root@e82d7900f0ec /]# systemctl restart httpd</code></pre>
+</li>
+<li><p>포트 활성 상태 확인</p>
+<pre><code class="language-bash">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;zone&gt;
+&lt;short&gt;Public&lt;/short&gt;
+&lt;description&gt;For use in public areas. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.&lt;/description&gt;
+&lt;service name=&quot;ssh&quot;/&gt;
+&lt;service name=&quot;http&quot;/&gt;
+&lt;service name=&quot;dhcpv6-client&quot;/&gt;
+&lt;service name=&quot;cockpit&quot;/&gt;
+&lt;port port=&quot;80&quot; protocol=&quot;tcp&quot;/&gt;
+&lt;port port=&quot;22&quot; protocol=&quot;tcp&quot;/&gt;
+&lt;/zone&gt;</code></pre>
+<h3 id="사이트-출력-1">사이트 출력 1.</h3>
+</li>
+<li><p><code>Host OS</code>인 <code>Ubuntu</code>에서 불여시를 실행한 후 <code>[root@e82d7900f0ec /]# systemctl restart httpd</code>를 입력, 출력 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/40842c82-a1bd-473d-948e-c6988bb94bc4/image.png" /></p>
+</li>
+</ul>
+<h3 id="도커-컨테이너-상태-확인">도커 컨테이너 상태 확인</h3>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/30c2ddc8-b185-4fab-a21b-66ee41eccdd0/image.png" /></p>
+<h3 id="사이트-출력-2">사이트 출력 2.</h3>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker exec -it websamadal /bin/bash
+[root@e82d7900f0ec /]# vi /var/www/html/index.html</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f0668244-a45a-4224-8a19-c58eb0363735/image.png" /></p>
+<h3 id="사이트-출력-3-host-osubuntu의-host-oswindows-10의-웹브라우저에서-출력">사이트 출력 3. Host OS(Ubuntu)의 Host OS(Windows 10)의 웹브라우저에서 출력</h3>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/cc84b008-1a0f-4c30-bda8-097843fd88c1/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2baca9e7-78a4-4434-a59a-4637d757eae4/image.png" /></p>
+<hr />
+<h3 id="실습-2-apache-web-server-이미지를-이용한-도커-컨테이너">실습 2. Apache Web Server 이미지를 이용한 도커 컨테이너</h3>
+<ul>
+<li><p>준비 작업 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/35a425f0-7f49-4dbf-a93e-914f46b7c49b/image.png" /></p>
+</li>
+<li><p>도커 이미지 검색 후 다운로드 </p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker search httpd
+samadal@CloudDX:~$ sudo docker pull httpd</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/af306b98-8b9e-40bc-a196-c13410fe62e8/image.png" /></p>
+</li>
+<li><p>컨테이너 삭제 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e91d1b78-f567-42b2-bd38-bef44a1f9372/image.png" /></p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker rm websamadal</code></pre>
+</li>
+<li><p>도커 컨테이너 생성(다운로드 한 이미지를 사용하지 않고 생성)</p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker run -itd --name websamadal -p 8014:80 httpd</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/c05e6581-b81d-4118-9051-65a733946002/image.png" /></p>
+</li>
+</ul>
+<ul>
+<li>사이트 출력 1.</li>
 </ul>
