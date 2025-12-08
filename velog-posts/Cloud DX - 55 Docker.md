@@ -862,5 +862,75 @@ samadal@CloudDX:~$ sudo docker exec -it mdb /bin/bash
 </ul>
 </li>
 <li><p>Step 55. <code>호스트 시스템(Ubuntu)</code>에서 SSH를 이용한 컨테이너 접속 5. 신규 터미널창(호스트 시스템)</p>
+<ul>
+<li>도커 컨테이너에 접속 (접속 허가 거부 오류 발생) <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/50eebce2-8c88-42b3-8bd2-f1a0530579c6/image.png" /></li>
+</ul>
+</li>
+<li><p>Step 56. <code>호스트 시스템(Ubuntu)</code>에서 SSH를 이용한 컨테이너 접속 6. 기존 터미널창(도커 컨테이너 터미널 창)</p>
+<ul>
+<li><code>vi /etc/ssh/sshd_confing</code>접속<ul>
+<li><code>PAM(pluggable Authentication Modules)</code>은 <code>접속허용</code>을 위한 사용 여부를 묻는다. <code>yes(허용)</code>, <code>no(거부)</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0695edde-d038-4903-86db-e17f1eb5de83/image.png" /></li>
+<li>주석 처리하고 데몬 재실행</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>Step 57. <code>호스트 시스템(Ubuntu)</code>에서 SSH를 이용한 컨테이너 접속 7. 신규 터미널창(호스트 시스템)</p>
+<ul>
+<li>도커 컨테이너에 접속(성공) <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e8c0dde0-eacb-4228-be62-e757f23ba6d1/image.png" /><h3 id="접속-2-호스트-시스템에서-도커-컨테이너로-ssh를-이용한-접속-2-전용-포트22-이외의-포트로-접속">접속 2. 호스트 시스템에서 도커 컨테이너로 SSH를 이용한 접속 2. 전용 포트(22) 이외의 포트로 접속</h3>
+</li>
+</ul>
+</li>
+<li><p>Step 1. 기본 작업</p>
+<ul>
+<li>포트(8081/tcp) 추가 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/abc69ed1-df57-4d2f-89ab-9f1fae375a66/image.png" /></li>
+</ul>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo ufw allow 8081/tcp
+samadal@CloudDX:~$ sudo ufw reload</code></pre>
+<ul>
+<li>도커 확인 이미지 및 컨테이너 확인 후 활성 상태가 있으면 중지 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f38d5ff8-b39e-4d7e-a9f9-77f185488ed7/image.png" /></li>
+</ul>
+</li>
+<li><p>Step 2. 도커 컨테이너 생성 후 접속 </p>
+<ul>
+<li>생성 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f7695bf8-8a86-4d8c-b68f-76f9c0fe8ff3/image.png" /></li>
+</ul>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker create -it --privileged -p 8081:22 --name cloudsamadal rockylinux:8 init</code></pre>
+<ul>
+<li><p>확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e58575ab-b7e0-4ab4-85b1-6968767cbc8e/image.png" /></p>
+</li>
+<li><p>접속  <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/14e70e3d-4cec-4940-9214-065dcd66b7c7/image.png" /></p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker start cloudsamadal
+samadal@CloudDX:~$ sudo docker exec -it cloudsamadal /bin/bash</code></pre>
+</li>
+<li><p>네트워크 활성화</p>
+<pre><code class="language-bash">[root@83bcb5ed1a83 /]# yum -y install net-tools</code></pre>
+</li>
+<li><p><code>SSH</code> 패키지 설치</p>
+<pre><code class="language-bash">[root@83bcb5ed1a83 /]# yum -y install openssh-*</code></pre>
+</li>
+<li><p>서비스 및 데몬 실행</p>
+<pre><code class="language-bash">[root@83bcb5ed1a83 /]# systemctl enable sshd
+[root@83bcb5ed1a83 /]# systemctl restart sshd</code></pre>
+</li>
+<li><p>포트 확인</p>
+<pre><code class="language-bash">[root@83bcb5ed1a83 /]# netstat -atunp | grep ssh
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      303/sshd
+tcp6       0      0 :::22                   :::*                    LISTEN      303/sshd</code></pre>
+</li>
+<li><p>관리자 비번 지정 및 사용자 생성</p>
+<pre><code class="language-bash">yum -y install passwd
+useradd samadal
+passwd
+passwd samadal</code></pre>
+</li>
+<li><p>실행 상태에서 빠져 나온다. </p>
+<ul>
+<li><code>^ + p + q</code></li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
