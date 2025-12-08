@@ -705,17 +705,50 @@ yum -y install firewalld
 <ul>
 <li><p>작업 환경</p>
 <ul>
-<li>컨테이너에 <code>Rocky Linux 8.10</code>이 설치된 경우에는 데몬 실행 시 오류가 발생한다.</li>
+<li>컨테이너에 <code>Rocky Linux 8.10</code>이 설치된 경우에는 정상적으로 동작한다.</li>
 </ul>
 </li>
 <li><p><span style="color: red;"><strong>매우 중요</strong></span></p>
 <ul>
-<li><code>컨테이너(mariadb_server)</code> 생성 시 생성되는 컨테이너에 <code>커널(init)까지 접근 가능</code>하도록 <code>권한(--privileged)</code>을 부여한다.
-왜? 명령을 실행하면 오류 메시지와 동시에 화면이 멈추는데 <code>privileged</code>와 <code>init</code>는 백그라운드에서 동작이 되어야 하는 것이기 때문이다.</li>
-<li><code>centos:latest</code>로 하지 않고 <code>centos:7</code> 또는 <code>centos:7.9.2007</code>로 하면 <code>D-bus</code> 오류가 발생한다. <code>latest</code>는 <code>CentOS 8.x</code>가 적용된다.</li>
-<li>그러나 <code>centos:latest</code>, <code>centos:7</code>, <code>centos:7.9.2007</code> 등 3가지 모두 <code>D-Bus</code> 오류가 발생한다.</li>
-<li>따라서 <code>Rocky Linux 8</code>으로 설치를 진행한다.</li>
-<li>(중요) 따라서 멈춘 화면은 <code>작업 표시줄</code>로 내리고 <code>신규 터미널창</code>을 하나 더 열고 작업하면 된다.</li>
+<li><p><code>컨테이너(mariadb_server)</code> 생성 시 생성되는 컨테이너에 <code>커널(init)까지 접근 가능</code>하도록 <code>권한(--privileged)</code>을 부여한다.
+왜? 명령을 실행하면 오류 메시지와 동시에 화면이 멈추는데 <code>privileged</code>와 <code>init</code>는 백그라운드에서 동작이 되어야 하는 것이기 때문이다.</p>
+</li>
+<li><p><code>centos:latest</code>로 하지 않고 <code>centos:7</code> 또는 <code>centos:7.9.2007</code>로 하면 <code>D-bus</code> 오류가 발생한다. <code>latest</code>는 <code>CentOS 8.x</code>가 적용된다.</p>
+</li>
+<li><p>그러나 <code>centos:latest</code>, <code>centos:7</code>, <code>centos:7.9.2007</code> 등 3가지 모두 <code>D-Bus</code> 오류가 발생한다.</p>
+</li>
+<li><p>따라서 <code>Rocky Linux 8</code>으로 설치를 진행한다.</p>
+</li>
+<li><p>(중요) 따라서 멈춘 화면은 <code>작업 표시줄</code>로 내리고 <code>신규 터미널창</code>을 하나 더 열고 작업하면 된다. </p>
+</li>
+<li><p>앞에서 작업했던 모든 것을 다 제거한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f01699ca-8e77-4b33-adb6-d3d1f90268be/image.png" /></p>
+</li>
+<li><p>명령 실행 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f9bd43ff-6000-4262-b61d-693a993ae931/image.png" /> </p>
+</li>
+<li><p>신규 터미널을 새로 띄우고 컨테이너에 접속 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ebb014a0-6ceb-47c0-a938-4ac110524a78/image.png" /></p>
+</li>
+<li><p>기타 작업</p>
+<ul>
+<li><code>저장소 업데이트</code><pre><code class="language-bash">[root@1c9f908a1987 /]# dnf -y install epel-release
+[root@1c9f908a1987 /]# dnf -y update</code></pre>
+</li>
+<li><code>방화벽</code><pre><code class="language-bash">[root@1c9f908a1987 /]# dnf -y install firewalld
+[root@1c9f908a1987 /]# systemctl enable firewalld
+[root@1c9f908a1987 /]# systemctl restart firewalld
+[root@1c9f908a1987 /]# firewall-cmd --permanent --add-port=3306/tcp
+[root@1c9f908a1987 /]# firewall-cmd --permanent --add-port=22/tcp
+[root@1c9f908a1987 /]# firewall-cmd --permanent --add-service=mysql
+[root@1c9f908a1987 /]# firewall-cmd --reload</code></pre>
+</li>
+<li><code>DB 패키지 설치</code><pre><code class="language-bash">[root@1c9f908a1987 /]# dnf -y install mariadb-*
+[root@1c9f908a1987 /]# systemctl enable mariadb
+[root@1c9f908a1987 /]# systemctl restart mariadb
+[root@1c9f908a1987 /]# mysql -u root -p mysql</code></pre>
+</li>
+</ul>
+</li>
+<li><p><code>Database Server 작업 1. 사용자(usersamadal) 생성</code></p>
+</li>
 </ul>
 </li>
 </ul>
