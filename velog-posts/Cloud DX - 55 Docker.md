@@ -1040,5 +1040,64 @@ samadal@CloudDX:~$ sudo docker pull httpd</code></pre>
 </li>
 </ul>
 <ul>
-<li>사이트 출력 1.</li>
+<li><p>사이트 출력 1.</p>
+<ul>
+<li><p>주소 입력 1. <code>Ubuntu</code>의 <code>firefox</code></p>
+<ul>
+<li><code>http://127.0.0.1:8014</code> / <code>http://localhost:8014</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/be474f67-d5d8-4db8-8fca-ee934e6658e4/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e7aa36a0-bcc3-42f4-ada8-4812545d2f30/image.png" /></li>
+</ul>
+</li>
+<li><p>주소 입력 2. <code>Windows 10</code>의 브라우저 </p>
+<ul>
+<li><code>http://192.168.10.128:8014</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/281ee519-299b-4baa-be67-04e432557a41/image.png" /></li>
+</ul>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/cff5e4d0-9dcf-486a-a5cc-d9f22669eecf/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/89eafaaf-89a4-497c-88f0-20b46dd99432/image.png" /></p>
+<pre><code class="language-bash">root@d8f95d5d632e:/usr/local/apache2/htdocs# apt update -y
+root@d8f95d5d632e:/usr/local/apache2/htdocs# apt upgrade -y
+root@d8f95d5d632e:/usr/local/apache2/htdocs# apt install vim-*</code></pre>
+</li>
+</ul>
+</li>
+<li><p>컨테이너 접속 후 기본 웹 문서 생성</p>
+</li>
+<li><p>사이트 출력 2.</p>
+</li>
+</ul>
+<h3 id="실습-3-도커-허브에-업로드">실습 3. 도커 허브에 업로드</h3>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker container commit websamadal kyk02405/web:1.0
+samadal@CloudDX:~$ sudo docker login
+samadal@CloudDX:~$ sudo docker push kyk02405/web:1.0</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e9ca6527-7401-422e-a4ae-543002c6993c/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4dd4a3c0-1d09-4ea8-8b6d-b862bbf2ef5f/image.png" /></p>
+<hr />
+<h3 id="실습-4-httpd가-설치된-컨테이너에-원격-접속">실습 4. httpd가 설치된 컨테이너에 원격 접속</h3>
+<ul>
+<li><p><code>httpd 컨테이너에 접속</code></p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker exec -it websamadal /bin/bash</code></pre>
+</li>
+<li><p>외부와의 통신 여부 확인</p>
+<pre><code class="language-bash">root@d8f95d5d632e:/usr/local/apache2# apt install iputils-ping</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/841d8b92-6eaf-4b86-b9b2-48ae0aa92f77/image.png" /></p>
+</li>
+<li><p><code>IP</code>확인</p>
+<pre><code class="language-bash">root@d8f95d5d632e:/usr/local/apache2# apt install -y net-tools</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d98763bc-6ea8-4b25-9906-852361ccb0e8/image.png" /></p>
+</li>
+<li><p>접속을 위한 패키지 설치 및 확인</p>
+<pre><code class="language-bash">root@d8f95d5d632e:/usr/local/apache2# apt install -y openssh-*</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/119ce4cf-8ff6-4b6f-9454-0c184f20319f/image.png" /></p>
+</li>
+<li><p>접속을 위한 사용자 생성 및 비밀번호 지정</p>
+<pre><code class="language-bash">root@d8f95d5d632e:/usr/local/apache2# useradd -s /bin/bash samadal
+root@d8f95d5d632e:/usr/local/apache2# passwd
+root@d8f95d5d632e:/usr/local/apache2# passwd samadal</code></pre>
+</li>
+<li><p><code>호스트 OS</code>에서 컨테이너로 접속</p>
+<ul>
+<li><code>Duplicate Session</code>으로 새 창 띄우고 접속 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/61240992-b7aa-490c-ba60-b9ff9d1e7b26/image.png" /></li>
+</ul>
+</li>
 </ul>
