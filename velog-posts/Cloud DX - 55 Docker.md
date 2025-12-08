@@ -1101,3 +1101,78 @@ root@d8f95d5d632e:/usr/local/apache2# passwd samadal</code></pre>
 </ul>
 </li>
 </ul>
+<pre><code class="language-bash">root@d8f95d5d632e:/usr/local/apache2# service ssh restart
+Restarting OpenBSD Secure Shell server: sshd.
+root@d8f95d5d632e:/usr/local/apache2#</code></pre>
+<ul>
+<li><code>know_hosts</code>가 없으면 실행 됨
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/a1b8f98b-370f-4e49-af70-f546aa1035b8/image.png" /></li>
+</ul>
+<hr />
+<h2 id="종합-문제">종합 문제</h2>
+<h3 id="실습-1">실습 1.</h3>
+<ul>
+<li><p>작업 환경</p>
+<ul>
+<li><p>도커 허브에 업로드한 컨테이너 이미지를 모두 제거한다.</p>
+</li>
+<li><p>두 개의 컨테이너를 활성화 한 후 <code>SSH</code>를 통해서 접속이 가능하도록 설정한다.</p>
+</li>
+<li><p><code>Web Server(aws)</code>와 <code>DB Server(mdb)</code>를 모두 연계해서 작업 하도록 한다.</p>
+</li>
+<li><p>제로보드 <code>FTP</code> 또는 <code>SCP</code>를 이용해서 도커 컨테이너에 업로드한 후 작업한다.</p>
+<h4 id="작업-1-기존에-작업했던-내용-중에서-컨테이너만-제거한다"><strong>작업 1. 기존에 작업했던 내용 중에서 컨테이너만 제거한다.</strong></h4>
+</li>
+<li><p>현재 상태 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9394a375-53b0-4971-8ec7-12d0c3e4a9a8/image.png" /></p>
+</li>
+<li><p>컨테이너 제거</p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker stop websamadal
+samadal@CloudDX:~$ sudo docker rm websamadal
+samadal@CloudDX:~$ sudo docker rm mdb
+samadal@CloudDX:~$ sudo docker rm cloudsamadal</code></pre>
+</li>
+<li><p>확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/34ad21b7-b60e-4ad1-b8cc-aef30cd1923d/image.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="작업-2-컨테이너-이미지-생성-후-도커-허브에-업로드백업"><strong>작업 2. 컨테이너 이미지 생성 후 도커 허브에 업로드(백업)</strong></h4>
+<ul>
+<li><p>Step 1. 컨테이너 생성 1. <code>DB Server</code></p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker run -itd --privileged --name mariadb_server rockylinux:8 init</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/73b92e04-f8b4-47b7-ab26-7b3e69b561fa/image.png" /></p>
+</li>
+<li><p>Step 2. 컨테이너 접속</p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker exec -it mariadb_server /bin/bash</code></pre>
+</li>
+<li><p>Step 3. 시스템 업데이트 및 패키지 설치</p>
+<pre><code class="language-bash">[root@df1f6b49a4a9 /]# dnf -y install epel-release
+[root@df1f6b49a4a9 /]# dnf -y update
+[root@df1f6b49a4a9 /]# dnf -y install mariadb-*
+[root@df1f6b49a4a9 /]# systemctl enable mariadb
+[root@df1f6b49a4a9 /]# systemctl restart mariadb
+[root@df1f6b49a4a9 /]# rpm -qa | grep mariadb-* | nl
+   1  mariadb-common-10.3.39-1.module+el8.8.0+1452+2a7eab68.x86_64
+   2  mariadb-errmsg-10.3.39-1.module+el8.8.0+1452+2a7eab68.x86_64
+   3  mariadb-backup-10.3.39-1.module+el8.8.0+1452+2a7eab68.x86_64
+   4  mariadb-server-utils-10.3.39-1.module+el8.8.0+1452+2a7eab68.x86_64
+   5  mariadb-10.3.39-1.module+el8.8.0+1452+2a7eab68.x86_64
+   6  mariadb-connector-c-devel-3.1.11-2.el8_3.x86_64
+   7  mariadb-server-galera-10.3.39-1.module+el8.8.0+1452+2a7eab68.x86_64
+   8  mariadb-test-10.3.39-1.module+el8.8.0+1452+2a7eab68.x86_64
+   9  mariadb-connector-odbc-3.1.12-1.el8.x86_64
+  10  mariadb-connector-c-config-3.1.11-2.el8_3.noarch
+  11  mariadb-embedded-10.3.39-1.module+el8.8.0+1452+2a7eab68.x86_64
+  12  mariadb-connector-c-3.1.11-2.el8_3.x86_64
+  13  mariadb-gssapi-server-10.3.39-1.module+el8.8.0+1452+2a7eab68.x86_64
+  14  mariadb-server-10.3.39-1.module+el8.8.0+1452+2a7eab68.x86_64
+  15  mariadb-devel-10.3.39-1.module+el8.8.0+1452+2a7eab68.x86_64
+  16  mariadb-oqgraph-engine-10.3.39-1.module+el8.8.0+1452+2a7eab68.x86_64
+  17  mariadb-java-client-2.7.1-2.el8.noarch
+  18  mariadb-embedded-devel-10.3.39-1.module+el8.8.0+1452+2a7eab68.x86_64</code></pre>
+</li>
+</ul>
+<ul>
+<li>Step 4. 방화벽 설정</li>
+<li>Step 5. DB 사용 사용자 생성</li>
+</ul>
