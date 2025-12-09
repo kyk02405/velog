@@ -1136,6 +1136,7 @@ samadal@CloudDX:~$ sudo docker rm cloudsamadal</code></pre>
 </ul>
 </li>
 </ul>
+<hr />
 <h4 id="작업-2-컨테이너-이미지-생성-후-도커-허브에-업로드백업"><strong>작업 2. 컨테이너 이미지 생성 후 도커 허브에 업로드(백업)</strong></h4>
 <ul>
 <li><p>Step 1. 컨테이너 생성 1. <code>DB Server</code></p>
@@ -1171,8 +1172,36 @@ samadal@CloudDX:~$ sudo docker rm cloudsamadal</code></pre>
   17  mariadb-java-client-2.7.1-2.el8.noarch
   18  mariadb-embedded-devel-10.3.39-1.module+el8.8.0+1452+2a7eab68.x86_64</code></pre>
 </li>
+<li><p>Step 4. 방화벽 설정</p>
+<pre><code class="language-bash">[root@df1f6b49a4a9 /]# systemctl enable mariadb
+[root@df1f6b49a4a9 /]# systemctl restart mariadb</code></pre>
+</li>
+<li><p>Step 5. DB 사용 사용자 생성</p>
+<pre><code class="language-bash">CREATE DATABASE dbsamadal;
+CREATE USER 'usersamadal'@'localhost' IDENTIFIED BY 'dbsamadal';
+GRANT ALL PRIVILEGES ON dbsamadal.* TO 'usersamadal'@'localhost';
+UPDATE user SET password = password('pwroot') WHERE user = 'root';
+FLUSH PRIVILEGES;
+systemctl restart mariadb</code></pre>
+</li>
+<li><p>Step 6. 도커 컨테이너 이미지 생성 후 도커 허브에 업로드 (백업) <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/48939628-b62e-4f07-8ae6-f644e5f91b2b/image.png" /></p>
+</li>
 </ul>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/1b4088ff-ff64-4acb-82fe-baa2a642919b/image.png" /></p>
+<hr />
+<h4 id="작업-3-ssh-접속을-위한-컨테이너-2개-mdb1-mdb2-생성">작업 3. SSH 접속을 위한 컨테이너 2개 (mdb1, mdb2) 생성</h4>
 <ul>
-<li>Step 4. 방화벽 설정</li>
-<li>Step 5. DB 사용 사용자 생성</li>
+<li><p>방화벽 포트 추가</p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo ufw allow 8081/tcp &amp;&amp; sudo ufw allow 8082/tcp
+samadal@CloudDX:~$ sudo ufw reload</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8f101539-bf59-485e-a8af-af5d0e58b484/image.png" /></p>
+</li>
+<li><p>컨테이너 이미지를 이용한 컨테이너(<code>mdb1</code>, <code>mdb2</code>) 생성</p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker create -it --privileged -p 8081:22 --name mdb1 kyk02405/mariadb:20251209 init
+samadal@CloudDX:~$ sudo docker create -it --privileged -p 8082:22 --name mdb2 kyk02405/mariadb:20251209 init</code></pre>
+</li>
+</ul>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/66981f60-9860-4d68-8fbd-f078c15c97f8/image.png" /></p>
+<ul>
+<li>```</li>
 </ul>
