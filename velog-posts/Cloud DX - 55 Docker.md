@@ -1307,7 +1307,7 @@ root@34c7c44b2ab7:/usr/local/apache2/conf# service apache2 start</code></pre>
 </ul>
 </li>
 <li><code>SSH</code><ul>
-<li>'Host OS'의 '8015' 포트를 'Docker Container'의 '22'포트와 연동</li>
+<li><code>Host OS</code>의 <code>8015</code> 포트를 <code>Docker Container</code>의 <code>22</code>포트와 연동</li>
 <li><code>8015 / 22</code></li>
 </ul>
 </li>
@@ -1324,7 +1324,127 @@ root@34c7c44b2ab7:/usr/local/apache2/conf# service apache2 start</code></pre>
 </ul>
 </li>
 <li><code>DB Server</code><ul>
-<li><code>8019 / 3306</code></li>
+<li><code>8019 / 3306</code><pre><code class="language-bash">samadal@CloudDX:~$ sudo docker create -it --privileged -p 8015:22 -p 8016:53 -p 8017:80 -p 8018:21 -p 8019:3306 --name allserver rockylinux:8 init</code></pre>
+</li>
 </ul>
+</li>
+</ul>
+<hr />
+<h4 id="작업-2-호스트-시스템에서의-방화벽-포트-데몬-관련-작업">작업 2. 호스트 시스템에서의 방화벽, 포트, 데몬 관련 작업</h4>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo ufw allow 8015/tcp; sudo ufw allow 8016/tcp; sudo ufw allow 8017/tcp; sudo ufw allow 8018/tcp; sudo ufw allow 8019/tcp</code></pre>
+<hr />
+<h4 id="작업-3-컨테이너에서-접속-후-방화벽-포트-데몬-관련-작업">작업 3. 컨테이너에서 접속 후 방화벽, 포트, 데몬 관련 작업</h4>
+<ul>
+<li><code>firewalld</code> 설치<pre><code class="language-bash">[root@13c94028eabe /]# dnf -y install firewalld
+[root@13c94028eabe /]# systemctl enable firewalld
+[root@13c94028eabe /]# systemctl restart firewalld</code></pre>
+</li>
+<li>방화벽 및 포트 설정<pre><code class="language-bash">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;zone&gt;
+&lt;short&gt;Public&lt;/short&gt;
+&lt;description&gt;For use in public areas. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.&lt;/description&gt;
+&lt;service name=&quot;ssh&quot;/&gt;
+&lt;service name=&quot;dns&quot;/&gt;
+&lt;service name=&quot;http&quot;/&gt;
+&lt;service name=&quot;ftp&quot;/&gt;
+&lt;service name=&quot;mysql&quot;/&gt;
+&lt;service name=&quot;dhcpv6-client&quot;/&gt;
+&lt;service name=&quot;cockpit&quot;/&gt;
+&lt;port port=&quot;21&quot; protocol=&quot;tcp&quot;/&gt;
+&lt;port port=&quot;22&quot; protocol=&quot;tcp&quot;/&gt;
+&lt;port port=&quot;53&quot; protocol=&quot;tcp&quot;/&gt;
+&lt;port port=&quot;53&quot; protocol=&quot;udp&quot;/&gt;
+&lt;port port=&quot;80&quot; protocol=&quot;tcp&quot;/&gt;
+&lt;port port=&quot;3306&quot; protocol=&quot;tcp&quot;/&gt;
+&lt;/zone&gt;</code></pre>
+</li>
+<li>패키지 설치<pre><code class="language-bash">[root@13c94028eabe /]# dnf install -y passwd
+[root@13c94028eabe /]# dnf install -y openssh-*
+[root@13c94028eabe /]# dnf install -y httpd-*
+[root@13c94028eabe /]# dnf install -y vsftpd-*
+[root@13c94028eabe /]# dnf install -y mariadb-*
+[root@13c94028eabe /]# dnf install -y bind-*
+[root@13c94028eabe /]# dnf install -y php
+[root@13c94028eabe /]# dnf install -y php-*</code></pre>
+</li>
+<li>데몬 <code>enable</code><pre><code class="language-bash">[root@13c94028eabe /]# systemctl enable httpd
+Created symlink /etc/systemd/system/multi-user.target.wants/httpd.service → /usr/lib/systemd/system/httpd.service.
+[root@13c94028eabe /]# systemctl enable vsftpd
+Created symlink /etc/systemd/system/multi-user.target.wants/vsftpd.service → /usr/lib/systemd/system/vsftpd.service.
+[root@13c94028eabe /]# systemctl enable mariadb
+Created symlink /etc/systemd/system/mysql.service → /usr/lib/systemd/system/mariadb.service.
+Created symlink /etc/systemd/system/mysqld.service → /usr/lib/systemd/system/mariadb.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/mariadb.service → /usr/lib/systemd/system/mariadb.service.
+[root@13c94028eabe /]# systemctl enable sshd
+[root@13c94028eabe /]# systemctl enable named</code></pre>
+</li>
+<li>데몬 <code>restart</code><pre><code class="language-bash">[root@13c94028eabe /]# systemctl restart httpd
+[root@13c94028eabe /]# systemctl restart vsftpd
+[root@13c94028eabe /]# systemctl restart mariadb
+[root@13c94028eabe /]# systemctl restart sshd
+[root@13c94028eabe /]# systemctl restart named
+[root@13c94028eabe /]# systemctl enable vsftpd</code></pre>
+</li>
+<li>사이트 출력 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f162d702-a27c-43e1-a15d-844431346477/image.png" /></li>
+</ul>
+<hr />
+<h4 id="작업-4-컨테이너에서의-db-사용자-생성">작업 4. 컨테이너에서의 DB 사용자 생성</h4>
+<ul>
+<li><code>DB Server</code> 설정
+```bash</li>
+<li><ul>
+<li>1) 데이터베이스 생성
+CREATE DATABASE dbsamadal;</li>
+</ul>
+</li>
+</ul>
+<p>-- 2) 로컬 사용자 생성
+CREATE USER 'usersamadal'@'localhost' IDENTIFIED BY 'pwsamadal';</p>
+<p>-- 3) 외부 접속 사용자 생성 (%)
+CREATE USER 'usersamadal'@'%' IDENTIFIED BY 'pwsamadal';</p>
+<p>-- 4) 로컬 계정에 권한 부여
+GRANT ALL PRIVILEGES ON dbsamadal.* TO 'usersamadal'@'localhost';</p>
+<p>-- 5) 외부 계정에 권한 부여
+GRANT ALL PRIVILEGES ON dbsamadal.* TO 'usersamadal'@'%';</p>
+<p>-- 6) 비밀번호 명확하게 재설정 (중복 방지)
+ALTER USER 'usersamadal'@'localhost' IDENTIFIED BY 'pwsamadal';
+ALTER USER 'usersamadal'@'%' IDENTIFIED BY 'pwsamadal';</p>
+<p>-- 7) root 비밀번호를 UPDATE 방식으로 변경
+UPDATE mysql.user SET password = PASSWORD('pwroot') WHERE user = 'root';</p>
+<p>-- 8) 변경 사항 적용
+FLUSH PRIVILEGES;</p>
+<pre><code>---
+#### 작업 5. `Apache Web Server` 기본 경로 변경
+- 경로 변경 `vi /etc/httpd/conf/httpd.conf`
+![](https://velog.velcdn.com/images/kyk02405/post/53ebb245-7125-4e37-a0eb-58b20209a96d/image.png)
+
+```bash
+[root@13c94028eabe /]# useradd samadal
+[root@13c94028eabe /]# chmod 701 /home/samadal
+[root@13c94028eabe /]# cp -p /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.samadal
+[root@13c94028eabe /]# vi /etc/httpd/conf/httpd.conf
+[root@13c94028eabe /]# vi /home/samadal/index.html
+Docker Container with Samadal
+[root@13c94028eabe /]# systemctl restart httpd</code></pre><ul>
+<li>사이트 출력 2. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/22a1ad58-2ebe-4e3e-8457-708ac8a631e5/image.png" /></li>
+</ul>
+<hr />
+<h4 id="작업-6-컨테이너에서-phpmyadmin-설치-후-db-server-연동">작업 6. 컨테이너에서 phpmyadmin 설치 후 DB Server 연동</h4>
+<ul>
+<li><p><code>phpmyadmin</code> 설치</p>
+<pre><code class="language-bash">[root@13c94028eabe samadal]# dnf install -y wget
+[root@13c94028eabe samadal]# dnf install -y zip
+[root@13c94028eabe samadal]# wget https://files.phpmyadmin.net/phpMyAdmin/4.0.10.20/phpMyAdmin-4.0.10.20-all-languages.zip
+[root@13c94028eabe samadal]# unzip phpMyAdmin-4.0.10.20-all-languages.zip
+[root@13c94028eabe samadal]# mv phpMyAdmin-4.0.10.20-all-languages phpmyadmin
+[root@13c94028eabe samadal]# systemctl restart httpd
+[root@13c94028eabe samadal]# vi index.php
+&lt;?php
+      phpinfo();
+?&gt;</code></pre>
+</li>
+<li><p>사이트 출력 3. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/700beb2c-cf06-417e-86af-54c5e829dd42/image.png" /></p>
+</li>
+<li><p>사이트 출력 4. </p>
 </li>
 </ul>
