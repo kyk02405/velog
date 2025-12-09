@@ -1250,4 +1250,44 @@ samadal@CloudDX:~$ sudo docker pull httpd</code></pre>
 </li>
 <li><p>포트 포워딩을 위한 방화벽(8014) 추가</p>
 </li>
+<li><p>사이트 출력 1. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f4a3ea21-9ff5-4b18-8232-4ab287f875c7/image.png" /></p>
+</li>
+<li><p><code>httpd</code> 컨테이너 접속하고 출력용 파일 생성</p>
+<pre><code class="language-bash">root@34c7c44b2ab7:/usr/local/apache2/htdocs# mv index.html index.html.samadal
+root@34c7c44b2ab7:/usr/local/apache2/htdocs# apt update
+root@34c7c44b2ab7:/usr/local/apache2/htdocs# apt upgrade
+root@34c7c44b2ab7:/usr/local/apache2/htdocs# apt -y install vim-*
+root@34c7c44b2ab7:/usr/local/apache2/htdocs# vi index.html
+hi</code></pre>
+</li>
+<li><p>사이트 출력 2.
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/3a47590c-deb5-494e-9ea7-18d5d9b6cf89/image.png" /></p>
+</li>
+</ul>
+<hr />
+<h4 id="작업-5-제로보드-출력">작업 5. 제로보드 출력</h4>
+<pre><code class="language-bash">root@34c7c44b2ab7:/usr/local/apache2/htdocs# apt install net-tools
+root@34c7c44b2ab7:/usr/local/apache2/htdocs# apt install -y openssh-*
+root@34c7c44b2ab7:/usr/local/apache2/htdocs# service ssh start
+root@34c7c44b2ab7:/usr/local/apache2/htdocs# useradd -m samadal
+root@34c7c44b2ab7:/usr/local/apache2/htdocs# passwd samadal
+^ + p + q</code></pre>
+<ul>
+<li><p><code>/etc/ssh/sshd_config</code> 수정</p>
+<pre><code class="language-bash">root@34c7c44b2ab7:/usr/local/apache2/htdocs# vi /etc/ssh/sshd_config
+PermitRootLogin yes
+# Use PAM yes</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/862ddf86-f109-40b2-8036-52570e35e268/image.png" /></p>
+</li>
+<li><p>xe.zip 설치</p>
+<pre><code class="language-bash">root@34c7c44b2ab7:/home/samadal# apt install wget
+root@34c7c44b2ab7:/home/samadal# apt install iputils-ping
+root@34c7c44b2ab7:/home/samadal# wget http://download.xpressengine.com/download/18325662/22756225
+root@34c7c44b2ab7:/home/samadal# mv 22756225 xe.zip
+root@34c7c44b2ab7:/home/samadal# unzip xe.zip
+root@34c7c44b2ab7:/home/samadal# chmod 707 xe
+root@34c7c44b2ab7:~# cd /usr/local/apache2/htdocs
+root@34c7c44b2ab7:/usr/local/apache2/htdocs# mv /home/samadal/xe .
+</code></pre>
+</li>
 </ul>
