@@ -1191,17 +1191,63 @@ systemctl restart mariadb</code></pre>
 <hr />
 <h4 id="작업-3-ssh-접속을-위한-컨테이너-2개-mdb1-mdb2-생성">작업 3. SSH 접속을 위한 컨테이너 2개 (mdb1, mdb2) 생성</h4>
 <ul>
-<li><p>방화벽 포트 추가</p>
-<pre><code class="language-bash">samadal@CloudDX:~$ sudo ufw allow 8081/tcp &amp;&amp; sudo ufw allow 8082/tcp
+<li>방화벽 포트 추가<pre><code class="language-bash">samadal@CloudDX:~$ sudo ufw allow 8081/tcp &amp;&amp; sudo ufw allow 8082/tcp
 samadal@CloudDX:~$ sudo ufw reload</code></pre>
-<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8f101539-bf59-485e-a8af-af5d0e58b484/image.png" /></p>
-</li>
-<li><p>컨테이너 이미지를 이용한 컨테이너(<code>mdb1</code>, <code>mdb2</code>) 생성</p>
-<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker create -it --privileged -p 8081:22 --name mdb1 kyk02405/mariadb:20251209 init
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8f101539-bf59-485e-a8af-af5d0e58b484/image.png" /></li>
+<li>작업 전 이미지와 컨테이너 상태 확인 
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/bd7a7baf-b0fb-413a-99f0-61c0f943bc36/image.png" /></li>
+</ul>
+<ul>
+<li>컨테이너 이미지(kyk02405/mariadb:20251209)를 이용한 컨테이너(<code>mdb1</code>, <code>mdb2</code>) 생성<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker create -it --privileged -p 8081:22 --name mdb1 kyk02405/mariadb:20251209 init
 samadal@CloudDX:~$ sudo docker create -it --privileged -p 8082:22 --name mdb2 kyk02405/mariadb:20251209 init</code></pre>
 </li>
 </ul>
-<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/66981f60-9860-4d68-8fbd-f078c15c97f8/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9649f223-cade-4a56-aa8b-0094a543b64c/image.png" />
+현재는 활성 상태 컨테이너가 없기 때문에 <code>PORTS</code> 필드에 <code>Prot Forwarding</code> 된 내용이 안 나타난다.</p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5733c1b7-839c-4bbc-a83d-f9c1237c4cae/image.png" /></p>
 <ul>
-<li>```</li>
+<li><p>접속 후 테스트 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/69914b51-a37e-4cfb-acc2-4c7b5c8bb425/image.png" /></p>
+</li>
+<li><p>공통사항 </p>
+<ul>
+<li><code>패키지(net-tools / firewalld / openssh-*)</code> 설치<pre><code class="language-bash">dnf -y install net-tools
+dnf -y install firewalld
+dnf -y install openssh-*
+dnf -y install passwd</code></pre>
+</li>
+<li>데몬 재실행</li>
+<li><code>vi /etc/ssh/sshd_config</code> 수정 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7a31b8a3-d304-43c3-b555-6098695c64b8/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/c2c9f491-4685-4116-a742-dc6c41581bed/image.png" /><ul>
+<li>데몬 재실행</li>
+</ul>
+</li>
+<li>접속 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9dca5a33-9a6f-4693-a849-6f4ffe9b1aed/image.png" /></li>
+<li><code>mdb2(172.17.0.3)</code>도 똑같이 진행</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="작업-4-gui-mode-에서-동작되는-apache-web-server">작업 4. GUI Mode 에서 동작되는 Apache Web Server</h4>
+<ul>
+<li><p>개요</p>
+<ul>
+<li><code>Apache 전용 이미지(httpd)</code>를 사용해서 컨테이너를 생성</li>
+<li>사이트 출력까지만 진행한다.</li>
+</ul>
+</li>
+<li><p>이미지와 컨테이너 정보 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/14890c4e-bfb3-450f-b19a-52b7818b9701/image.png" /></p>
+</li>
+<li><p>포트 상태 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/829dcc51-cc5a-4984-b8ab-8c6570a22a4e/image.png" /></p>
+</li>
+<li><p><code>Apache</code> 공식 이미지 다운로드</p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker search httpd
+samadal@CloudDX:~$ sudo docker pull httpd</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/99293efb-814c-4ba5-98f8-4f1eeab9223b/image.png" /></p>
+</li>
+<li><p><code>Apache</code> 전용 이미지로 컨테이너 생성</p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo docker run -itd --name websamadal -p 8014:80 httpd</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7caae3b7-4a9e-41ff-9004-97468cdc565d/image.png" /></p>
+</li>
+<li><p>포트 포워딩을 위한 방화벽(8014) 추가</p>
+</li>
 </ul>
