@@ -1445,6 +1445,25 @@ Docker Container with Samadal
 </li>
 <li><p>사이트 출력 3. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/700beb2c-cf06-417e-86af-54c5e829dd42/image.png" /></p>
 </li>
-<li><p>사이트 출력 4. </p>
+<li><p><code>phpmyadmin</code> 사이트 출력 4. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/45272cdd-608f-442b-b13c-82536df7ce72/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/05607175-da35-444f-909f-e01896ab1c64/image.png" /></p>
+</li>
+<li><p>용량 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4dff4fd6-7c0d-40bf-a93e-0cac48fb00a9/image.png" /></p>
 </li>
 </ul>
+<hr />
+<h4 id="작업-7-컨테이너에서-제로보드-설치-후-db-server-연동">작업 7. 컨테이너에서 제로보드 설치 후 DB Server 연동</h4>
+<ul>
+<li>제로보드 다운로드<pre><code class="language-bash">[root@13c94028eabe samadal]# wget http://download.xpressengine.com/download/18325662/22756225
+[root@13c94028eabe samadal]# mv 22756225 xe.zip
+[root@13c94028eabe samadal]# unzip xe.zip
+[root@13c94028eabe samadal]# chmod 707 xe</code></pre>
+</li>
+</ul>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/71ebe330-9285-46fd-bade-9e5d63723881/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/6cb66961-ac3e-4944-8fe8-50c64be0d8a2/image.png" /></p>
+<ul>
+<li>사이트 출력 5. 로그인</li>
+</ul>
+<hr />
+<h2 id="실습-3-도커-컨테이너를-이용한-제로보드-연동-2ssh-dns-server-web-server-ftp-server-db-server가-서로-다른-컨테이너에-있는-경우">실습 3. 도커 컨테이너를 이용한 제로보드 연동 2.SSH, DNS Server, Web Server, FTP Server, DB Server가 서로 다른 컨테이너에 있는 경우</h2>
