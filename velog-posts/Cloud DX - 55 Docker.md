@@ -1112,17 +1112,17 @@ root@d8f95d5d632e:/usr/local/apache2#</code></pre>
 <h2 id="종합-문제">종합 문제</h2>
 <h3 id="실습-1">실습 1.</h3>
 <ul>
-<li><p>작업 환경</p>
-<ul>
-<li><p>도커 허브에 업로드한 컨테이너 이미지를 모두 제거한다.</p>
+<li>작업 환경<ul>
+<li>도커 허브에 업로드한 컨테이너 이미지를 모두 제거한다.</li>
+<li>두 개의 컨테이너를 활성화 한 후 <code>SSH</code>를 통해서 접속이 가능하도록 설정한다.</li>
+<li><code>Web Server(aws)</code>와 <code>DB Server(mdb)</code>를 모두 연계해서 작업 하도록 한다.</li>
+<li>제로보드 <code>FTP</code> 또는 <code>SCP</code>를 이용해서 도커 컨테이너에 업로드한 후 작업한다.</li>
+</ul>
 </li>
-<li><p>두 개의 컨테이너를 활성화 한 후 <code>SSH</code>를 통해서 접속이 가능하도록 설정한다.</p>
-</li>
-<li><p><code>Web Server(aws)</code>와 <code>DB Server(mdb)</code>를 모두 연계해서 작업 하도록 한다.</p>
-</li>
-<li><p>제로보드 <code>FTP</code> 또는 <code>SCP</code>를 이용해서 도커 컨테이너에 업로드한 후 작업한다.</p>
+</ul>
+<hr />
 <h4 id="작업-1-기존에-작업했던-내용-중에서-컨테이너만-제거한다"><strong>작업 1. 기존에 작업했던 내용 중에서 컨테이너만 제거한다.</strong></h4>
-</li>
+<ul>
 <li><p>현재 상태 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9394a375-53b0-4971-8ec7-12d0c3e4a9a8/image.png" /></p>
 </li>
 <li><p>컨테이너 제거</p>
@@ -1132,8 +1132,6 @@ samadal@CloudDX:~$ sudo docker rm mdb
 samadal@CloudDX:~$ sudo docker rm cloudsamadal</code></pre>
 </li>
 <li><p>확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/34ad21b7-b60e-4ad1-b8cc-aef30cd1923d/image.png" /></p>
-</li>
-</ul>
 </li>
 </ul>
 <hr />
@@ -1288,6 +1286,45 @@ root@34c7c44b2ab7:/home/samadal# unzip xe.zip
 root@34c7c44b2ab7:/home/samadal# chmod 707 xe
 root@34c7c44b2ab7:~# cd /usr/local/apache2/htdocs
 root@34c7c44b2ab7:/usr/local/apache2/htdocs# mv /home/samadal/xe .
-</code></pre>
+root@34c7c44b2ab7:/usr/local/apache2/conf# apt install php
+root@34c7c44b2ab7:/usr/local/apache2/conf# service apache2 start</code></pre>
+</li>
+</ul>
+<pre><code class="language-bash">root@34c7c44b2ab7:/usr/local/apache2/conf# vi httpd.conf</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/fe80351b-2392-4856-9be8-836b7fdf00ea/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/eb15a0ee-792c-4b43-a91a-1643959da2ee/image.png" /></p>
+<ul>
+<li>출력 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b3c747f5-27a9-4767-87b0-c90522629925/image.png" /></li>
+</ul>
+<hr />
+<h3 id="실습-2-도커-컨테이너를-이용한-제로보드-연동-1-한-개의-컨테이너-ssh-dns-server-web-server-ftp-server-db-server-가-모두-있는-경우">실습 2. 도커 컨테이너를 이용한 제로보드 연동 1. 한 개의 컨테이너 SSH, DNS Server, Web Server, FTP Server, DB Server 가 모두 있는 경우</h3>
+<hr />
+<h4 id="작업-1-dns-server-web-server-ftp-server-db-server-가-모두-적용된-컨테이너-생성">작업 1. DNS Server, Web Server, FTP Server, DB Server 가 모두 적용된 컨테이너 생성</h4>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/96c0cfc1-abd2-4420-b713-a57f7da3b182/image.png" /></p>
+<ul>
+<li>개요 <ul>
+<li>각 서버별 포트 포워딩을 적용할 포트르 다음과 같이 설정한다.</li>
+</ul>
+</li>
+<li><code>SSH</code><ul>
+<li>'Host OS'의 '8015' 포트를 'Docker Container'의 '22'포트와 연동</li>
+<li><code>8015 / 22</code></li>
+</ul>
+</li>
+<li><code>DNS Server</code><ul>
+<li><code>8016 / 53</code></li>
+</ul>
+</li>
+<li><code>Web Server</code><ul>
+<li><code>8017 / 80</code></li>
+</ul>
+</li>
+<li><code>FTP Server</code><ul>
+<li><code>8018 / 21</code></li>
+</ul>
+</li>
+<li><code>DB Server</code><ul>
+<li><code>8019 / 3306</code></li>
+</ul>
 </li>
 </ul>
