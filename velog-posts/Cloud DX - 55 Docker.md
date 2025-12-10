@@ -1694,13 +1694,25 @@ Storage Driver: overlay2</code></pre>
 <h2 id="68-prune-명령">6.8 Prune 명령</h2>
 <h3 id="개요-2">개요</h3>
 <ul>
-<li>도커와 관련된 모든 내용들이 삭제된다.</li>
-<li>사용하지 않는 도커 컨테이너의 삭제 대상은 다운로드 한 이미지까지 모두 제거가 된다.</li>
-<li>따라서 모든 설정이 완료된 도커 컨테이너는 이미지화 한 후 도커 허브에 백업을 해둬야 한다.</li>
-<li>리눅스에서의 <code>rm -rf /*</code>와 동급<h3 id="명령어-실행">명령어 실행</h3>
+<li><p>도커와 관련된 모든 내용들이 삭제된다.</p>
 </li>
-<li>도커 상태 확인 1.</li>
-<li>작업 1. </li>
-<li>도커 상태 확인 2. 변화가 없다.</li>
-<li>활성 상태 컨테이너 삭제</li>
+<li><p>사용하지 않는 도커 컨테이너의 삭제 대상은 다운로드 한 이미지까지 모두 제거가 된다.</p>
+</li>
+<li><p>따라서 모든 설정이 완료된 도커 컨테이너는 이미지화 한 후 도커 허브에 백업을 해둬야 한다.</p>
+</li>
+<li><p>리눅스에서의 <code>rm -rf /*</code>와 동급</p>
+<h3 id="명령어-실행">명령어 실행</h3>
+</li>
+<li><p>도커 상태 확인 1. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/66084279-0867-4354-98c8-c944968961ed/image.png" /></p>
+</li>
+<li><p>작업 1. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/6c75c247-699f-449e-b01c-f734cc11df0d/image.png" /></p>
+</li>
+<li><p>도커 상태 확인 2. 변화가 없다.</p>
+</li>
+<li><p>활성 상태 컨테이너 삭제 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/75ef430d-9619-4c18-887f-104be50e1c80/image.png" /></p>
+</li>
+<li><p>작업 2. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/77894387-11f2-4479-86aa-8e55e51582dc/image.png" /></p>
+</li>
+<li><p>도커 상태 확인 3. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/deba9e75-229b-46c9-a63d-244577c7eff2/image.png" /></p>
+</li>
 </ul>
