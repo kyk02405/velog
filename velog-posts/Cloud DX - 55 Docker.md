@@ -1486,3 +1486,88 @@ Docker Container with Samadal
    → 'Containter'   Rocky 8.10 / 172.17.0.4 / 22, 3306
    → grant 명령 실행 시 'localhost', '%' 추가</code></pre></li>
 </ul>
+<hr />
+<h2 id="67-도커-기본-경로-변경">6.7 도커 기본 경로 변경</h2>
+<h3 id="개요-1">개요</h3>
+<ul>
+<li>시스템 운영 시 필요에 따라 분리해서 별도의 저장장치를 통해 관리하고자 할 때 유용하게 사용</li>
+<li>(핵심) 만약 현재 운용중인 <code>HDD</code> 즉, <code>Host OS</code>가 설치된 파티션이 용량 부족으로 인해 어려움을 겪을때 <code>대용량의 신규 HDD</code>를 추가하고 <code>도커 기본 경로</code>인 <code>ls -l /var/lib/docker/</code>를 별도로 추가된 파티션으로 변경하면 된다.</li>
+</ul>
+<hr />
+<h3 id="작업-1-경로-변경-설정-전-작업">작업 1. 경로 변경 설정 전 작업</h3>
+<ul>
+<li><p>(중요) 현재 동작 중인 도커 컨테이너들을 모두 중지한다.</p>
+<ul>
+<li><p>도커 이미지확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/40844cf9-a5e0-4a9e-82f9-17dcf76aafcf/image.png" /></p>
+</li>
+<li><p>도커 컨테이너 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e49b9e6f-08b5-4cd0-94b0-fbd7e4d708bf/image.png" /></p>
+</li>
+<li><p>삭제 후 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7818ae4f-8eb6-4dc8-a8dc-e85f9a61e0c8/image.png" /></p>
+</li>
+</ul>
+</li>
+<li><p>호스트 시스템을 종료한 후 128GB 용량의 <code>HDD</code>를 추가하고 파티션을 통으로 잡고 자동 마운트 설정 </p>
+<ul>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/50c18ce6-64e4-472f-acc7-5722198ff13b/image.png" /></p>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/6b1644a7-c2c6-4895-a997-681e4fadbd8d/image.png" /></p>
+</li>
+<li><p><code>재부팅</code> 후 확인<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/45912cc2-8d20-4397-b308-f9f30456df4d/image.png" /></p>
+</li>
+<li><p>(중요) 도커 데몬 중지와 도커 자동 데몬 실행 중지</p>
+<ul>
+<li><p>프로세스 정보에서 동작중인 도커 데몬을 확인한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0ff8f447-2dc8-4c60-8bd6-f7b268ea187c/image.png" /></p>
+</li>
+<li><p><code>도커 데몬</code>을 중지한다 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b7aa9e64-59dc-437f-929b-946522a74ac9/image.png" /></p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo systemctl stop docker</code></pre>
+</li>
+<li><p><code>도커 자동 데몬 실행</code>을 중지한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/92a95bd3-eef3-4734-ad62-acc9e32c6a97/image.png" /></p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo systemctl disable docker</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="작업-2-경로-변경-설정">작업 2. 경로 변경 설정</h3>
+<ul>
+<li><p>Step 1. 기본 경로 확인</p>
+<pre><code class="language-bash">samadal@CloudDX:~$ sudo -i
+root@CloudDX:~# find / -name docker.service -type f
+/usr/lib/systemd/system/docker.service
+/var/lib/systemd/deb-systemd-helper-enabled/multi-user.target.wants/docker.service
+find: ‘/run/user/1000/doc’: 허가 거부
+find: ‘/run/user/120/doc’: 허가 거부
+root@CloudDX:~# cd /usr/lib/systemd/system</code></pre>
+</li>
+<li><p>Step 2. 기본 경로 설정 변경 1. 오류</p>
+<ul>
+<li><p>파일 수정</p>
+<pre><code class="language-bash">root@CloudDX:/usr/lib/systemd/system# cp -p docker.service docker.service.samadal
+root@CloudDX:/usr/lib/systemd/system# vi docker.service</code></pre>
+<ul>
+<li>수정 전<pre><code class="language-bash">root@CloudDX:/usr/lib/systemd/system# vi docker.service
+15 ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+19 Restart=always</code></pre>
+</li>
+<li>수정 후<pre><code class="language-bash">15 ExecStart=/usr/bin/dockerd -H fd:// --graph=/128gb
+19 Restart=no</code></pre>
+</li>
+<li>설정 파일 변경 후 다시 로딩해서 시스템에 적용<pre><code class="language-bash">root@CloudDX:/usr/lib/systemd/system# systemctl daemon-reload</code></pre>
+</li>
+<li>도커 데몬 재시작 1. 오류<pre><code class="language-bash">root@CloudDX:/usr/lib/systemd/system# systemctl enable docker
+root@CloudDX:/usr/lib/systemd/system# /usr/lib/systemd/systemd-sysv-install enable docker    
+</code></pre>
+</li>
+</ul>
+<pre><code>
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Step 3. 기본 경로 설정 변경 2. 정상</li>
+<li>Step 4.</li>
+<li>Step 5.</li>
+</ul>
