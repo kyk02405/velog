@@ -1467,3 +1467,22 @@ Docker Container with Samadal
 </ul>
 <hr />
 <h2 id="실습-3-도커-컨테이너를-이용한-제로보드-연동-2ssh-dns-server-web-server-ftp-server-db-server가-서로-다른-컨테이너에-있는-경우">실습 3. 도커 컨테이너를 이용한 제로보드 연동 2.SSH, DNS Server, Web Server, FTP Server, DB Server가 서로 다른 컨테이너에 있는 경우</h2>
+<ul>
+<li><p>초기 설정</p>
+<p>   -&gt; 이미지를 이용한 컨테이너 생성 및 확인</p>
+<pre><code> : sudo docker images
+ : sudo docker create -it --privileged -p 8081:22 -p 8016:53 --name dns_server rockylinux:8 init
+ : sudo docker create -it --privileged -p 8082:22 -p 8017:80 --name web_server rockylinux:8 init
+ : sudo docker create -it --privileged -p 8083:22 -p 8019:3306 --name db_server rockylinux:8 init</code></pre><p>   -&gt; 'Host OS'와 'Containter'에서의 방화벽 포트 설정</p>
+<pre><code> : DNS Server
+   → 'Host OS'   Ubuntu 24.04.3 / 192.168.10.128 / 8016, 8081
+   → 'Containter'   Rocky 8.10 / 172.17.0.2 / 22, 53 / 호스트(ns, www)
+ : Web Server
+   → 'Host OS'   Ubuntu 24.04.3 / 192.168.10.129 / 8017, 8082
+   → 'Containter'   Rocky 8.10 / 172.17.0.3 / 22, 80
+   → 사이트 출력    http://www.gusiya.com/, http://www.gusiya.com/xe/
+ : DB Server
+   → 'Host OS'   Ubuntu 24.04.3 / 192.168.10.130 / 8019, 8083
+   → 'Containter'   Rocky 8.10 / 172.17.0.4 / 22, 3306
+   → grant 명령 실행 시 'localhost', '%' 추가</code></pre></li>
+</ul>
