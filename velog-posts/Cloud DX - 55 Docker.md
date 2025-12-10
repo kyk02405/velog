@@ -1554,7 +1554,7 @@ root@CloudDX:/usr/lib/systemd/system# vi docker.service</code></pre>
 <li>수정 후<pre><code class="language-bash">15 ExecStart=/usr/bin/dockerd -H fd:// --graph=/128gb
 19 Restart=no</code></pre>
 </li>
-<li>설정 파일 변경 후 다시 로딩해서 시스템에 적용<pre><code class="language-bash">root@CloudDX:/usr/lib/systemd/system# systemctl daemon-reload</code></pre>
+<li>설정 파일 변경 후 다시 로딩해서 시스템에 적용 1.<pre><code class="language-bash">root@CloudDX:/usr/lib/systemd/system# systemctl daemon-reload</code></pre>
 </li>
 <li>도커 데몬 재시작 1. 오류<pre><code class="language-bash">root@CloudDX:/usr/lib/systemd/system# systemctl enable docker
 root@CloudDX:/usr/lib/systemd/system# /usr/lib/systemd/systemd-sysv-install enable docker    
@@ -1567,7 +1567,88 @@ root@CloudDX:/usr/lib/systemd/system# /usr/lib/systemd/systemd-sysv-install enab
 </li>
 </ul>
 <ul>
-<li>Step 3. 기본 경로 설정 변경 2. 정상</li>
-<li>Step 4.</li>
-<li>Step 5.</li>
+<li>Step 3. 기본 경로 설정 변경 2. 정상<pre><code class="language-bash">root@CloudDX:/usr/lib/systemd/system# rm -rf docker.service
+root@CloudDX:/usr/lib/systemd/system# cp -p docker.service.samadal docker.service</code></pre>
+<ul>
+<li>수정 전<pre><code class="language-bash">15 ExecStart=/usr/bin/dockerd -H fd:// --graph=/128gb
+19 Restart=no</code></pre>
+</li>
+<li>수정 후<pre><code class="language-bash">16 ExecStart=/usr/bin/dockerd -H fd:// --data-root /128gb
+21 Restart=no</code></pre>
+</li>
+<li>설정 파일 변경 후 다시 로딩해서 시스템에 적용 2.<pre><code class="language-bash">root@CloudDX:/usr/lib/systemd/system# systemctl daemon-reload
+root@CloudDX:/usr/lib/systemd/system# systemctl restart docker</code></pre>
+</li>
+<li>도커 데몬 재시작 2. 정상<ul>
+<li>수정된 내용 확인<pre><code class="language-bash">root@CloudDX:/usr/lib/systemd/system# ps -ef | grep docker
+root        3765       1  0 12:40 ?        00:00:00 /usr/bin/dockerd -H fd:// --data-root /128gb
+root        3929    2798  0 12:41 pts/1    00:00:00 grep --color=auto docker</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Step 4. 도커 기본 경로 설정 변경 확인<ul>
+<li>정상적으로 변경이 되었다면 원래 기본 경로<code>(/var/lib/docker/)</code> 안에 있는 내용들과 동일한 내용들이 <code>/128gb</code>에 추가된 것을 확인할 수 있다.
+```bash
+root@CloudDX:~# sudo ls -l /var/lib/docker/
+합계 40
+drwx--x--x 4 root root 4096 12월  4 18:01 buildkit
+drwx--x--- 2 root root 4096 12월 10 11:44 containers</li>
+</ul>
+</li>
+<li>rw------- 1 root root   36 12월  4 18:01 engine-id
+drwxr-x--- 3 root root 4096 12월  4 18:01 network
+drwx------ 3 root root 4096 12월  4 18:01 plugins
+drwx--x--- 3 root root 4096 12월  4 18:13 rootfs
+drwx------ 2 root root 4096 12월 10 11:53 runtimes
+drwx------ 2 root root 4096 12월  4 18:01 swarm
+drwx------ 2 root root 4096 12월 10 11:53 tmp
+drwx-----x 2 root root 4096 12월 10 11:53 volumes
+root@CloudDX:~# sudo ls -l /128gb
+합계 52
+drwx--x--x 4 root root  4096 12월 10 12:40 buildkit
+drwx--x--- 2 root root  4096 12월 10 12:40 containers</li>
+<li>rw------- 1 root root    36 12월 10 12:40 engine-id
+drwx------ 2 root root 16384 12월 10 11:51 lost+found
+drwxr-x--- 3 root root  4096 12월 10 12:40 network
+drwx------ 3 root root  4096 12월 10 12:40 plugins
+drwx------ 2 root root  4096 12월 10 12:40 runtimes
+drwx------ 2 root root  4096 12월 10 12:40 swarm
+drwx------ 2 root root  4096 12월 10 12:40 tmp
+drwx-----x 2 root root  4096 12월 10 12:40 volumes
+```</li>
+<li>Step 5. (매우 중요) 기본 경로가 변경되었다는 것을 증명<ul>
+<li>컨테이너가 존재할 경우에는 <code>/var/lib/docker/containers/</code> 안에 다음과 같은 내용이 출력된다.<pre><code class="language-bash">root@CloudDX:~# sudo ls -l /var/lib/docker/containers/
+합계 0
+root@CloudDX:~# sudo ls -l /128gb/containers/
+합계 0</code></pre>
+</li>
+<li>기본 경로의 내용이 복사된 것이 아니라 신규로 생성되었다는 것을 알 수 있다</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="작업-3-기본-경로와-변경-경로의-용량-및-overlay2-디렉토리의-내용-변화">작업 3. 기본 경로와 변경 경로의 용량 및 overlay2 디렉토리의 내용 변화</h3>
+<ul>
+<li><p>Step 1. 이미지를 올린 상태 </p>
+<ul>
+<li><p>이미지, 컨테이너, 마운트 정보를 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/99490544-385f-450a-87d4-f435632ff8ca/image.png" /></p>
+</li>
+<li><p>현재 용량 확인(등록(활성, 비활성)되어 있는 컨테이너가 없기 때문에 <code>overlay2</code>가 안보인다.)</p>
+<pre><code class="language-bash">root@CloudDX:/128gb# du -hs * | sort -nr</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/224fab0a-24df-42a3-9306-d44c524e2094/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/22cdd5f0-88b2-4792-a2a9-f1eab93c7b5d/image.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Step 2. 도커 이미지 삭제 후 변화된 내용 확인 <ul>
+<li>이미지 삭제 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/db9e439b-d226-4cae-b4ef-1bee50c3bd35/image.png" /></li>
+<li>용량 변화 확인ㅏㅏ</li>
+</ul>
+</li>
 </ul>
