@@ -1670,7 +1670,37 @@ Storage Driver: overlay2</code></pre>
 <li><p>Step 3. 도커 이미지 삭제 후 변화된 내용 확인 </p>
 <ul>
 <li>이미지 삭제 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/db9e439b-d226-4cae-b4ef-1bee50c3bd35/image.png" /></li>
-<li>용량 변화 확인</li>
+<li>용량 변화 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/70f6029c-41d3-4d9f-bdfd-f58c1989ec7b/image.png" /></li>
 </ul>
 </li>
+</ul>
+<ul>
+<li><p>Step 4. 변경된 경로를 이용한 실습</p>
+<ul>
+<li><p>도커 이미지 다운로드 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/652c2686-2eaa-4541-8878-654cc7058201/image.png" /></p>
+</li>
+<li><p>별도의 창에서 확인 1. 이미지 생성 후의 변화 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/fbfc8bc8-57e4-4ef1-8f31-f61c195822c8/image.png" /></p>
+</li>
+<li><p>컨테이너 생성 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b1fdbd48-cb5e-4aa7-b61e-4510ff6e8c10/image.png" /></p>
+</li>
+<li><p>별도의 창에서 확인 2. <code>컨테이너 생성</code> 후의 변화 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8fa63e03-44c1-498c-b6a5-00a951bc0b82/image.png" /><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d991effd-db4a-4c27-b3c7-ec29d168582a/image.png" /></p>
+</li>
+<li><p>확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f6f1bdad-a010-414e-bf4a-0181f2679f31/image.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="68-prune-명령">6.8 Prune 명령</h2>
+<h3 id="개요-2">개요</h3>
+<ul>
+<li>도커와 관련된 모든 내용들이 삭제된다.</li>
+<li>사용하지 않는 도커 컨테이너의 삭제 대상은 다운로드 한 이미지까지 모두 제거가 된다.</li>
+<li>따라서 모든 설정이 완료된 도커 컨테이너는 이미지화 한 후 도커 허브에 백업을 해둬야 한다.</li>
+<li>리눅스에서의 <code>rm -rf /*</code>와 동급<h3 id="명령어-실행">명령어 실행</h3>
+</li>
+<li>도커 상태 확인 1.</li>
+<li>작업 1. </li>
+<li>도커 상태 확인 2. 변화가 없다.</li>
+<li>활성 상태 컨테이너 삭제</li>
 </ul>
