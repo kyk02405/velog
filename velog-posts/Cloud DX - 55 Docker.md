@@ -1637,18 +1637,40 @@ root@CloudDX:~# sudo ls -l /128gb/containers/
 <ul>
 <li><p>이미지, 컨테이너, 마운트 정보를 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/99490544-385f-450a-87d4-f435632ff8ca/image.png" /></p>
 </li>
-<li><p>현재 용량 확인(등록(활성, 비활성)되어 있는 컨테이너가 없기 때문에 <code>overlay2</code>가 안보인다.)</p>
+<li><p>등록(활성, 비활성)되어 있는 컨테이너가 없기 때문에 <code>/128gb/</code>의 <code>overlay2</code>가 안보인다.</p>
 <pre><code class="language-bash">root@CloudDX:/128gb# du -hs * | sort -nr</code></pre>
-<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/224fab0a-24df-42a3-9306-d44c524e2094/image.png" />
-<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/22cdd5f0-88b2-4792-a2a9-f1eab93c7b5d/image.png" /></p>
 </li>
-</ul>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/224fab0a-24df-42a3-9306-d44c524e2094/image.png" /></p>
 </li>
-</ul>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/22cdd5f0-88b2-4792-a2a9-f1eab93c7b5d/image.png" /></p>
+</li>
+<li><p>저장소 특징</p>
 <ul>
-<li>Step 2. 도커 이미지 삭제 후 변화된 내용 확인 <ul>
+<li>그런데 현재 <code>/128gb/</code>에는 <code>overlay2</code> 디렉토리가 나타나지 않는데 그 이유는, <code>Ubuntu 24.x</code> 이후 버전에서는 <code>overlay2</code> 대신에 <code>overlayfs</code>가 적용된다. </li>
+<li><code>sudo docker info | grep storage</code> 명령으로 확인할 수 있따.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Step 2. <code>overlayfs</code> 저장소를 <code>overlay2</code> 저장소로 변경</p>
+<pre><code class="language-bash">root@CloudDX:~# systemctl restart docker
+root@CloudDX:~# sudo cp -p /etc/containerd/config.toml /ho       me/samadal/
+root@CloudDX:~# sudo rm -rf /etc/containerd/config.toml
+root@CloudDX:~# sudo vi /etc/docker/daemon.js
+root@CloudDX:~# cat /etc/docker/daemon.js
+{
+&quot;storage-driver&quot;: &quot;overlay2&quot;
+}
+root@CloudDX:~# sudo rm -rf /128gb/*
+root@CloudDX:~# sudo systemctl restart containerd
+root@CloudDX:~# sudo systemctl restart docker
+root@CloudDX:~# sudo docker info | grep Storage
+Storage Driver: overlay2</code></pre>
+</li>
+<li><p>Step 3. 도커 이미지 삭제 후 변화된 내용 확인 </p>
+<ul>
 <li>이미지 삭제 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/db9e439b-d226-4cae-b4ef-1bee50c3bd35/image.png" /></li>
-<li>용량 변화 확인ㅏㅏ</li>
+<li>용량 변화 확인</li>
 </ul>
 </li>
 </ul>
