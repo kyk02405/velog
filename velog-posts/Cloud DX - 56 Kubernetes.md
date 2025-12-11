@@ -316,9 +316,25 @@ end</code></pre>
 </ul>
 <hr />
 <h4 id="실습-2-가상-머신에-추가-패키지-설치">실습 2. 가상 머신에 추가 패키지 설치</h4>
-<p> yum repolist</p>
-<p> cd ~ 
- cat .bashrc</p>
+<ul>
+<li>개요<ul>
+<li><code>Vagrantfile</code> 수정을 통해 Rocky Linux에 필요한 패키지를 설치한다.</li>
+<li>vagrantfile을 수정하여 Rocky에 필요한 패키지를 설치한다.</li>
+</ul>
+</li>
+<li>소스 코드</li>
+</ul>
+<ul>
+<li><p>코드 실행</p>
+<p>  <code>Vagrant up</code></p>
+</li>
+<li><p>전송(SSH)테스트</p>
+<p>  <code>vagrant ssh</code></p>
+</li>
+<li><p>가상 머신 제거</p>
+<p>  <code>vagrant destroy -f</code></p>
+</li>
+</ul>
 <hr />
 <h4 id="실습-3-가상-머신-4대master-nodecontroller-server-1대-worker-node-node-server-3대-구성">실습 3. 가상 머신 4대(Master Node(Controller Server) 1대, Worker Node (Node Server) 3대) 구성</h4>
 <p><u><a href="https://drive.google.com/file/d/1LeJPFwCYMopdM2VRurKOBe4E1fYwc6wT/view?usp=drive_link">zip파일 다운로드 하기</a></u> 
@@ -406,3 +422,22 @@ vagrant up</code></pre><ul>
 <li><p>가상 머신 제거</p>
 </li>
 </ul>
+<hr />
+<h2 id="73-터미널-접속-프로그램-superputty을-이용한-다수의-가상-머신-접속">7.3 터미널 접속 프로그램 (SuperPutty)을 이용한 다수의 가상 머신 접속</h2>
+<hr />
+<h3 id="개요">개요</h3>
+<ul>
+<li><code>SuperPuTTY</code>를 이용해서 가상 머신 시스템에 로그인할 떄 오류가 발생하면 그냥 비번 입력하고 들어가면 된다.</li>
+<li><code>Kubernetes</code>가 <code>192.168.1.x</code> 대역으로 사용하기 때문에 <code>VMWare</code>의 <code>Virtual Network Adapt</code>에서 <code>Host-only</code> 대역과 겹칠 수가 있기 때문에 미리 확인하고 변경해야 한다.</li>
+</ul>
+<hr />
+<h3 id="superputty와-putty-연동">SuperPuTTY와 PuTTY 연동</h3>
+<p><u><a href="https://github.com/jimradford/superputty/releases/tag/1.5.0.0">https://github.com/jimradford/superputty/releases/tag/1.5.0.0</a></u></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/97459c82-8025-48ab-b709-e4e60ad43483/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/215bbe9b-82f9-4348-a1a2-40e68e920985/image.png" /></p>
+<hr />
+<h3 id="putty의-설정-내용을-superputty에-적용">PuTTY의 설정 내용을 SuperPuTTY에 적용</h3>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5eae5169-b80f-4138-90c4-502e4e02917e/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9b66517b-2b24-4397-a032-6893c40b524f/image.png" /></p>
+<hr />
+<h3 id="다수의-가상-머신-접속을-위한-설정">다수의 가상 머신 접속을 위한 설정</h3>
