@@ -467,3 +467,40 @@ vagrant up</code></pre><ul>
 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/958adda6-9626-4869-b03f-84754eac5933/image.png" /></p>
 </li>
 </ul>
+<hr />
+<h2 id="74-컨테이너를-다루는-표준-아키텍처-kubernetes">7.4 컨테이너를 다루는 표준 아키텍처 'Kubernetes'</h2>
+<h3 id="kubernetes-이해하기">'Kubernetes' 이해하기</h3>
+<ul>
+<li>'Kubernetes'를 컨테이너 관리 도구'라고 설명했지만, 실제로 'Kubernetes'는
+ '컨테이너 오케스트레이션 (Container Orchestration)'을 위한 솔루션이다.            즉, '컨테이너만 관리하는 '단순 관리'가 아닌 여러 가지(컨테이너 뿐만 아니라
+ 다양한 서비스(Apps)들)를 한 번에 관리할 수 있는 '통합 관리'를 위한 솔루션을 제공한다.         ; '오케스트레이션 (Orchestration)'이란 복잡한 단계를 관리하고 요소들의 유기적인 관계를
+ 미리 정의해 손쉽게 사용하도록 서비스를 제공하는 것을 의미한다.
+ 즉, '통합적인 관리'라고 보면 된다.</li>
+<li>다수의 컨테이너를 유기적으로 연결, 실행, 종료할 뿐만 아니라 상태를 추적하고 보존하는 등
+ 컨테이너를 안정적으로 사용할 수 있게 만들어주는 것이 '컨테이너 오케스트레이션'이다.</li>
+</ul>
+<h3 id="실습-1-kubernetes-구성하기-kubernetes-테스트-환경-구축">실습 1. 'Kubernetes' 구성하기 ('Kubernetes' 테스트 환경 구축)</h3>
+<h4 id="개요-1">개요</h4>
+<ul>
+<li>'Kubernetes'가 설치되는 'Master Node(Master System, Server Node)'는 가상 머신을 이용해서 쉽게 'On-premis(온-프레미스) 환경'에 가깝게 즉, 'Server Node(Server)'와 'Worker Node(Client)'가 한 공간에서  동작되도록 구성하고 설치되는 과정으르 'Vagrant'로 자동화하고 필요하면 'Kubernetes' 테스트 환경을 재구성할 수 있게 하겠다.</li>
+</ul>
+<hr />
+<h4 id="step-1-vagrant-스크립트-파일-구성">Step 1. <code>Vagrant</code> 스크립트 파일 구성</h4>
+<p><u><a href="https://drive.google.com/file/d/1MJmyTGfut7LH2QLPjSjg2xgb2NpmvP_L/view?usp=drive_link">실습 zip</a></u></p>
+<ul>
+<li><code>Vagrantfile</code> (노드 생성)</li>
+<li><code>config.sh</code><ul>
+<li><code>kubeadm</code>으로 <code>kubernetres</code>를 설치하기 위한 사전 조건을 설정하는 스크립트 파일이다.</li>
+</ul>
+</li>
+<li><code>install_pkg.sh</code><ul>
+<li>클러스터를 구성하기 위해서 가상 머신에 설치되어야 하는 의존성 패키지를 명시한다.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="step-2-provisioning">Step 2. <code>Provisioning</code></h4>
+<ul>
+<li><code>Provisioning</code> 결과는 폴더에 포함된 파일들을 이용한 클러스터가 자동으로 구성된다.</li>
+<li><code>SuperPuTTy</code>를 실행한 후 <code>m-k8s</code>를 더블클릭 후 터미널에 접속한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/63951d52-5365-463d-a85e-083f75e26065/image.png" /></li>
+</ul>
