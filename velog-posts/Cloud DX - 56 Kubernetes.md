@@ -441,3 +441,29 @@ vagrant up</code></pre><ul>
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9b66517b-2b24-4397-a032-6893c40b524f/image.png" /></p>
 <hr />
 <h3 id="다수의-가상-머신-접속을-위한-설정">다수의 가상 머신 접속을 위한 설정</h3>
+<ul>
+<li><p>Step 1. 소스를 로딩한 후 실행한다.
+<u><a href="https://drive.google.com/file/d/1aMrNAIq9LWY0gIe2YUe8lFfMAKnmdAer/view?usp=drive_link">소스 다운로드</a></u></p>
+</li>
+<li><p>Step 2. <code>Provisioning</code>을 진행한다.
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/12c859a5-bd57-4939-bf13-a742b1e5be26/image.png" /></p>
+</li>
+<li><p>Step 3.<code>Master Node System</code> 등록</p>
+<ul>
+<li><code>PuTTY Sessions</code> -&gt; <code>New Folder</code> -&gt; <code>k8s</code> -&gt; <code>New</code>
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/acfda6b8-bacb-4a39-9d70-be34c8da7742/image.png" /></li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/958a8bda-8268-4e03-b873-ef41d95e25f2/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5fec201c-bfad-4908-b415-e4f3e2925e2d/image.png" /></p>
+<ul>
+<li><p>Step 4. <code>Worker Node System</code> 등록 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7ff7244a-a295-45f9-bb0b-b877cf31886d/image.png" /></p>
+<ul>
+<li><code>TCP Port</code> : 60101, 60102, 60103</li>
+</ul>
+</li>
+<li><p>Step 5. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8f90540e-c381-4998-a709-15042a970171/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/958adda6-9626-4869-b03f-84754eac5933/image.png" /></p>
+</li>
+</ul>
