@@ -173,5 +173,70 @@ vagrant init</code></pre>
 </ul>
 <hr />
 <ul>
-<li>Step 3. <code>Provisioning</code> 작업 1.</li>
+<li><p>Step 3. <code>Provisioning</code> 작업 1. 오류 발생 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/44f0eea2-08b4-44d9-9937-3bce5da62818/image.png" /></p>
+<ul>
+<li>오류 발생 이유 <ul>
+<li>현재 설치되어 있는 이미지가 <code>base</code>로 되어 있기 때문이다.</li>
+<li>즉, 해당 이미지를 <code>Vagrant</code>가 찾지 못해서 발생하는 오류이다.</li>
 </ul>
+</li>
+<li>실행</li>
+</ul>
+</li>
+</ul>
+<hr />
+<ul>
+<li>Step 4. <code>OS Images</code> 선택<ul>
+<li>설치 할 <code>OS Image</code>를 선택하기 위해서 <code>base</code>에 <code>사용자가 설치할 가상 머신</code>을 기입하면 된다.</li>
+<li><code>Vagrant</code>에서는 설치할 수 있는 가상 머신들을 사용자들이 올려서 공유할 수 있도록 하는 공간을 제공하고 있다.</li>
+<li><u><a href="https://portal.cloud.hashicorp.com/vagrant/discover/rockylinux/9"><code>HashiCorp</code></a></u> 에서 rockylinux 설치</li>
+</ul>
+</li>
+</ul>
+<hr />
+<ul>
+<li>Step 5.<code>Vagrant file</code>을 수정 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/84204dca-b087-455b-8e5c-9467041b38a1/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4ce1bd6c-5540-4d9d-a7c2-6ea60394c6d2/image.png" /><ul>
+<li><code>Vagrant file</code><pre><code class="language-bash"># -*- mode: ruby -*-
+# vi: set ft=ruby :
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.box = &quot;rockylinux/9&quot;
+  config.vm.box_version = &quot;6.0.0&quot;
+end</p>
+<pre><code>---
+- Step 6. `Provisioning` 작업 2. `Rocky Linux 9.5`
+  - `HashiCorp`안 디렉토리 전체 삭제 ![](https://velog.velcdn.com/images/kyk02405/post/b5a3f110-defb-45a4-a376-1edb07dc3245/image.png)
+  - `cmd`창에서 Step 1. 복사 후 입력 ![](https://velog.velcdn.com/images/kyk02405/post/67f452a9-dafa-4492-945d-98a4f92b7b87/image.png)
+  - `vagrant up` 치면 오류 발생![](https://velog.velcdn.com/images/kyk02405/post/38f70a59-272b-4484-b185-76bbbf8dd659/image.png)
+  - `vagrantfile` 수정 ![](https://velog.velcdn.com/images/kyk02405/post/8e0f640e-3d84-447d-9117-1760301d2026/image.png)
+    - `config.vm.box_version = &quot;5.0.0&quot;`으로 변경
+  - `vagrant up` 다시 실행 ![](https://velog.velcdn.com/images/kyk02405/post/39e0d19a-6804-4230-98d6-cfb4b9a68ce8/image.png)
+
+---
+- Step 7. 결과 확인 ![](https://velog.velcdn.com/images/kyk02405/post/581351c1-9ee2-4cd9-afca-e539fc63e331/image.png)
+  - `VirtialBox`에 가상 머신 `HashiCorp_default`가 생성된 것을 확인한다. 이름을 별도로 지정하지 않았기 때문에 임의로 붙여진다.
+  - `VirtualBox`에서 생성된 `가상 머신`이 제대로 동작하는지 `SSH`로 확인한다. ![](https://velog.velcdn.com/images/kyk02405/post/d570e5c2-168a-4bd7-a649-fc67a4b3133f/image.png)
+  ```bash
+  D:\3_VMs\HashiCorp&gt;Vagrant ssh
+  [vagrant@localhost ~]$ uptime
+  01:12:55 up 10 min,  1 user,  load average: 0.00, 0.01, 0.00
+  [vagrant@localhost ~]$ cat /etc/redhat-release
+  Rocky Linux release 9.5 (Blue Onyx)
+  [vagrant@localhost ~]$</code></pre><hr />
+<ul>
+<li>Step 8. <code>vagrant</code> 삭제 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/49cba6cd-ac47-4236-846f-80e05d575198/image.png" /></li>
+</ul>
+<pre><code class="language-bash">[vagrant@localhost ~]$ exit
+logout
+
+D:\3_VMs\HashiCorp&gt;Vagrant -f destroy
+    default: Are you sure you want to destroy the 'default' VM? [y/N] y
+==&gt; default: Forcing shutdown of VM...
+==&gt; default: Destroying VM and associated drives...</code></pre>
+<hr />
+<h2 id="72-vagrant-filevagrantfile를-이용한-테스트-환경-구축">7.2 Vagrant File(Vagrantfile)를 이용한 테스트 환경 구축</h2>
