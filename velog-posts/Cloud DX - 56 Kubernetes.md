@@ -240,3 +240,84 @@ D:\3_VMs\HashiCorp&gt;Vagrant -f destroy
 ==&gt; default: Destroying VM and associated drives...</code></pre>
 <hr />
 <h2 id="72-vagrant-filevagrantfile를-이용한-테스트-환경-구축">7.2 Vagrant File(Vagrantfile)를 이용한 테스트 환경 구축</h2>
+<h3 id="실습-환경-구축">실습 환경 구축</h3>
+<h4 id="실습-1-가상-머신에-필요한-설정-등을-vagrantfile을-이용해서-자동으로-적용되는-가상-머신-생성">실습 1. <code>가상 머신</code>에 필요한 설정 등을 <code>Vagrantfile</code>을 이용해서 자동으로 적용되는 가상 머신 생성</h4>
+<ul>
+<li><p>개요</p>
+<ul>
+<li><p><code>vagrantfile</code> 수정을 통해 원하는 구성이 자동으로 <code>Rocky Linux</code>에 입력되도록 한다.</p>
+</li>
+<li><p>소스코드 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/a97d703e-5e18-451d-915a-697fcd675244/image.png" /></p>
+<pre><code class="language-txt"># -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure(&quot;2&quot;) do |config| 
+config.vm.define &quot;m-k8s&quot; do |cfg|
+  cfg.vm.box = &quot;rockylinux/9&quot;
+  cfg.vm.box_version = &quot;5.0.0&quot;
+  cfg.vm.provider &quot;virtualbox&quot; do |vb|
+    vb.name = &quot;m-k8s(clouddx_Rocky95)&quot;
+    vb.cpus = 2
+    vb.memory = 2048
+    vb.customize [&quot;modifyvm&quot;, :id, &quot;--groups&quot;, &quot;/k8s-SM(clouddx_Rocky95)&quot;]
+  end
+  cfg.vm.host_name = &quot;m-k8s&quot;
+  cfg.vm.network &quot;private_network&quot;, ip: &quot;192.168.1.10&quot;
+  cfg.vm.network &quot;forwarded_port&quot;, guest: 22, host: 60010, auto_correct: true, id: &quot;ssh&quot;
+  cfg.vm.synced_folder &quot;../data&quot;, &quot;/vagrant&quot;, disabled: true
+end
+end</code></pre>
+</li>
+<li><p>코드 설명 </p>
+<ul>
+<li><code>1 ~ 2번째 줄</code><ul>
+<li>필수적으로 코드 맨앞에 선언 해줘야 한다.</li>
+<li>두 줄 모두 <code>#</code>을 붙여줘야 한다.</li>
+</ul>
+</li>
+<li><code>3번째 줄</code><ul>
+<li><code>Vagrant</code>에서 루비로 코드를 읽어들여서 실행할 때는 동작하는 API 버전을 말한다.</li>
+<li><code>do |config]|</code>는 <code>Vagrant</code> 설정의 시작을 알린다. </li>
+<li>do |이름|으로 시작한 작업은 코드 하단에 <code>end</code>로 끝나야 한다,</li>
+</ul>
+</li>
+<li><code>4 ~ 6번째 줄</code><ul>
+<li>VB에서 보이는 가상 머신을 m-k8s로 정의한다.</li>
+<li>가상 머신으로 설치될 OS의 이름, 버전 등 세부설정을 한다.</li>
+</ul>
+</li>
+<li><code>7번째 줄</code><ul>
+<li><code>Vagrant</code>의 프로바이더가 <code>VB</code>라는 것을 정의한다.</li>
+<li><code>Provider</code>는 <code>Vagrant</code>를 통해서 제공되는 코드가 실제로 가상 머신으로 배포되게 하는 소프트웨어를 말하는데 <code>Virtual Box</code>가 여기에 해당한다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Provisioning</code> 작업</p>
+<ul>
+<li>Step 1. 코드 실행 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ac081c9d-0a9c-4b96-8acb-6667802d1807/image.png" /></li>
+</ul>
+<pre><code class="language-bash">vagrant up</code></pre>
+<ul>
+<li><p>Step 2. 포트 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/05176ca8-3a9b-4f9a-9be6-bb6ebd835570/image.png" /></p>
+<ul>
+<li>가상 머신이 동작중일 때만 포트 포워딩된 포트를 확인할 수 가 있다.</li>
+</ul>
+</li>
+<li><p>Step 3. 네트워크 관리자에서 새로 생성된 네트워크 대역을 확인한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/01c8ac4a-aaaa-46cd-ab77-9a4ac0833caf/image.png" /></p>
+</li>
+</ul>
+</li>
+<li><p>접속(SSH) 테스트 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9696777f-4b7f-467d-8b5b-9d7428e2d437/image.png" /></p>
+</li>
+<li><p>가상 머신 제거 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8ec41b5b-41de-4ad6-bac8-ef9104f9af3d/image.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="실습-2-가상-머신에-추가-패키지-설치">실습 2. 가상 머신에 추가 패키지 설치</h4>
+<p> yum repolist</p>
+<p> cd ~ 
+ cat .bashrc</p>
+<hr />
+<h4 id="실습-3-가상-머신-4대master-nodecontroller-server-1대-worker-node-node-server-3대-구성">실습 3. 가상 머신 4대(Master Node(Controller Server) 1대, Worker Node (Node Server) 3대) 구성</h4>
