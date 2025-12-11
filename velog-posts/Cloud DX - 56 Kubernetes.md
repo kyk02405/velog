@@ -321,3 +321,88 @@ end</code></pre>
  cat .bashrc</p>
 <hr />
 <h4 id="실습-3-가상-머신-4대master-nodecontroller-server-1대-worker-node-node-server-3대-구성">실습 3. 가상 머신 4대(Master Node(Controller Server) 1대, Worker Node (Node Server) 3대) 구성</h4>
+<p><u><a href="https://drive.google.com/file/d/1LeJPFwCYMopdM2VRurKOBe4E1fYwc6wT/view?usp=drive_link">zip파일 다운로드 하기</a></u> 
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ebc60235-9c32-4ee8-97f9-e2566ed900f8/image.png" /></p>
+<ul>
+<li><code>config.sh</code><pre><code class="language-bash">#!/usr/bin/env bash
+# modify permission  
+chmod 744 ./ping_2_nds.sh</code></pre>
+</li>
+<li><code>install_pkg.sh</code><pre><code class="language-bash">#!/usr/bin/env bash
+</code></pre>
+</li>
+</ul>
+<h1 id="install-packages">install packages</h1>
+<p>yum install vim-enhanced -y </p>
+<pre><code>- `ping_2_nds.sh`
+```bash
+# ping 3 times per nodes
+ping 192.168.1.101 -c 3
+ping 192.168.1.102 -c 3
+ping 192.168.1.103 -c 3</code></pre><ul>
+<li><code>Vagrantfile</code><pre><code class="language-bash"># -*- mode: ruby -*-
+# vi: set ft=ruby :
+</code></pre>
+</li>
+</ul>
+<p>Vagrant.configure(&quot;2&quot;) do |config| 
+  config.vm.define &quot;m-k8s&quot; do |cfg|
+    cfg.vm.box = &quot;rockylinux/9&quot;
+    cfg.vm.box_version = &quot;5.0.0&quot;
+    cfg.vm.provider &quot;virtualbox&quot; do |vb|
+      vb.name = &quot;m-k8s(clouddx_Rocky95)&quot;
+      vb.cpus = 2
+      vb.memory = 2048
+      vb.customize [&quot;modifyvm&quot;, :id, &quot;--groups&quot;, &quot;/k8s-SM(clouddx_Rocky95)&quot;]
+    end
+    cfg.vm.host_name = &quot;m-k8s&quot;
+    cfg.vm.network &quot;private_network&quot;, ip: &quot;192.168.1.10&quot;
+    cfg.vm.network &quot;forwarded_port&quot;, guest: 22, host: 60010, auto_correct: true, id: &quot;ssh&quot;
+    cfg.vm.synced_folder &quot;../data&quot;, &quot;/vagrant&quot;, disabled: true<br />    cfg.vm.provision &quot;shell&quot;, path: &quot;install_pkg.sh&quot;
+    cfg.vm.provision &quot;file&quot;, source: &quot;ping_2_nds.sh&quot;, destination: &quot;ping_2_nds.sh&quot;
+    cfg.vm.provision &quot;shell&quot;, path: &quot;config.sh&quot;
+  end</p>
+<p>  #=============#</p>
+<h1 id="added-nodes">Added Nodes</h1>
+<p>  #=============#</p>
+<p>  (1..3).each do |i|
+    config.vm.define &quot;w#{i}-k8s&quot; do |cfg|
+      cfg.vm.box = &quot;rockylinux/9&quot;
+      cfg.vm.box_version = &quot;5.0.0&quot;
+      cfg.vm.provider &quot;virtualbox&quot; do |vb|
+        vb.name = &quot;w#{i}-k8s(clouddx_Rocky95)&quot;
+        vb.cpus = 1
+        vb.memory = 1024
+        vb.customize [&quot;modifyvm&quot;, :id, &quot;--groups&quot;, &quot;/k8s-SM(clouddx_Rocky95)&quot;]
+      end
+      cfg.vm.host_name = &quot;w#{i}-k8s&quot;
+      cfg.vm.network &quot;private_network&quot;, ip: &quot;192.168.1.10#{i}&quot;
+      cfg.vm.network &quot;forwarded_port&quot;, guest: 22, host: &quot;6010#{i}&quot;,auto_correct: true, id: &quot;ssh&quot;
+      cfg.vm.synced_folder &quot;../data&quot;, &quot;/vagrant&quot;, disabled: true
+      cfg.vm.provision &quot;shell&quot;, path: &quot;install_pkg.sh&quot;
+    end
+  end
+end</p>
+<pre><code>- 코드 실행
+```bash
+vagrant up</code></pre><ul>
+<li><p>접속(SSH) 테스트</p>
+<ul>
+<li><p><code>m-k8s</code>에 접속</p>
+<pre><code class="language-bash">vagrant ssh m-k8s</code></pre>
+</li>
+<li><p>네트워크 상태 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8e2df110-e81c-4cef-a750-a68bc4c144aa/image.png" /></p>
+<ul>
+<li><code>net-tools</code> 설치 후 확인</li>
+</ul>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8d659b73-2974-4ca6-ab53-57e19e3a665f/image.png" /></p>
+<ul>
+<li><code>passwd : vagrant</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>가상 머신 제거</p>
+</li>
+</ul>
