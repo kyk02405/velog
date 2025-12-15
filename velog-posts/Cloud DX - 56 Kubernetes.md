@@ -1215,3 +1215,12 @@ Events:
 </ul>
 </li>
 </ul>
+<hr />
+<h3 id="실습-6-node-자원-보호하기cordon-uncordon">실습 6. Node 자원 보호하기(cordon, uncordon)</h3>
+<ul>
+<li>개요</li>
+<li>실행<ul>
+<li>현재 배포된 <code>Pod</code></li>
+</ul>
+</li>
+</ul>
