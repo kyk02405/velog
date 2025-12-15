@@ -1161,9 +1161,57 @@ Events:
 <li><code>Pod</code> 생성을 위한 명령어 3가지<ul>
 <li><code>run</code> <code>(단일 Pod만을 생성)</code></li>
 <li><code>create</code> <code>(Deployment 생성 시 파일의 변경사항을 바로 적용할 수가 없다.)</code></li>
-<li><code>apply</code> `(</li>
+<li><code>apply</code> <code>(명령이 아닌 문서 파일로 Pod 수를 늘리고 스펙도 변경해서 적용할 수가 있다.)</code></li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="실습-5-pod의-컨테이너-복구-방법">실습 5. ‘Pod’의 컨테이너 복구 방법</h3>
+<ul>
+<li><p>개요</p>
+<ul>
+<li>지금까지 'Pod(컨테이너들의 집합)'와 'Deployment(Pod 생성 유형)', 'Object(Pods)' 들에 관해 알아봤다. 이제 본격적으로 배운 내용을 사용해 본다.</li>
+<li>'Kubernetes'는 거의 모든 부분이 '자동 복구되도록 설계'되어 있다.</li>
+<li>특히 'Pod'의 자동 복구 기술을 '셀프 힐링(Self-Healing)'이라고 한다.</li>
+<li>이 기술은 제대로 작동하지 않는 컨테이너를 다시 시작하거나 교체해서 파드가 정상적으로 작동하게 한다.</li>
+</ul>
+</li>
+<li><p>실행</p>
+<ul>
+<li><p>Pod에 접속하기 위한 IP 확인</p>
+</li>
+<li><p>Pod Container의 Shell에 접속</p>
+<p><code>kubectl exec -it nginx-pod -- /bin/bash</code></p>
+</li>
+</ul>
+</li>
+<li><p>참고 (Docker에서의 컨테이너 생성과 접속)</p>
+<p>  sudo docker run -itd --name samadalweb centos:7 /bin/bash
+  sudo docker create -it --name samadalweb centos:7 /bin/bash</p>
+<p>  sudo docker start samadalweb
+  sudo docker exec -it samadalweb /bin/bash</p>
+</li>
+<li><p>‘--’의 의미</p>
+<ul>
+<li>‘exec’에 대한 인자값을 나누고 싶을 때 사용한다.</li>
+<li>명령과 옵션을 구분하기 위해 사용한다.</li>
+</ul>
+</li>
+<li><p>'Bash Shell'에 접속하면 컨테이너에서 구동하는 'nginx'의 'PID(Process ID, 프로세서 식별자)'를 확인한다. 'nginx'의 'PID'는 항상 '1'이다.<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b016d0f9-f392-4cbd-b961-d489a52cb37f/image.png" /></p>
+</li>
+</ul>
+<ul>
+<li>명령 실행<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/439e23ca-5262-4370-92b9-0197505ad413/image.png" /></li>
+</ul>
+<ul>
+<li>Pod의 동작 보장 기능<ul>
+<li>개요<ul>
+<li>Kubetnetes에서는 Pod에 문제가 생기면 Pod를 자동 복구하고 Pod가 항상 동작되도록 보장해주는 기능이 있다.</li>
+</ul>
+</li>
+<li>실행<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7cb29939-958e-4a03-a08a-b074618b0940/image.png" /></li>
 </ul>
 </li>
 </ul>
