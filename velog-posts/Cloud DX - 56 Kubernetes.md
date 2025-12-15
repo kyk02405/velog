@@ -1136,5 +1136,34 @@ Events:
 </ul>
 </li>
 <li><p>실행</p>
+<ul>
+<li><p>(생략) 파일 업로드 1. Windows 10에서 ‘scp’를 이용해서 ‘2개의 YAML 파일’을 업로드한다.</p>
+</li>
+<li><p>파일 업로드 2. <code>kubernetes</code> 버전에 따라서 사용 가능한 <code>API</code> 버전이 다르기 때문에 꼭 확인 해야한다.</p>
+</li>
+<li><p><code>echo-hname-yml</code> 파일을 이용해서 <code>Deployment</code>를 생성하는데 현재 <code>Deployment</code>는 <code>Pods</code> 3개를 생성하도록 <code>replicas</code>에 정의되어 있다.</p>
+</li>
+<li><p><code>echo-hname.yaml</code> 파일을 수정해서 <code>Pod</code>를 <code>replicas</code>를 6개로 늘린다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0de5c8de-4231-45aa-af37-36ad1e16bca7/image.png" /></p>
+<pre><code class="language-bash">[root@m-k8s 3.2.4]# sed -i 's/replicas: 3/replicas: 6/' ./echo-hname.yaml</code></pre>
+</li>
+<li><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/07856246-3ecf-4e7a-b5c9-9dc8ad1f31ac/image.png" /></p>
+</li>
+<li><p>결론</p>
+<ul>
+<li><code>kubectl scale deployment dpy-nginx --replicas=3</code> 명령으로 <code>Pod</code>수를 늘릴수 있지만 명령이 아닌 문서 파일로 <code>Pod</code> 수를 늘리고 오브젝트의 스펙을 변경해서 적용하면 된다.</li>
+<li>그리고 위의 2개의 명령으로 인한 오류는 <code>apply</code> 명령을 사용하면 된다</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>apply</code>로 오브젝트 생성 관리</p>
+<ul>
+<li><code>Pod</code> 생성을 위한 명령어 3가지<ul>
+<li><code>run</code> <code>(단일 Pod만을 생성)</code></li>
+<li><code>create</code> <code>(Deployment 생성 시 파일의 변경사항을 바로 적용할 수가 없다.)</code></li>
+<li><code>apply</code> `(</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
