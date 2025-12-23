@@ -584,3 +584,40 @@ pl-bulk-prod-svc   LoadBalancer   10.107.241.78    192.168.1.12   8080:32335/TCP
 </ol>
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/13ac6d1d-38d0-4616-afb3-cdd3a28d2256/image.png" /></p>
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d1403e51-2c5d-4344-a65b-b514ae1b2b4d/image.png" /></p>
+<hr />
+<h2 id="84-jenkins-plug-in을-통해-구현되는-gioops">8.4 ‘Jenkins Plug-in’을 통해 구현되는 ‘GioOps’</h2>
+<h3 id="개요">개요</h3>
+<ul>
+<li>지금까지의 우리는 <code>Jenkins</code>를 이용해 <code>CI/CD</code>를 구성하는 방법을 알아봤다.  이러한 거의 모든 기능은 사실 <code>Jenkins</code>의 <code>Plug-in</code>을 통해 이루어진 것이다.</li>
+<li>예를 들면 가장 많이 쓰였던 <code>Kubernetes Plug-in</code>은 <code>CI/CD</code>를 실제로 수행하는 <code>Jenkins Agent Pod</code>를 사용자가 신경쓰지 않아도 자동으로 배포 관리하게 해준다.<code>맥도날드</code>, <code>버거킹</code>에서의 <code>햄버거</code>를 생각하면 된다.</li>
+<li>현업에서는 <code>Jenkins</code>의 단일 플러그인으로 <code>CI/CD</code>를 구성 하는 것이 아니라 여러 플러그인을 조합해 현재 업무에 맞는 형태로 만들어서 사용한다. <code>Subway 샌드위치</code>를 생각하면 된다.</li>
+<li><code>Jenkins Plug-in</code>은 사용자에게 필요한 기능을 주로 <code>Jenkins 플러그인</code> <code>홈페이지(https://plugins.jenkins.io/)</code>에서 검색하고 내용을 살펴본 후 이를 조합하는 방식을 취한다.</li>
+</ul>
+<h3 id="jenkins-플러그인-browse-categories-종류">Jenkins 플러그인 Browse Categories` 종류</h3>
+<ul>
+<li><p>Platforms (OS)</p>
+<ul>
+<li><code>웹 애플리케이션</code>이 아닌 <code>다른 플랫폼</code>에서 작동하는 <code>애플리케이션 빌드</code>를 위한 플러그인</li>
+</ul>
+</li>
+<li><p>User interface (기능이 보강된 대시보드)</p>
+<ul>
+<li><code>Jenkins</code>의 <code>기본 UI</code> 이외의 <code>확장  UI</code>를 적용하기 위한 플러그인</li>
+</ul>
+</li>
+<li><p>Administration</p>
+<ul>
+<li><code>LDAP(조직 등에서 정보를 볼 수 있게 해주는 프로토콜, Lightweight Directory Access Protocol)</code>, <code>Jenkins 클러스터</code> 관리 등 Jenkins 자체 관리에 필요한 플러그인</li>
+</ul>
+</li>
+<li><p>Build management</p>
+<ul>
+<li><code>CI/CD</code> 단계에서 추가적으로 사용할 수 있는 플러그인</li>
+</ul>
+</li>
+<li><p>Source Code Management</p>
+<ul>
+<li>GitHub, GitLab과 같은 <code>소스 코드 저장소</code>의 연결이나 관리를 위한 플러그인</li>
+</ul>
+</li>
+</ul>
