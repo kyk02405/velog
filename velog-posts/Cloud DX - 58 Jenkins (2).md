@@ -579,5 +579,8 @@ jenkins            LoadBalancer   10.107.207.103   192.168.1.11   80:30577/TCP  
 jenkins-agent      ClusterIP      10.104.207.3     &lt;none&gt;         50000/TCP        2d16h
 kubernetes         ClusterIP      10.96.0.1        &lt;none&gt;         443/TCP          3d10h
 pl-bulk-prod-svc   LoadBalancer   10.107.241.78    192.168.1.12   8080:32335/TCP   2d14h</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8f619d05-bd72-436c-924d-b9bb69ed4ad8/image.png" /></p>
 </li>
 </ol>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/13ac6d1d-38d0-4616-afb3-cdd3a28d2256/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d1403e51-2c5d-4344-a65b-b514ae1b2b4d/image.png" /></p>
