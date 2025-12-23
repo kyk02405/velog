@@ -79,57 +79,64 @@ deployment.apps &quot;failure1&quot; deleted</code></pre>
 </ol>
 <h2 id="레지스트리registry-사설-이미지-생성-구성하기">레지스트리(Registry, 사설 이미지 생성) 구성하기</h2>
 <ol start="13">
-<li><p>'2.zip' 업로드 후 압축 파일 해제</p>
-<pre><code class="language-bash">(m-k8s)# ls -l
--rw-r--r--. 1 root root 835 Jun 24 16:13 create-registry.sh
--rw-r--r--. 1 root root 334 Jun 24 16:13 remover.sh
--rw-r--r--. 1 root root 355 Jun 24 16:13 tls.csr</code></pre>
-</li>
-<li><p>'사설 도커 Registry' 만들기</p>
-<pre><code class="language-bash">(m-k8s)# chmod 700 create-registry.sh remover.sh
-(m-k8s)# ls -l
--rwx------. 1 root root 835 Jun 24 16:13 create-registry.sh
--rwx------. 1 root root 334 Jun 24 16:13 remover.sh
--rw-r--r--. 1 root root 355 Jun 24 16:13 tls.csr
-(m-k8s)# [root@m-k8s ~]# ./create-registry.sh
-Generating a 4096 bit RSA private key
-...
-6d464ea18732: Pull complete
-Digest: sha256:a3d8aaa63ed8681a604f1dea0aa03f100d5895b6a58ace528858a7b332415373
-Status: Downloaded newer image for registry:2
-3fd87ac9be6a45b0ae6b850f068f8b9a5d92cffa0a81863062579e1883640d37</code></pre>
-</li>
-<li><p>생성한 'Registry Container' 정상 동작여부를 확인한다.</p>
-<pre><code class="language-bash">(m-k8s)# docker ps -f name=registry
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                             NAMES
-3fd87ac9be6a        registry:2          &quot;/entrypoint.sh /etc…&quot;   2 minutes ago       Up 2 minutes        5000/tcp, 0.0.0.0:8443-&gt;443/tcp   registry</code></pre>
-</li>
-<li><p>'사설 도커 Registry'에 등록 가능하도록 컨테이너 이미지의 이름을 변경한다.</p>
-<pre><code class="language-bash">(m-k8s)# docker tag multistage-img 192.168.1.10:8443/multistage-img
-(m-k8s)# docker images 192.168.1.10:8443/multistage-img
-REPOSITORY                         TAG                 IMAGE ID            CREATED             SIZE
-192.168.1.10:8443/multistage-img   latest              0a7639c896a5        About an hour ago   148MB</code></pre>
-</li>
-<li><p>'multistage-img'를 '사설 도커 Registry'에 등록한다.</p>
-<pre><code class="language-bash">(m-k8s)# docker push 192.168.1.10:8443/multistage-img
-The push refers to repository [192.168.1.10:8443/multistage-img]
-ed44fba380ef: Pushed
-1d834f05c29e: Pushed
-b29380a5a354: Pushed
-231bdbae9aea: Pushed
-ba16d454860a: Pushed
-1a5ede0c966b: Pushed
-latest: digest: sha256:c08fee58e378fd0750c4ba618f76d8920fffa3d525b9b91cf17176d0e4ea3dd7 size: 1583</code></pre>
-</li>
-<li><p>이미지가 정상 동작하는지 확인한다. ('-k'는 '--insecure'로써 자체 서명 인증서를 사용한다는 말이다.)</p>
-<pre><code class="language-bash">(m-k8s)# curl https://192.168.1.10:8443/v2/_catalog -k
-{&quot;repositories&quot;:[&quot;multistage-img&quot;]}</code></pre>
-</li>
-<li><p>동일한 이미지임을 확인한다.</p>
-<pre><code class="language-bash">(m-k8s)# docker images | grep multi
-192.168.1.10:8443/multistage-img     latest              0a7639c896a5        About an hour ago   148MB
-multistage-img                       latest              0a7639c896a5        About an hour ago   148MB</code></pre>
-</li>
+<li>'2.zip' 업로드 후 압축 파일 해제 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2d6cc626-24ee-4d27-b241-95aeafac6fc6/image.png" /> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d8ad564b-9965-4756-a1d4-889cb8343e2c/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# ls -l
+   -rw-r--r--. 1 root root 835 Jun 24 16:13 create-registry.sh
+   -rw-r--r--. 1 root root 334 Jun 24 16:13 remover.sh
+   -rw-r--r--. 1 root root 355 Jun 24 16:13 tls.csr</code></pre>
+<ol start="14">
+<li>'사설 도커 Registry' 만들기 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/a3b8dc79-0299-447b-b7a1-90fd8808d09d/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# chmod 700 create-registry.sh remover.sh
+  (m-k8s)# ls -l
+   -rwx------. 1 root root 835 Jun 24 16:13 create-registry.sh
+   -rwx------. 1 root root 334 Jun 24 16:13 remover.sh
+   -rw-r--r--. 1 root root 355 Jun 24 16:13 tls.csr
+  (m-k8s)# [root@m-k8s ~]# ./create-registry.sh
+   Generating a 4096 bit RSA private key
+   ...
+   6d464ea18732: Pull complete
+   Digest: sha256:a3d8aaa63ed8681a604f1dea0aa03f100d5895b6a58ace528858a7b332415373
+   Status: Downloaded newer image for registry:2
+   3fd87ac9be6a45b0ae6b850f068f8b9a5d92cffa0a81863062579e1883640d37</code></pre>
+<ol start="15">
+<li>생성한 'Registry Container' 정상 동작여부를 확인한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/c21e268b-0bfa-4119-b191-60fdb626b6c3/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# docker ps -f name=registry
+   CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                             NAMES
+   3fd87ac9be6a        registry:2          &quot;/entrypoint.sh /etc…&quot;   2 minutes ago       Up 2 minutes        5000/tcp, 0.0.0.0:8443-&gt;443/tcp   registry</code></pre>
+<ol start="16">
+<li>'사설 도커 Registry'에 등록 가능하도록 컨테이너 이미지의 이름을 변경한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/da10f1b5-6fee-4d4c-bbac-36c850fc71b6/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# docker tag multistage-img 192.168.1.10:8443/multistage-img
+  (m-k8s)# docker images 192.168.1.10:8443/multistage-img
+   REPOSITORY                         TAG                 IMAGE ID            CREATED             SIZE
+   192.168.1.10:8443/multistage-img   latest              0a7639c896a5        About an hour ago   148MB</code></pre>
+<ol start="17">
+<li>'multistage-img'를 '사설 도커 Registry'에 등록한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4f473ead-06da-45b0-9a95-2ce2348f3b49/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# docker push 192.168.1.10:8443/multistage-img
+   The push refers to repository [192.168.1.10:8443/multistage-img]
+   ed44fba380ef: Pushed
+   1d834f05c29e: Pushed
+   b29380a5a354: Pushed
+   231bdbae9aea: Pushed
+   ba16d454860a: Pushed
+   1a5ede0c966b: Pushed
+   latest: digest: sha256:c08fee58e378fd0750c4ba618f76d8920fffa3d525b9b91cf17176d0e4ea3dd7 size: 1583</code></pre>
+<ol start="18">
+<li>이미지가 정상 동작하는지 확인한다. ('-k'는 '--insecure'로써 자체 서명 인증서를 사용한다는 말이다.) <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f702724e-1e66-4714-85ae-50a31c10be2a/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# curl https://192.168.1.10:8443/v2/_catalog -k
+   {&quot;repositories&quot;:[&quot;multistage-img&quot;]}</code></pre>
+<ol start="19">
+<li>동일한 이미지임을 확인한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/323413d4-16de-4bfd-84e4-faa7905ed7eb/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# docker images | grep multi
+   192.168.1.10:8443/multistage-img     latest              0a7639c896a5        About an hour ago   148MB
+   multistage-img                       latest              0a7639c896a5        About an hour ago   148MB</code></pre>
+<ol start="20">
 <li><p>'19'의 결과</p>
 <ul>
 <li>'호스트(m-k8s)'에 '다운로드(pull)' 한 '이미지(multistage-img)'와 'Registry'에 등록한 '이미지(192.168.1.10:8443/multistage-img)'는
@@ -137,137 +144,156 @@ multistage-img                       latest              0a7639c896a5        Abo
 <li>이렇게 이미지를 'Registry'에 등록하게 되면 인터넷이 안 되어도 사용할 수 있는 환경을 구성할 수가 있다.</li>
 </ul>
 </li>
-<li><p>호스트에 생성한 이미지를 삭제한다.</p>
-<pre><code class="language-bash">(m-k8s)# docker rmi -f 0a76
-Error response from daemon: conflict: unable to delete 0a7639c896a5 (cannot be forced) - image is being used
-by running container 512de55164ce
-(m-k8s)# docker ps -a | grep 512d
-512de55164ce        multistage-img                      &quot;java -jar app-in-im…&quot;   About an hour ago   Up About an hour        
-60434/tcp, 0.0.0.0:60434-&gt;80/tcp   multistage-run
-(m-k8s)# docker ps | grep 512d
-512de55164ce        multistage-img                    &quot;java -jar app-in-im…&quot;   About an hour ago   Up About an hour
-60434/tcp, 0.0.0.0:60434-&gt;80/tcp   multistage-run
-(m-k8s)# docker stop 512de55164ce
-512de55164ce
-(m-k8s)# docker ps | grep 512d
-(m-k8s)# docker rmi -f 0a76
-Untagged: 192.168.1.10:8443/multistage-img:latest
-Untagged: 192.168.1.10:8443/multistage-   img@sha256:c08fee58e378fd0750c4ba618f76d8920fffa3d525b9b91cf17176d0e4ea3dd7
-Untagged: multistage-img:latest
-Deleted: sha256:0a7639c896a5b3bbb5fd584986568058303bf31aeeba1611a29c695c8f2f85f4
-Deleted: sha256:afa0b83343cda2cca373ab372f87b8d89086592f2895abf5d42d2dd6a925a60a
-Deleted: sha256:046e08f52a8a4156ca05162f4fc751be565612197378fcdf91269602d929432a
-Deleted: sha256:58a3b3a88640ba45397413b52f76d36943db0e2f1e1485e6c79124e15b8c1c89
-Deleted: sha256:8f689c228f75fea4f52cb8e61e79332f498d3b9ee9b9047499588a3c68895fc3
-(m-k8s)# docker images | grep multistage
-(m-k8s)# docker images | grep multi
-(m-k8s)# rm -rf *</code></pre>
+<li><p>호스트에 생성한 이미지를 삭제한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e9935bbc-5f74-4a54-aa67-99bc34192c21/image.png" /></p>
 </li>
 </ol>
+<pre><code class="language-bash">  (m-k8s)# docker rmi -f 0a76
+   Error response from daemon: conflict: unable to delete 0a7639c896a5 (cannot be forced) - image is being used
+   by running container 512de55164ce
+  (m-k8s)# docker ps -a | grep 512d
+   512de55164ce        multistage-img                      &quot;java -jar app-in-im…&quot;   About an hour ago   Up About an hour        
+   60434/tcp, 0.0.0.0:60434-&gt;80/tcp   multistage-run
+  (m-k8s)# docker ps | grep 512d
+   512de55164ce        multistage-img                    &quot;java -jar app-in-im…&quot;   About an hour ago   Up About an hour
+   60434/tcp, 0.0.0.0:60434-&gt;80/tcp   multistage-run
+  (m-k8s)# docker stop 512de55164ce
+   512de55164ce
+  (m-k8s)# docker ps | grep 512d
+  (m-k8s)# docker rmi -f 0a76
+   Untagged: 192.168.1.10:8443/multistage-img:latest
+   Untagged: 192.168.1.10:8443/multistage-   img@sha256:c08fee58e378fd0750c4ba618f76d8920fffa3d525b9b91cf17176d0e4ea3dd7
+   Untagged: multistage-img:latest
+   Deleted: sha256:0a7639c896a5b3bbb5fd584986568058303bf31aeeba1611a29c695c8f2f85f4
+   Deleted: sha256:afa0b83343cda2cca373ab372f87b8d89086592f2895abf5d42d2dd6a925a60a
+   Deleted: sha256:046e08f52a8a4156ca05162f4fc751be565612197378fcdf91269602d929432a
+   Deleted: sha256:58a3b3a88640ba45397413b52f76d36943db0e2f1e1485e6c79124e15b8c1c89
+   Deleted: sha256:8f689c228f75fea4f52cb8e61e79332f498d3b9ee9b9047499588a3c68895fc3
+  (m-k8s)# docker images | grep multistage
+  (m-k8s)# docker images | grep multi
+  (m-k8s)# rm -rf *</code></pre>
 <h2 id="kustomize를-이용한-metallbload-balancer-만들기">'Kustomize'를 이용한 'MetalLB(Load Balancer)' 만들기</h2>
 <ol start="22">
-<li>'b.zip' 파일을 압축해제한 후 작업한다.<pre><code class="language-bash">(m-k8s)# ls -l
--rw-r--r--. 1 root root  261 Jun 24 17:01 kustomize-install.sh
--rw-r--r--. 1 root root  223 Jun 24 17:01 metallb-l2config.yaml
--rw-r--r--. 1 root root 5384 Jun 24 17:01 metallb.yaml
--rw-r--r--. 1 root root   90 Jun 24 17:01 namespace.yaml</code></pre>
-</li>
-<li>'Kustomize' 명령 실행<pre><code class="language-bash">(m-k8s)# chmod 700 kustomize-install.sh
-(m-k8s)# ls -l
--rwx------. 1 root root  261 Jun 24 17:01 kustomize-install.sh
--rw-r--r--. 1 root root  223 Jun 24 17:01 metallb-l2config.yaml
--rw-r--r--. 1 root root 5384 Jun 24 17:01 metallb.yaml
--rw-r--r--. 1 root root   90 Jun 24 17:01 namespace.yaml
-(m-k8s)# ./kustomize-install.sh
- % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                Dload  Upload   Total   Spent    Left  Speed
- 0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-100 12.4M  100 12.4M    0     0  9717k      0  0:00:01  0:00:01 --:--:-- 72.5M
-kustomize install successfully
-(m-k8s)# ls -l /usr/local/bin/ (사용자에 의해 설치된 프로그램들은 모두 이 경로에서 동작되도록 설정해야 한다.)
--rwxr-xr-x. 1 root root  7229744 Jan  3  2021 bpytop
--rwxr-xr-x. 1 root root 40595456 May 28  2020 kustomize</code></pre>
-</li>
-<li>'커스터마이징'을 위한 'yaml' 파일을 생성한다.<pre><code class="language-bash">(m-k8s)# kustomize create --namespace=metallb-system --resources namespace.yaml,metallb.yaml,metallb-l2config.yaml
-(m-k8s)# ls -l
--rw-r--r--. 1 root root  157 Jun 24 17:08 kustomization.yaml
--rwx------. 1 root root  261 Jun 24 17:01 kustomize-install.sh
--rw-r--r--. 1 root root  223 Jun 24 17:01 metallb-l2config.yaml
--rw-r--r--. 1 root root 5384 Jun 24 17:01 metallb.yaml
--rw-r--r--. 1 root root   90 Jun 24 17:01 namespace.yaml
-(m-k8s)# cat kustomization.yaml
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-- namespace.yaml
-- metallb.yaml
-- metallb-l2config.yaml
-namespace: metallb-system</code></pre>
-</li>
-<li>설치된 이미지를 안정적인 버전으로 유지하기 위해 'Controller'와 'Speaker'의 이미지 태그를 'v0.8.2'로 지정한다.<pre><code class="language-bash">(m-k8s)# kustomize edit set image metallb/controller:v0.8.2
-(m-k8s)# kustomize edit set image metallb/speaker:v0.8.2
-(m-k8s)# cat kustomization.yaml
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-- namespace.yaml
-- metallb.yaml
-- metallb-l2config.yaml
-namespace: metallb-system
-images:
-- name: metallb/controller
- newTag: v0.8.2
-- name: metallb/speaker
- newTag: v0.8.2</code></pre>
-</li>
-<li>'MetalLB' 설치를 위한 '메니페스트(스펙)'를 생성한다.<pre><code class="language-bash">(m-k8s)# kustomize build
-  ...
-addresses:
-     - 192.168.1.11-192.168.1.19
-  ...
-    image: quay.io/metallb/controller:v0.8.2
-  ...
-image: quay.io/metallb/speaker:v0.8.2
-  ...</code></pre>
-</li>
-<li>빌드한 결과를 'kubectl apply'에 인자로 전달한다.<pre><code class="language-bash">(m-k8s)# kustomize build | kubectl apply -f -
-namespace/metallb-system created
-serviceaccount/controller created
-serviceaccount/speaker created
-podsecuritypolicy.policy/speaker created
-role.rbac.authorization.k8s.io/config-watcher created
-clusterrole.rbac.authorization.k8s.io/metallb-system:controller created
-clusterrole.rbac.authorization.k8s.io/metallb-system:speaker created
-rolebinding.rbac.authorization.k8s.io/config-watcher created
-clusterrolebinding.rbac.authorization.k8s.io/metallb-system:controller created
-clusterrolebinding.rbac.authorization.k8s.io/metallb-system:speaker created
-configmap/config created
-deployment.apps/controller created
-daemonset.apps/speaker created</code></pre>
-</li>
-<li>'MetalLB'가 정상적으로 배포되었는지 확인한다.<pre><code class="language-bash">(m-k8s)# kubectl get pods -n metallb-system
-NAME                          READY   STATUS    RESTARTS   AGE
-controller-5d48db7f99-crb2n   1/1     Running   0          58s
-speaker-99nvm                 1/1     Running   0          58s
-speaker-djfn6                 1/1     Running   0          58s
-speaker-f4v9f                 1/1     Running   0          58s
-speaker-swk2x                 1/1     Running   0          58s
-(m-k8s)# kubectl get configmap -n metallb-system
-NAME     DATA   AGE
-config   1      96s</code></pre>
-</li>
-<li>'Kustomize'를 통해 고정한 'MetalLB'의 태그를 확인한다.<pre><code class="language-bash">(m-k8s)# kubectl describe pods -n metallb-system | grep Image:
-Image:         quay.io/metallb/controller:v0.8.2
-Image:         quay.io/metallb/speaker:v0.8.2
-Image:         quay.io/metallb/speaker:v0.8.2
-Image:         quay.io/metallb/speaker:v0.8.2
-Image:         quay.io/metallb/speaker:v0.8.2</code></pre>
-</li>
-<li>테스트를 위한 'Deployment Pod' 1개를 배포하고 'LoadBalancer' 타입으로 노출하고 IP가 정상적으로 할당되었는지 확인한다.<pre><code class="language-bash">(m-k8s)# kubectl create deployment echo-ip --image=sysnet4admin/echo-ip
-deployment.apps/echo-ip created
-(m-k8s)# kubectl expose deployment echo-ip --type=LoadBalancer --port=80
-service/echo-ip exposed</code></pre>
-</li>
+<li>'b.zip' 파일을 압축해제한 후 작업한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/25416140-b7a5-4bc6-b3f3-fc25c06ab315/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7acfa9f6-cb0e-4939-8535-9b69dbd570dd/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# ls -l
+   -rw-r--r--. 1 root root  261 Jun 24 17:01 kustomize-install.sh
+   -rw-r--r--. 1 root root  223 Jun 24 17:01 metallb-l2config.yaml
+   -rw-r--r--. 1 root root 5384 Jun 24 17:01 metallb.yaml
+   -rw-r--r--. 1 root root   90 Jun 24 17:01 namespace.yaml</code></pre>
+<ol start="23">
+<li>'Kustomize' 명령 실행 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/03607a38-732b-420b-a5de-e508d35d6033/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# chmod 700 kustomize-install.sh
+  (m-k8s)# ls -l
+   -rwx------. 1 root root  261 Jun 24 17:01 kustomize-install.sh
+   -rw-r--r--. 1 root root  223 Jun 24 17:01 metallb-l2config.yaml
+   -rw-r--r--. 1 root root 5384 Jun 24 17:01 metallb.yaml
+   -rw-r--r--. 1 root root   90 Jun 24 17:01 namespace.yaml
+  (m-k8s)# ./kustomize-install.sh
+     % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                    Dload  Upload   Total   Spent    Left  Speed
+     0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+   100 12.4M  100 12.4M    0     0  9717k      0  0:00:01  0:00:01 --:--:-- 72.5M
+   kustomize install successfully
+  (m-k8s)# ls -l /usr/local/bin/ (사용자에 의해 설치된 프로그램들은 모두 이 경로에서 동작되도록 설정해야 한다.)
+   -rwxr-xr-x. 1 root root  7229744 Jan  3  2021 bpytop
+   -rwxr-xr-x. 1 root root 40595456 May 28  2020 kustomize</code></pre>
+<ol start="24">
+<li>'커스터마이징'을 위한 'yaml' 파일을 생성한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f13504ad-5110-4cc5-a343-77f426b422aa/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# kustomize create --namespace=metallb-system --resources namespace.yaml,metallb.yaml,metallb-l2config.yaml
+  (m-k8s)# ls -l
+   -rw-r--r--. 1 root root  157 Jun 24 17:08 kustomization.yaml
+   -rwx------. 1 root root  261 Jun 24 17:01 kustomize-install.sh
+   -rw-r--r--. 1 root root  223 Jun 24 17:01 metallb-l2config.yaml
+   -rw-r--r--. 1 root root 5384 Jun 24 17:01 metallb.yaml
+   -rw-r--r--. 1 root root   90 Jun 24 17:01 namespace.yaml
+  (m-k8s)# cat kustomization.yaml
+   apiVersion: kustomize.config.k8s.io/v1beta1
+   kind: Kustomization
+   resources:
+   - namespace.yaml
+   - metallb.yaml
+   - metallb-l2config.yaml
+   namespace: metallb-system</code></pre>
+<ol start="25">
+<li>설치된 이미지를 안정적인 버전으로 유지하기 위해 'Controller'와 'Speaker'의 이미지 태그를 'v0.8.2'로 지정한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/84abda46-1e81-4645-804e-bc3679221676/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# kustomize edit set image metallb/controller:v0.8.2
+  (m-k8s)# kustomize edit set image metallb/speaker:v0.8.2
+  (m-k8s)# cat kustomization.yaml
+   apiVersion: kustomize.config.k8s.io/v1beta1
+   kind: Kustomization
+   resources:
+   - namespace.yaml
+   - metallb.yaml
+   - metallb-l2config.yaml
+   namespace: metallb-system
+   images:
+   - name: metallb/controller
+     newTag: v0.8.2
+   - name: metallb/speaker
+     newTag: v0.8.2</code></pre>
+<ol start="26">
+<li>'MetalLB' 설치를 위한 '메니페스트(스펙)'를 생성한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/3dd5c2d6-b54b-475a-9d85-30c01e8f46b9/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# kustomize build
+      ...
+   addresses:
+         - 192.168.1.11-192.168.1.19
+      ...
+        image: quay.io/metallb/controller:v0.8.2
+      ...
+   image: quay.io/metallb/speaker:v0.8.2
+      ...</code></pre>
+<ol start="27">
+<li>빌드한 결과를 'kubectl apply'에 인자로 전달한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/083b0986-d9e8-4b20-ac04-6b3065d8c050/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# kustomize build | kubectl apply -f -
+   namespace/metallb-system created
+   serviceaccount/controller created
+   serviceaccount/speaker created
+   podsecuritypolicy.policy/speaker created
+   role.rbac.authorization.k8s.io/config-watcher created
+   clusterrole.rbac.authorization.k8s.io/metallb-system:controller created
+   clusterrole.rbac.authorization.k8s.io/metallb-system:speaker created
+   rolebinding.rbac.authorization.k8s.io/config-watcher created
+   clusterrolebinding.rbac.authorization.k8s.io/metallb-system:controller created
+   clusterrolebinding.rbac.authorization.k8s.io/metallb-system:speaker created
+   configmap/config created
+   deployment.apps/controller created
+   daemonset.apps/speaker created</code></pre>
+<ol start="28">
+<li>'MetalLB'가 정상적으로 배포되었는지 확인한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0e55253f-f82d-4fb9-9ffd-3af426c33e48/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# kubectl get pods -n metallb-system
+   NAME                          READY   STATUS    RESTARTS   AGE
+   controller-5d48db7f99-crb2n   1/1     Running   0          58s
+   speaker-99nvm                 1/1     Running   0          58s
+   speaker-djfn6                 1/1     Running   0          58s
+   speaker-f4v9f                 1/1     Running   0          58s
+   speaker-swk2x                 1/1     Running   0          58s
+  (m-k8s)# kubectl get configmap -n metallb-system
+   NAME     DATA   AGE
+   config   1      96s</code></pre>
+<ol start="29">
+<li>'Kustomize'를 통해 고정한 'MetalLB'의 태그를 확인한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/91f86a28-f1bd-43a0-9732-2f02cd9e77b0/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# kubectl describe pods -n metallb-system | grep Image:
+    Image:         quay.io/metallb/controller:v0.8.2
+    Image:         quay.io/metallb/speaker:v0.8.2
+    Image:         quay.io/metallb/speaker:v0.8.2
+    Image:         quay.io/metallb/speaker:v0.8.2
+    Image:         quay.io/metallb/speaker:v0.8.2</code></pre>
+<ol start="30">
+<li>테스트를 위한 'Deployment Pod' 1개를 배포하고 'LoadBalancer' 타입으로 노출하고 IP가 정상적으로 할당되었는지 확인한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5b8cc587-3657-4c09-9cbb-765b4dec828d/image.png" /></li>
+</ol>
+<pre><code class="language-bash">  (m-k8s)# kubectl create deployment echo-ip --image=sysnet4admin/echo-ip
+   deployment.apps/echo-ip created
+  (m-k8s)# kubectl expose deployment echo-ip --type=LoadBalancer --port=80
+   service/echo-ip exposed</code></pre>
+<ol start="31">
 <li>사이트를 출력하고 'echo-ip'가 정상적으로 응답하는지 확인한다.<pre><code class="language-bash">(m-k8s)# curl http://192.168.1.11
 request_method : GET | ip_dest: 172.16.221.129</code></pre>
 </li>
