@@ -861,7 +861,7 @@ echo-ip   LoadBalancer   10.107.85.129   192.168.1.11   80:30629/TCP   9s
 request_method : GET | ip_dest: 172.16.103.130
 ```
 
-![업로드중..](blob:https://velog.io/70085b08-a224-4259-9b3e-a86106229538)
+![](https://velog.velcdn.com/images/kyk02405/post/37a19d64-7209-4bd4-ac96-8c1a1d089029/image.png)
 
 
 - Step 13. 다음 작업을 위해 ‘MetalLB’만 남겨두고 ‘Deployment’, ‘Service’를 모두 삭제한다.
@@ -1047,3 +1047,200 @@ jenkins-76496d9db7-lnwrf   2/2     Running   0          4m49s   172.16.171.68   
 </ul>
 </li>
 </ul>
+<hr />
+<h3 id="jenkins-살펴보기">‘Jenkins’ 살펴보기</h3>
+<ul>
+<li>개요<ul>
+<li>‘Jenkins Controller’는 Master Node에 설치되어 있고 ‘Jenkins-agent’는 필요 시에 생성되고 작업을 마치면 삭제되는 임시 구조를 하고 있다.</li>
+<li>‘Jenkins-agent’에서 작업한 내용들은 삭제가 되기 전에 ‘Jenkins Controller’에 저장해야 하고 이를 위해서 ‘Jenkins-agent’가 항상 동작되어 있어야 한다.</li>
+</ul>
+</li>
+<li>서비스 확인 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/3cc6ce8a-a488-456a-9b1c-a333d1c74719/image.png" /></li>
+</ul>
+<ul>
+<li><p>‘Jenkins’ 접속하기</p>
+<ul>
+<li><p>Step 1. ‘Host OS’에서 웹 브라우저를 실행하고 ‘<a href="http://192.168.1.11%E2%80%99%EC%9D%84">http://192.168.1.11’을</a> 입력한다.</p>
+</li>
+<li><p>Step 2. ‘Welcome to Jenkins!’ 창이 출력되는데 ‘ID와 ‘PW’는 모두 ‘admin’을 입력한다.</p>
+<p>  <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/642841cd-2985-4dda-bd80-d659a4c580ae/image.png" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>    - 새로운 Item
+        - Jenkins를 통해서 Build(작업, 작업할 영역) 할 작업을 Item이라고 한다.
+    - 사람
+        - 사용자를 관리한다.
+        - Jenkins를 구동하는 서버에서 ‘직접 사용자를 관리’하는 방법
+        - Jenkins가 별도의 데이터베이스를 가지고 ‘자체적으로 사용자를 관리’하는 방법
+    - 빌드 기록
+        - Jenkins 작업에 대한 성공, 실패, 진행 내역을 확인할 수 있다.
+    - Jenkins 관리
+        - Jenkins의 시스템, 보안, 도구, Plug-in 등 각종 설정을 수행한다.
+    - My Views
+        - Jenkins에서 각종 작업을 분류하고 모아서 볼 수 있다.
+    - Lockable Resources
+        - Jenkins에서는 한 번에 여러 개의 작업이 동시에 발생할 수 있는데 이 때 작업이 진행중이라면 다른 작업들은 옵션에 따라서 대기해야 하는 경우가 발생된다.
+        - Jenkins에서는 현재 작업이 끝날 때 까지 같은 작업을 하지 못하게 하는 잠금 장치인 ’Lockable Resources’로 설정할 수가 있다.
+    - New View
+        - 대시보드인 View를 생성하는 영역이다.
+- Step 3. Jenkins 사용을 위한 몇 가지 기본 설정
+    - '시스템 설정 (시스템)’
+        - 메인 화면에 표시될 문구, 동시에 실행할 수 있는 '실행기(exccutors)'의 개수, 'Jenkins'를 접속할 수 있는 경로, 관리자의 정보, 시스템 전체에 적용할 수 있는 환경변수, 시스템에서 공통적으로 활용해야 하는 'Plug-in' 파일의 경로와 설정 정보 등을 이곳에서 설정할 수 있다.
+    - 'Global Tool Configuraltion (빌드에 사용되는 도구)’
+        - 빌드 과정에서 사용하는 '도구(Maven, JDK, Git, Docker 등)'의 경로 및 옵션을 설정할 수 있다.
+        - 'Plug-in' 관리를 통해 추가로 사용할 도구를 설정하면 이 메뉴에서 해당 도구를 설정하는 메뉴를 찾을 수 있다.
+    - 'Plug-in' 관리 (호환성)’
+        - 'Jenkins'에서 사용할 'Plug-in'을 설치, 삭제, 업데이트할 수 있다.
+        - 'Jenkins' 홈화면에서 보이는 알람은 여기서 'Plug-in'을 업데이트해서 해결할 수 있다.
+        - 'Jenkins' 알람이 갑자기 사라진 경우
+            - 'Jenkins'의 알람은 'Jenkins' 관리 메뉴에 진입하는 경우, 수정을 하고 있다고 판단해 알람을 보여주지 않는다.
+            - 따라서 현재 알람이 사라졌다고 해서 문제가 수정된 것은 아니니 오해가 없길 바란다.
+    - '노드 관리 (노드)’
+        - 'Jenkins'에서 사용하는 노드를 추가, 삭제하거나 노드의 세부 설정 및 상태 모니터링을 할 수 있는 메뉴이다.
+        - 'Jenkins'에서는 작업을 수행할 수 있는 각 단위를 'Kubernetes'와 동일하게 노드라고 하며 노드에 레이블을 붙여 관리하거나 노드의 동작 방식을 설정할 수 있다.
+    - 'Configuration, as Code (설정 이전)’
+        - 'Jenkins'의 설정을 내보내거나 불러올 수 있다.
+        - 이 메뉴를 통해 다른 곳에서 구성한 'Jenkins' 설정을 옮겨오거나 내 'Jenkins'의  설정을 내보내서 공유할 수 있다.
+        - 새로운 'Jenkins'를 구성해서 현재 'Jenkins'의 설정을 이전할 때 유용한 메뉴이다.
+    - 'Manage Credentials’
+        - 'Jenkins'에서 사용하는 'Plug-in'에 필요한 접근 키, 비밀 키, API 토큰과 같은 접속에 필요한 인증 정보를 관리한다.
+        - 노출이 되면 곤란한 매우 중요한 정보이기 때문에 프로젝트에 직접 입력하지 않고 필요한 경우 호출해서 사용한다.
+        - 이 기능을 이용해서 '5.5절' 실습에서 사용하는 여러 'Plug-in'들이 다른 프로그램으로 연결될 때 보관한 인증 정보를 넘겨준다.</code></pre><h3 id="jenkins-controller-설정하기">‘Jenkins Controller’ 설정하기</h3>
+<ul>
+<li>개요<ul>
+<li>‘Jenkins’를 사용하기 위해서는 기본적으로 ‘Controller’와 ‘Agent’ 구동과 관련된 여러가지 설정이 필요하다.</li>
+<li>이에 관련된 내용들은 ‘Helm’을 설치할 때 이미 작업이 되어 있는 상태이다.</li>
+</ul>
+</li>
+<li>‘Jenkins’ 시스템 설정하기<ul>
+<li>Step 1. ‘Jenkins Controller’ 진입<ul>
+<li>Jenkins 관리 → 시스템 설정 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/dd4c4b0b-09d1-443e-acb2-116251180730/image.png" /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>- Step 2. 시스템 메시지 ![](https://velog.velcdn.com/images/kyk02405/post/c2ea6424-26d0-45ea-a931-c0b113016717/image.png)
+
+
+- Step 3. '# of executors’
+    - 동시에 빌드를 수행할 수 있는 갯수를 보정하는 옵션이다.
+    - Controller Node에서 몇 개까지의 빌드를 수행할 수 있는지를 설정한다.
+    - 현재 설치된 Jenkins의 경우 Agent Pod를 통해서 작업을 생성하기 때문에 이 옵션을 '0'으로 설정하는 것이 좋다.
+- Step 4. Labels
+    - 노드를 구분할 수 있는 레이블을 지정한다.
+- Step 5. Usage
+    - ‘Jenkins’의 빌드 작업에 대해 ‘Jenkins’ 노드가 어떻게 처리할지를 설정한다.
+    - ‘User this node as much as possible’ 옵션을 가장 많이 사용하는데 이 옵션을 빌드 작업을 수행할 때 별도의 조건없이 노드에 빌드를 할 수 있는 환경이라면 현재 노드에서 빌드를 진행하도록 설정한다.
+    - 즉, 이 옵션을 일반적인 환경에서의 빌드 작업에 적합하다고 할 수 있다 ![](https://velog.velcdn.com/images/kyk02405/post/a58fb64a-46ca-45f9-82a7-10f5e5421382/image.png)
+
+
+- Step 6. Quiet period
+    - 빌드 작업이 시작될때 까지 잠시 대기하는 시간을 설정한다. 단위는 ‘초’이다.
+- Step 7. SCM checkout retry count
+    - ‘소스 코드 저장소(SCM, Source Code Management)’ 로부터 파일을 가져오지 못한 경우 몇 번 재시도를 할 지를 결정하는 옵션이다.
+    - 개발자들이 소스 코드를 통합하고 관리하며 이력을 추적하기 위해 사용하는 시스템을 말한다.
+- Step 8. Source Code Management
+- Step 9. Restrict project naming
+    - Jenkins를 통해 만들어지는 작업의 이름 규칙을 설정하는 옵션이다.
+- Step 10. Jenkins URL
+    - 설치된 ‘Jenkins Controller’의 접속 주소를 말한다.
+    - 이 주소는 Jenkins가 외부로 알림을 보내거나 자신의 주소를 알려준다.</code></pre><hr />
+<h3 id="jenkins-plug-in-관리하기">‘Jenkins Plug-in’ 관리하기</h3>
+<ul>
+<li><p>개요</p>
+<ul>
+<li>'Jenkins'는 실행되는 모든 기능을 'Plug-in'으로 구현하도록 설계되어 있다.</li>
+<li>이렇게 설치한 'Plug-in'들을 단독으로 사용하거나 여러 개를 조합해 더 강력한 'CI/CD' 기능을 만들 수 있다.</li>
+<li>이런 예로 'Kubernetes' 위에 'Agent Pod'를 설정할 수 있게 도와주는 메뉴인 'kubernetes' 'Plug-in'이 있습니다.</li>
+<li>'Jenkins' 홈 화면에서 'Jenkins'를 클릭한 후 '플러그인 관리'를 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9c31d4f0-1818-419f-93df-dafedb4b4793/image.png" /></li>
+</ul>
+</li>
+<li><p>Step 1. <code>업데이트 된 플러그인 목록</code> 탭</p>
+</li>
+<li><p>Step 2. <code>설치가능</code> 탭</p>
+</li>
+<li><p>Step 3. <code>설치된 플로그인 목록</code> 탭</p>
+</li>
+<li><p>Step 4. <code>고급</code> 탭</p>
+</li>
+<li><p>Step 5. <code>Jenkins</code>에서 사용해야 하는 <code>Plug-in</code> 업데이트 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2d94087d-c02e-41db-b01b-819fb2926024/image.png" /></p>
+</li>
+</ul>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d2cf9d95-6a87-45b4-a69f-ef2b727afc3e/image.png" /></p>
+<hr />
+<h2 id="jenkins-agent-설정하기">‘Jenkins Agent’ 설정하기</h2>
+<h3 id="시스템-구성">시스템 구성</h3>
+<ol>
+<li><p>이전에 실습했던 시스템 4대를 모두 삭제한다.
+<code>(win10)# vagrant -f destroy</code></p>
+</li>
+<li><p>배포한 'a.zip' 파일을 'HashiCorp' 폴더 안에 압축해제한다.</p>
+</li>
+<li><p>'Vagrantfile'을 이용한 'Provisioning'을 진행하고 시스템을 구성한다.
+<code>(win10)# vagrant up</code></p>
+</li>
+<li><p>도커 버전을 확인한다.</p>
+<pre><code class="language-bash">(m-k8s)#kubectl get nodes -o wide
+NAME     STATUS   ROLES    AGE   VERSION   INTERNAL-IP     EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION                CONTAINER-RUNTIME
+m-k8s    Ready    master   21m   v1.18.4   192.168.1.10    &lt;none&gt;        CentOS Linux 7 (Core)   3.10.0-1160.90.1.el7.x86_64   docker://18.9.9
+w1-k8s   Ready    &lt;none&gt;   19m   v1.18.4   192.168.1.101   &lt;none&gt;        CentOS Linux 7 (Core)   3.10.0-1160.90.1.el7.x86_64   docker://18.9.9
+w2-k8s   Ready    &lt;none&gt;   16m   v1.18.4   192.168.1.102   &lt;none&gt;        CentOS Linux 7 (Core)   3.10.0-1160.90.1.el7.x86_64   docker://18.9.9
+w3-k8s   Ready    &lt;none&gt;   14m   v1.18.4   192.168.1.103   &lt;none&gt;        CentOS Linux 7 (Core)   3.10.0-1160.90.1.el7.x86_64   docker://18.9.9</code></pre>
+</li>
+</ol>
+<h3 id="이미지-빌드">이미지 빌드</h3>
+<ol start="5">
+<li><p>배포한 'Dockerfile'의 내용을 확인한다.
+<code>(m-k8s)# cat Dockerfile</code></p>
+</li>
+<li><p>'Dockerfile'로 컨테이너 이미지를 빌드한다.</p>
+<pre><code class="language-bash">(m-k8s)# docker build -t multistage-img .
+   ...
+Successfully built 0a7639c896a5         → 빌드된 'multistage-img'의 'ID'
+Successfully tagged multistage-img:latest</code></pre>
+</li>
+<li><p>빌드 이미지 용량을 확인한다.</p>
+<pre><code class="language-bash">(m-k8s)# docker images | head -n 3
+REPOSITORY                           TAG                 IMAGE ID            CREATED             SIZE
+multistage-img                       latest              0a7639c896a5        2 minutes ago       148MB
+&lt;none&gt;                               &lt;none&gt;              beec99834c08        2 minutes ago       615MB</code></pre>
+</li>
+<li><p>'댕글링 이미지'를 삭제한다. ('Dangling 이미지'는 'REPOSITORY' 필드에 'none'으로 되어 있는 이미지를 말한다.)</p>
+<pre><code class="language-bash">(m-k8s)# docker rmi $(docker images -f dangling=true -q)
+Deleted: sha256:beec99834c086e5da60836fa0cb904e5cc18b0960b97699862354e4529b0305f
+Deleted: sha256:72cb995b76af943e1451ade35149adc60d763ef37a9e9a45574318762dc806eb
+Deleted: sha256:d1f75a690ddef0d9a159da6bd4a9d2decba1fef35c80588574a90e7d6c0ec62b
+Deleted: sha256:d7c5fb65092b241efe3c89bd08faf69c9c9e2f973433368e4e6507d5a07a63dc
+Deleted: sha256:e37d0e1be9eef3988c38e5cd03310c1afa8d000a02a5d2d936d5ce8fd0d0ee0e
+Deleted: sha256:32606ad9ad163004eb01d0775af6d0425712d9aa54987259f60385d7a5f5ede0
+Deleted: sha256:32081055ef9959383f44f075d60435cf417df6e1225043f74dcc38c7b8492c48
+Deleted: sha256:0555a197210ed5d35956fc5e791e094224bb35d7410282f9fbccd7695524e6ec</code></pre>
+</li>
+<li><p>'multistage-img'를 이용한 컨테이너 생성하고 빌드한 컨테이너가 잘 동작하는지 확인한다.</p>
+<pre><code class="language-bash">(m-k8s)# docker run -d -p 60434:80 --name multistage-run --restart always multistage-img
+512de55164ce6611e9ad505ffe63049c68cb0d81a0d8bb17989008b360e85340
+(m-k8s)# curl 127.0.0.1:60434
+src: 172.17.0.1 / dest: 127.0.0.1</code></pre>
+<h3 id="kubernetes에서-컨테이너-이미지를-구동한다">'Kubernetes'에서 '컨테이너 이미지'를 구동한다.</h3>
+</li>
+<li><p>'Deployment Pod'를 생성한다.</p>
+<pre><code class="language-bash">(m-k8s)# docker images multistage-img
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+multistage-img      latest              0a7639c896a5        16 minutes ago      148MB
+(m-k8s)# kubectl create deployment failure1 --image=multistage-img
+deployment.apps/failure1 created</code></pre>
+</li>
+<li><p>'호스트 시스템(m-k8s)'에 이미지가 있는데도 외부에서 이미지를 다운로드 하려고 하기 때문에 오류가 발생한다.</p>
+<pre><code class="language-bash">(m-k8s)# [root@m-k8s ~]# kubectl get pods -w
+NAME                        READY   STATUS             RESTARTS   AGE
+failure1-6dc55db9d4-jpddx   0/1     ImagePullBackOff   0          2m42s
+failure1-6dc55db9d4-jpddx   0/1     ErrImagePull       0          3m17s</code></pre>
+</li>
+<li><p>오류가 발생한 'Deployment Pod'를 삭제한다.</p>
+<pre><code class="language-bash">(m-k8s)# kubectl delete deployment failure1
+deployment.apps &quot;failure1&quot; deleted</code></pre>
+</li>
+</ol>
