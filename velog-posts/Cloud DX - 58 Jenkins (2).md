@@ -635,26 +635,151 @@ pl-bulk-prod-svc   LoadBalancer   10.107.241.78    192.168.1.12   8080:32335/TCP
 </ul>
 </li>
 </ul>
+<hr />
 <h3 id="step-2-github-저장소-주소-복사">Step 2. 'GitHub 저장소 주소' 복사</h3>
 <h4 id="개요-2">개요</h4>
 <ul>
-<li>'GitHub 저장소 주소'는 뒤에 생성할 'Manifest(상세 설명 또는 Spec)'를 'Push'하기 위한 주소이다.<ul>
-<li>'git' 명령어</li>
-</ul>
-</li>
-<li>init (초기화) - 현재 디렉터리를 'Git' 작업할 수 있도록 선언한다.</li>
-<li>remote (원격) - 'GitHub 저장소'와 같은 원격 저장소를 지정한다.</li>
-<li>add (추가) - 파일 또는 디렉터리를 'Git'을 통해 추적하도록 설정한다.</li>
-<li>commit (저장) - 'Git'을 통해 추적하는 파일의 변경 사항을 저장한다.</li>
-<li>Push (전송) - 변경 사항이 기록된 'Local Git'의 파일들을 원격 저장소로 전송한다.<ul>
-<li>'GipOps' 화면 하단의 'Quick setup'에 '주소(<a href="https://github.com/samadalwho/GitOps.git)'%EB%A5%BC">https://github.com/samadalwho/GitOps.git)'를</a> 복사한다.</li>
-</ul>
-</li>
-</ul>
-<h3 id="step-2-step-3-gitops의-내용-저장을-위한-디렉터리-생성">Step 2. Step 3. 'GitOps'의 내용 저장을 위한 디렉터리 생성</h3>
+<li><p><code>GitHub 저장소 주소</code>는 뒤에 생성할 <code>Manifest(상세 설명 또는 Spec)</code>를 <code>Push</code>하기 위한 주소이다.</p>
 <ul>
-<li>'GitOps'의 내용을 저장할 '디렉터리(gitops)'를 'Master Node(m-k8s)'의 '홈 디렉터리(/root)'에 생성한다.<ul>
+<li><code>git</code> 명령어</li>
+</ul>
+</li>
+<li><p>init (초기화) - 현재 디렉터리를 <code>Git</code> 작업할 수 있도록 선언한다.</p>
+</li>
+<li><p>remote (원격) - <code>GitHub 저장소</code>와 같은 원격 저장소를 지정한다.</p>
+</li>
+<li><p>add (추가) - 파일 또는 디렉터리를 <code>Git</code>을 통해 추적하도록 설정한다.</p>
+</li>
+<li><p>commit (저장) - <code>Git</code>을 통해 추적하는 파일의 변경 사항을 저장한다.</p>
+</li>
+<li><p>Push (전송) - 변경 사항이 기록된 <code>Local Git</code>의 파일들을 원격 저장소로 전송한다.</p>
+<ul>
+<li><code>GitOps</code> 화면 하단의 <code>Quick setup</code>에 <code>주소(https://github.com/kyk02405/GitOps.git)</code>를 복사한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b2d73eff-8808-419b-ba34-7f72d6364571/image.png" /></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="step-3-gitops의-내용-저장을-위한-디렉터리-생성">Step 3. 'GitOps'의 내용 저장을 위한 디렉터리 생성</h3>
+<pre><code class="language-bash">[root@m-k8s ~]# mkdir ~/gitops
+[root@m-k8s ~]# cd ~/gitops/
+[root@m-k8s gitops]# pwd
+/root/gitops</code></pre>
+<ul>
+<li><code>GitOps</code>의 내용을 저장할 <code>디렉터리(gitops)</code>를 <code>Master Node(m-k8s)</code>의 <code>홈 디렉터리(/root)</code>에 생성한다.<ul>
 <li>생성이 완료되면 해당 디렉터리로 이동</li>
 </ul>
 </li>
+</ul>
+<hr />
+<h3 id="step-4-git-관련-작업을-위한-초기화">Step 4. 'Git' 관련 작업을 위한 초기화</h3>
+<ul>
+<li>명령을 실행한 후 <code>Git</code> 작업 내용을 저장하는 <code>.git</code> 디렉터리가 생성되는 것을 확인한다.</li>
+</ul>
+<hr />
+<h3 id="step-5-자격-증명-헬퍼를-이용한-영구적인-자격증명-설정">Step 5. '자격 증명 헬퍼'를 이용한 '영구적인 자격증명' 설정</h3>
+<ul>
+<li><code>Git</code>을 통해서 원격 저장소에 파일들을 저장할 때는 <code>작업자 이름</code>, <code>작업자 이메일 주소</code> 등을 설정하는게 좋다.
+b - 현재 환경에서 <code>GitHub 저장소</code>로 여러 번 <code>Push(전송)</code>하게 되면 <code>Push</code>할 때마다 <code>GitHub</code> <code>사용자 이름</code>과 <code>비밀번호</code>를 요구하기 때문에 <code>자격 증명 저장소(Credential Store)</code>를 이용해서 번거로은 상태가 발생하지 않도록 <code>자격 증명 헬퍼(Credential Helper)</code>를 설정해서 자격증명이 영구적으로 저장되도록 한다.<pre><code class="language-bash">[root@m-k8s gitops]# git config --global user.name &quot;kyk02405&quot;
+[root@m-k8s gitops]# git config --global user.email &quot;kyk02405@gmail.com&quot;
+[root@m-k8s gitops]# git config --global credential.helper &quot;store --file ~/.git-cred&quot;</code></pre>
+</li>
+</ul>
+<hr />
+<h3 id="step-6-step-6-github-저장소에-파일-업로드">Step 6. Step 6. 'GitHub 저장소'에 파일 업로드</h3>
+<ul>
+<li>원격 저장소에 작업한 파일들을 <code>GitHub 저장소</code>에 업로드할 수 있도록 저장소의 주소를 추가한다.</li>
+<li><code>origin</code>은 사용자의 'GitHub 저장소'에 대한 <code>또 다른 이름(별칭, Alias)</code>이다.<pre><code class="language-bash">[root@m-k8s gitops]# git remote add origin https://github.com/kyk02405/GitOps.git</code></pre>
+</li>
+</ul>
+<hr />
+<h3 id="step-7-kubernetes-오브젝트-배포">Step 7. Kubernetes 오브젝트 배포</h3>
+<ul>
+<li><code>Jenkins</code>에서 선언적으로 <code>Kubernetes 오브젝트</code>를 배포하기 위해서 사전에 구성해 둔 파일들을 홈 디렉터리 밑에 <code>gitops</code> 디렉터리로 복사한다. <pre><code class="language-bash">[root@m-k8s 5.5.1]# cp ~/_Book_k8sInfra/ch5/5.5.1/* ~/gitops/</code></pre>
+</li>
+</ul>
+<hr />
+<h3 id="step-8-kubernetes-오브젝트-배포를-위한-jenkinsfile-내용-수정">Step 8. <code>Kubernetes 오브젝트</code> 배포를 위한 <code>Jenkinsfile</code> 내용 수정</h3>
+<ul>
+<li><code>Jenkinsfile</code>에는 <code>Kubernetes 오브젝트 배포</code>를 위한 설정이 이미 구현되어 있다.</li>
+<li><code>GitHub 저장소</code>는 개별 사용자에 맞는 설정이 필요하기 때문에 <code>sed</code> 명령을 이용해서 <code>GitHub 저장소</code>를 변경한다.</li>
+<li><code>sed</code> 명령은 기존에 사용했던 방식인 <code>s/변경대상/변경할내용/g</code>로 사용했는데 <code>변경할 내용</code>에 <code>/</code>가 포함되어 있기 때문에 <code>GitHub 저장소</code>로 변환되지 않는다.</li>
+<li>따라서 <code>/</code>를 <code>,</code>로 대치하게 되면 <code>GitHub 저장소</code>가 정상적으로 변화된다. 단, 빈 공백이 있어서는 안된다.<pre><code class="language-bash">[root@m-k8s gitops]# sed -i 's,Git-URL,https://github.com/kyk02405/GitOps.git,g' Jenkinsfile
+</code></pre>
+</li>
+</ul>
+<p>[root@m-k8s gitops]# cat Jenkinsfile
+pipeline {
+  agent any
+  stages {
+    stage('git pull') {
+      steps {
+        // <a href="https://github.com/kyk02405/GitOps.git">https://github.com/kyk02405/GitOps.git</a> will replace by sed command before RUN
+        git url: '<a href="https://github.com/kyk02405/GitOps.git'">https://github.com/kyk02405/GitOps.git'</a>, branch: 'main'
+      }
+    }
+    stage('k8s deploy'){
+      steps {
+        kubernetesDeploy(kubeconfigId: 'kubeconfig',
+                         configs: '*.yaml')
+      }
+    }
+  }</p>
+<pre><code>---
+### Step 9. 'add(추가)'를 이용한 파일 등록
+- `Git`이 파일들을 추적할 수 있도록 다음의 명령을 이용해서 파일들을 등록한다.
+```bash
+[root@m-k8s gitops]# git add .</code></pre><hr />
+<h3 id="step-10-추가한-내용-확인">Step 10. 추가한 내용 확인</h3>
+<ul>
+<li>추가한 내용을 'Commit' 하기 전에 설정값들이 제대로 설정되어 있는지 확인한다.<pre><code class="language-bash">[root@m-k8s gitops]# git config --list
+user.name=kyk02405
+user.email=kyk02405@gmail.com
+credential.helper=store --file ~/.git-cred
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+remote.origin.url=https://github.com/kyk02405/GitOps.git
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*</code></pre>
+</li>
+</ul>
+<hr />
+<h3 id="step-11-변경-사항-저장">Step 11. 변경 사항 저장</h3>
+<ul>
+<li>추가한 파일들을 <code>Push(전송)</code>하기 위해서 이 명령을 통해 변경 사항을 저장한다.</li>
+<li><code>-m</code>은 <code>Push(전송)</code>하는 내용 등을 파악하기 위한 <code>주석</code>이라고 생각하면 된다.<pre><code class="language-bash">[root@m-k8s gitops]# git commit -m &quot;init commit&quot;
+[master (root-commit) 1900297] init commit
+3 files changed, 37 insertions(+)
+create mode 100644 Jenkinsfile
+create mode 100644 README.md
+create mode 100644 deployment.yaml</code></pre>
+</li>
+</ul>
+<hr />
+<h3 id="step-12-github-저장소로-push전송로-업로드-되는-branch-설정">Step 12. 'GitHub 저장소'로 'Push(전송)'로 업로드 되는 'Branch' 설정</h3>
+<ul>
+<li><code>GitHub 저장소</code>로 <code>Push(전송)</code>하기 위해서 업로드 되는 <code>Branch</code>를 <code>git branch</code>로 설정해야 한다.</li>
+<li><code>Branch(작업의 흐름)</code>는 <code>Code</code>를 보관할 수 있는 단위로 상황에 따랏 여러 <code>Branch</code>를 구성하고 작업 내용을 분리, 저장할 수 있다.</li>
+<li><code>-M(Move)</code>은 <code>Branch</code> 이름을 바꾸는 옵션이고 <code>main</code>은 <code>기본 Branch 이름</code>이다.</li>
+</ul>
+<hr />
+<h3 id="step-13-github-저장소로-push전송">Step 13. <code>GitHub 저장소</code>로 <code>Push(전송)</code></h3>
+<ul>
+<li>명령 실행 시 <code>비밀번호 입력</code>할 때 오류가 발생하면 <code>GitHub</code>에서의 <code>Token(비밀번호 로그인 방식)</code> 문제이다.</li>
+<li><code>GitHub</code>에서는 <code>HTTP를 이용한 기존의 비밀번호 로그인 방식</code>을 더 이상 지원하지 않는다.</li>
+<li>따라서 <code>HTTPS</code> 환경에서의 <code>새로운 비밀번호 로그인 방식(Token)</code>을 이용해서 접속하도록 설정해 줘야 한다.</li>
+</ul>
+<pre><code class="language-bash">[root@m-k8s gitops]# git branch -M main
+[root@m-k8s gitops]# git branch
+[root@m-k8s gitops]# git push -u origin main
+Username for 'https://github.com': kyk02405
+Password for 'https://kyk02405@github.com': (토큰키입력)</code></pre>
+<h4 id="토큰-생성-방법">토큰 생성 방법</h4>
+<blockquote>
+<p><code>Github 프로필 아이콘</code> -&gt; <code>Settings</code> -&gt; <code>Developer Settings</code> -&gt; <code>Personal access tokens</code> -&gt; <code>tokens (classic)</code>
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4d11bb6d-b3e9-4afb-afac-26b4648f1158/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9951a26d-97ec-479d-a706-f6bb590e2fd7/image.png" /></p>
+</blockquote>
+<ul>
+<li>토큰은 한번만 뜸 따로 저장하기</li>
 </ul>
