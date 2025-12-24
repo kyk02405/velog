@@ -621,3 +621,40 @@ pl-bulk-prod-svc   LoadBalancer   10.107.241.78    192.168.1.12   8080:32335/TCP
 </ul>
 </li>
 </ul>
+<hr />
+<h2 id="실습">실습</h2>
+<h3 id="step-1-github-사이트에서-github-저장소repository-생성">Step 1. GitHub 사이트에서 GitHub 저장소(Repository) 생성</h3>
+<h4 id="개요-1">개요</h4>
+<ul>
+<li>주기적으로 변화를 감지해야 하는 <code>GitHub 저장소</code>는 모드 같은 저장소를 공유할 수 없기 때문에 필요할 때마다 생성해야 한다.<ul>
+<li><code>https://github.com/</code>에 로그인 후 화면 상단에 있는 <code>Repositories</code>를 클릭한다.</li>
+<li>우측에 있는 <code>New</code>를 클릭한다.</li>
+<li><code>Create a new repository</code> 화면에 있는 <code>Repository name</code>에 <code>GitOps</code>를 입력한다.</li>
+<li><code>Choose visibility</code>에서 <code>Public</code>를 선택한다.</li>
+<li>하단에 있는 <code>Create repository</code>를 클릭한다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="step-2-github-저장소-주소-복사">Step 2. 'GitHub 저장소 주소' 복사</h3>
+<h4 id="개요-2">개요</h4>
+<ul>
+<li>'GitHub 저장소 주소'는 뒤에 생성할 'Manifest(상세 설명 또는 Spec)'를 'Push'하기 위한 주소이다.<ul>
+<li>'git' 명령어</li>
+</ul>
+</li>
+<li>init (초기화) - 현재 디렉터리를 'Git' 작업할 수 있도록 선언한다.</li>
+<li>remote (원격) - 'GitHub 저장소'와 같은 원격 저장소를 지정한다.</li>
+<li>add (추가) - 파일 또는 디렉터리를 'Git'을 통해 추적하도록 설정한다.</li>
+<li>commit (저장) - 'Git'을 통해 추적하는 파일의 변경 사항을 저장한다.</li>
+<li>Push (전송) - 변경 사항이 기록된 'Local Git'의 파일들을 원격 저장소로 전송한다.<ul>
+<li>'GipOps' 화면 하단의 'Quick setup'에 '주소(<a href="https://github.com/samadalwho/GitOps.git)'%EB%A5%BC">https://github.com/samadalwho/GitOps.git)'를</a> 복사한다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="step-2-step-3-gitops의-내용-저장을-위한-디렉터리-생성">Step 2. Step 3. 'GitOps'의 내용 저장을 위한 디렉터리 생성</h3>
+<ul>
+<li>'GitOps'의 내용을 저장할 '디렉터리(gitops)'를 'Master Node(m-k8s)'의 '홈 디렉터리(/root)'에 생성한다.<ul>
+<li>생성이 완료되면 해당 디렉터리로 이동</li>
+</ul>
+</li>
+</ul>
