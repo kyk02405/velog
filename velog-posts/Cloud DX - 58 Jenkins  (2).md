@@ -883,3 +883,39 @@ Password for 'https://kyk02405@github.com': (토큰키입력)</code></pre>
 </li>
 </ul>
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7fd7151f-68c8-4906-98b9-73026a5c52b7/image.png" /></p>
+<hr />
+<h3 id="step-27-dpy-pl-gitops-프로젝트의-배포-진행-상태-확인">Step 27. 'dpy-pl-gitops' 프로젝트의 배포 진행 상태 확인</h3>
+<ul>
+<li>'*/10 * * * *'로 설정했기 때문에 '10분'을 기다린 후 'Build History' 항목에서 진행되는 것을 확인할 수 있다.</li>
+</ul>
+<hr />
+<h3 id="step-28-배포-작업-완료">Step 28. 배포 작업 완료</h3>
+<ul>
+<li>‘Build History’ 항목에서 ‘#1’, ‘#2’를 클릭하면서 확인하면 된다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/17721e1b-4363-4279-a232-c5f628722bc1/image.png" /></li>
+</ul>
+<hr />
+<h3 id="step-29-deployment-확인">Step 29. Deployment 확인</h3>
+<ul>
+<li>배포 작업이 완료됨에 따라 ‘GitHub 저장소’에 ‘Push’한 ‘Yaml’ 파일이 ‘Kubernetes Cluster’에 적용이 되었는지 확인한다.<pre><code class="language-bash">[root@m-k8s gitops]# sed -i 's/replicas: 2/replicas: 5/' deployment.yaml
+[root@m-k8s gitops]#
+[root@m-k8s gitops]# git add . ; git commit -m &quot;change replicas count&quot; ; git push -u origin main
+[main d686e89] change replicas count
+1 file changed, 1 insertion(+), 1 deletion(-)
+Counting objects: 5, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 283 bytes | 0 bytes/s, done.
+Total 3 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/kyk02405/GitOps.git
+ 1900297..d686e89  main -&gt; main
+Branch main set up to track remote branch main from origin.</code></pre>
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/30c8df3e-da9f-43dd-8f0e-343a9614104e/image.png" /></li>
+</ul>
+<hr />
+<h3 id="step-30-최종-확인">Step 30. 최종 확인</h3>
+<ul>
+<li>Deployment(배포) 상태 확인</li>
+<li><code>Jenkins</code>의 <code>Pipeline dpy-pl-gitops</code> 프로젝트에서 <code>Build History</code>를 통해서 변화된 내용을 확인한다.</li>
+<li><code>GitHub 저장소</code>의 <code>Code</code>에서 <code>deployment.yaml</code> 파일의 변화된 내용을 확인한다.</li>
+</ul>
