@@ -819,19 +819,67 @@ Password for 'https://kyk02405@github.com': (토큰키입력)</code></pre>
 <hr />
 <h3 id="step-18-새로운-자격증명-추가">Step 18. 새로운 자격증명 추가</h3>
 <ul>
-<li><code>Stores scoped to Jenkins</code> 하단에 있는 <code>global</code>을 클릭하면 된다. <img alt="업로드중.." src="blob:https://velog.io/c7f872ad-594b-4303-94d4-8d6585d0f9e7" /></li>
+<li><code>Stores scoped to Jenkins</code> 하단에 있는 <code>global</code>을 클릭하면 된다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/eda68794-311f-4384-831b-d8bb081d036e/image.png" /></li>
 </ul>
 <hr />
 <h3 id="step-19-master-node에-접근-가능한-권한-부여">Step 19. 'Master Node'에 접근 가능한 권한 부여</h3>
 <ul>
 <li><code>Kubernetes</code> 설정 파일에 대한 <code>자격 증명</code>을 가져오려면 현재 설정 파일이 있는 <code>Master Node(m-k8s, 192.168.1.10)</code>에 접속 권한이 있어야 한다.</li>
-<li>왼쪽에 있는 <code>Add Credentials</code>를 클릭한다. <img alt="업로드중.." src="blob:https://velog.io/9d6c3f5c-0a7d-4e8c-8f06-91486e24bc8b" /></li>
+<li>왼쪽에 있는 <code>Add Credentials</code>를 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0ddef38f-7d82-4dc8-b2ab-408dd0832c77/image.png" /></li>
 </ul>
 <hr />
 <h3 id="step-20-다음과-같이-입력한-후-ok를-클릭한다">Step 20. 다음과 같이 입력한 후 'OK'를 클릭한다.</h3>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2eddf774-3c53-4445-af35-fded3e3d84da/image.png" /></p>
 <p>   -&gt; Kind      : Username with password
    -&gt; Scope   : Global (Jenkins, nodes, items, all child items, etc)
    -&gt; Username   : root
    -&gt; Password   : vagrant
    -&gt; ID      : m-k8s-ssh
    -&gt; Description   : m-k8s ssh credential</p>
+<hr />
+<h3 id="step-21-m-k8s-ssh-이름의-노드-자격-증명-확인">Step 21. ‘m-k8s-ssh’ 이름의 ‘노드 자격 증명’ 확인</h3>
+<ul>
+<li>설정을 통한 등록을 확인한 후 ‘Kubernetes’ 설정 파일에 대한 자격증명을 추가한다.</li>
+<li>왼쪽에 있는 ‘Add Credentials’를 클릭한다.</li>
+</ul>
+<hr />
+<h3 id="step-22-kubernetes-접속-자격-증명을-다음과-같이-입력한-후-ok를-클릭한다">Step 22. 'Kubernetes' 접속 자격 증명을 다음과 같이 입력한 후 'OK'를 클릭한다.</h3>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/dd860122-0a26-4b7f-8fae-580e1e1f86cd/image.png" />
+   -&gt; Kind      : Kubernetes configuration (kubeconfig)
+   -&gt; Scope   : Global (Jenkins, nodes, items, all child items, etc)
+   -&gt; ID      : kubeconfig
+   -&gt; Description   : kubeconfig get from master node
+   -&gt; Kubeconfig   : From a file on the Kubernetes master node
+   -&gt; Server   : 192.168.1.10
+   -&gt; SSH Credentials   : root/<strong>**</strong> (m-k8s ssh credential)
+    -&gt; File         : .kube/config</p>
+<hr />
+<h3 id="step-23-kubernetes-접속-자격-증명이-kubeconfig된-것을-확인한다">Step 23. 'Kubernetes' 접속 자격 증명이 'kubeconfig'된 것을 확인한다.</h3>
+<hr />
+<h3 id="step-24-선언적인-배포-환경을-프로젝트-설정">Step 24. 선언적인 배포 환경을 프로젝트 설정</h3>
+<ul>
+<li><code>Jenkins</code>의 <code>대시보드</code>의 왼쪽에 있는 <code>새로운 Item</code>을 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/1d588e51-b553-4b15-95aa-80c9c8f927f4/image.png" /></li>
+<li>'Pipeline' 아이템을 선택한 후 'dpy-pl-gitops'를 입력한 후 하단에 있는 'OK'를 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/def4cb38-8e2f-4e00-80b6-b7a8721fc81b/image.png" /></li>
+</ul>
+<hr />
+<h3 id="step-25-github-저장소에-변경-내용을-감시하기-위한-poll-scm-설정">Step 25. ‘GitHub 저장소’에 변경 내용을 감시하기 위한 ‘Poll SCM’ 설정</h3>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/85715632-33de-4152-8d5a-2f32077ebef3/image.png" /></p>
+<ul>
+<li><code>Poll SCM</code>은 주기적으로 <code>GitHub 저장소</code>의 변경을 인식하게 한다.</li>
+<li><code>Build Triggers</code> 탭에서 하단에 있는 <code>Poll SCM</code>을 체크한 후 <code>Schedule</code>은 <code>*/10 * * * *</code>로 입력한다.</li>
+<li><code>*/10 * * * *</code>은 <code>Cron Expression(크론 표현식)</code>이라고 하며 <code>10분마다 변화가 있는지 체크</code>하라는 말이다.</li>
+<li>참고로 <code>Crontab</code>에서의 표현 방식과 동일하다. 즉, <code>분 시 일 월 요일</code>을 뜻한다.</li>
+<li>하단에 있는 <code>Apply</code>를 클릭한다.</li>
+</ul>
+<hr />
+<h3 id="step-26-pipeline-프로젝트에서-사용할-소스-저장소-구성">Step 26. 'Pipeline' 프로젝트에서 사용할 소스 저장소 구성</h3>
+<ul>
+<li>'Pipeline' 탭을 클릭하고 다음과 같이 입력한 후 하단에 있는 'Apply'를 클릭한다.<ul>
+<li>Definition      → Pipeline script from SCM</li>
+<li>SCM         → Git</li>
+<li>Repository URL   → <a href="https://github.com/samadalwho/GitOps.git">https://github.com/samadalwho/GitOps.git</a></li>
+<li>Branch Specifier (blank for 'any')   → */main</li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7fd7151f-68c8-4906-98b9-73026a5c52b7/image.png" /></p>
