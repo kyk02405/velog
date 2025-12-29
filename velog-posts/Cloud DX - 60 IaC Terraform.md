@@ -92,18 +92,37 @@ resource &quot;aws_instance&quot; &quot;example&quot; {         -&gt; EC2 Instan
 <hr />
 <h3 id="aws-cli-설치-및-업데이트">AWS CLI 설치 및 업데이트</h3>
 <ul>
-<li>다운로드 및 설치<ul>
-<li>방법 1. ‘Windows(64bit)’용 설치 관리자를 이용한 다운로드<ul>
+<li><p>다운로드 및 설치</p>
+<ul>
+<li>방법 1. <code>Windows(64bit)</code>용 설치 관리자를 이용한 다운로드<ul>
 <li><a href="https://awscli.amazonaws.com/AWSCLIV2.msi">https://awscli.amazonaws.com/AWSCLIV2.msi</a></li>
 </ul>
 </li>
-<li>방법 2. ‘실행창(cmd)’에서 ‘msiexec’를 이용한 MSI 설치 관리자를 실행<ul>
+<li>방법 2. <code>실행창(cmd)</code>에서 <code>msiexec</code>를 이용한 MSI 설치 관리자를 실행<ul>
 <li><code>msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi</code></li>
 </ul>
 </li>
 </ul>
 </li>
+<li><p>설치는 기본값으로 설치한다</p>
+</li>
+<li><p>AWS CLI 버전 확인</p>
+</li>
 </ul>
+<h3 id="terraform-설치">Terraform 설치</h3>
 <ul>
-<li>AWSC</li>
+<li><p>설치 경로</p>
+<ul>
+<li><a href="https://developer.hashicorp.com/terraform">https://developer.hashicorp.com/terraform</a>
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7792acb5-0eae-4b12-befc-75f85865efd1/image.png" /> 가급적 최신 버전을 다운로드 한다.</li>
+</ul>
+</li>
+<li><p>지정된 경로로 이동 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/daba4cf0-f2ee-46d1-9428-48e078b1183d/image.png" /></p>
+</li>
+<li><p>환경 변수 편집 </p>
+<ul>
+<li><code>sysdm.pl</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/3f2de292-f139-41a2-9ce9-4d7e315605b2/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d6c6733b-7312-499c-a877-59a02599ad8b/image.png" /></li>
+</ul>
+</li>
 </ul>
