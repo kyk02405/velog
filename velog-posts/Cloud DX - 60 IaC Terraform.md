@@ -57,9 +57,53 @@
 <h4 id="개요-2">개요</h4>
 <ul>
 <li>기본 구조는 블록, 식별자, 속성 및 값으로 구성된다.</li>
-<li><code>Terraform</code>의 <code>HCL</code>을 이용해서 <code>AWS</code>의 <code>EC2</code> <code>Instance</code>를 구성하는 예제<pre><code class="language-bash">resource &quot;aws_instance&quot; &quot;web&quot; {
-ami           = &quot;ami-0abc123&quot;
-instance_type = &quot;t3.micro&quot;
+<li><code>Terraform</code>의 <code>HCL</code>을 이용해서 <code>AWS</code>의 <code>EC2</code> <code>Instance</code>를 구성하는 예제<pre><code class="language-bash">provider &quot;aws&quot; {                            -&gt; AWS Provider를 설정한다.
+              region = &quot;us=west-2&quot;
+}
+resource &quot;aws_instance&quot; &quot;example&quot; {         -&gt; EC2 Instance를 생성한다.
+              ami = &quot;ami-xxx...&quot;                  -&gt; 속성으로 각각 사용할 AMI와 인스턴스의 유형을 지정한다.
+              instance_type = &quot;t2.micro&quot;
+              tags = {                            -&gt; 인스턴스에 대한 추가 'Metadata(세부 속성)'를 제공한다.
+                              Name = &quot;MyExampleInstance&quot;
+              }
 }</code></pre>
 </li>
+</ul>
+<hr />
+<h3 id="terraform을-사용한-웹-애플리케이션-인프라스트럭처infrastructure-프로비저닝provisioning-진행-순서">Terraform을 사용한 웹 애플리케이션 인프라스트럭처(infrastructure) 프로비저닝(Provisioning) 진행 순서</h3>
+<ul>
+<li>Step 1. AWS 계정을 준비하고 <code>API키</code> 를설정한다.</li>
+<li>Step 2. <code>프라스트럭처</code>를 정의하는 HCL 언어로 필요한 리소스를 선언한다.</li>
+<li>Step 3. 선언된 리소스들이 생성 가능에 대한 여부를 <code>lan</code>명령어를 통해서 확인한다.<ul>
+<li>이 명령을 실행하면 <code>클라우드(AWS의 서비스)</code>에 적용되어 변화될 내용들을 보여준다.</li>
+<li>생성하고자 하는 리소스 수만큼 반복하면서 Terraform 정의 파일을 조금씩 완성시켜 나간다.</li>
+</ul>
+</li>
+<li>Step 4.선언된 리소스들을 <code>AWS</code>에 적용을 위해 <code>Apply</code> 명령을 실행한다</li>
+<li>Step 5. 웹 애플리케이션을 배포한다.</li>
+</ul>
+<hr />
+<h2 id="102-terraform-설치">10.2 Terraform 설치</h2>
+<h3 id="시스템-구성">시스템 구성</h3>
+<ul>
+<li><code>램 8GB</code></li>
+<li><code>추가 HDD 128GB</code></li>
+</ul>
+<hr />
+<h3 id="aws-cli-설치-및-업데이트">AWS CLI 설치 및 업데이트</h3>
+<ul>
+<li>다운로드 및 설치<ul>
+<li>방법 1. ‘Windows(64bit)’용 설치 관리자를 이용한 다운로드<ul>
+<li><a href="https://awscli.amazonaws.com/AWSCLIV2.msi">https://awscli.amazonaws.com/AWSCLIV2.msi</a></li>
+</ul>
+</li>
+<li>방법 2. ‘실행창(cmd)’에서 ‘msiexec’를 이용한 MSI 설치 관리자를 실행<ul>
+<li><code>msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>AWSC</li>
 </ul>
