@@ -126,3 +126,46 @@ resource &quot;aws_instance&quot; &quot;example&quot; {         -&gt; EC2 Instan
 </ul>
 </li>
 </ul>
+<hr />
+<h2 id="103-aws-콘솔-관리자와-terraform과의-연동을-위한-초기-작업">10.3 AWS 콘솔 관리자와 Terraform과의 연동을 위한 초기 작업</h2>
+<h3 id="aws-콘솔-관리자-초기-작업">AWS 콘솔 관리자 초기 작업</h3>
+<ul>
+<li><code>AWS user1 사용자 생성</code></li>
+</ul>
+<h3 id="매우-중요-aws-iam-계정-사용을-위한-key-등록">(매우 중요) AWS IAM 계정 사용을 위한 Key 등록</h3>
+<h4 id="step-1-key-확인-1">Step 1. Key 확인 1. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/f5b51ee6-e41b-4940-bb7f-7c09d01bbb6f/image.png" /></h4>
+<h4 id="step-2-key-등록">Step 2. Key 등록 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/a5290ea6-d58a-40f1-9fd2-9735ca2009be/image.png" /></h4>
+<h4 id="step-3-key-확인-2">Step 3. Key 확인 2. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8f5f44ce-979c-4e57-9856-e03e7fb4f52c/image.png" /></h4>
+<hr />
+<h2 id="104-실습">10.4 실습</h2>
+<h3 id="실습-1-공급자와-리소스-구성을-위한-maintf-코드">실습 1. 공급자와 리소스 구성을 위한 main.tf 코드</h3>
+<h4 id="ami">ami</h4>
+<ul>
+<li><p><code>EC2 Instance</code>를 생성하는 <code>Amazon Machine Image</code>를 말한다.</p>
+</li>
+<li><p><code>AMI 카탈로그</code> 확인</p>
+<ul>
+<li><p><code>(주의)</code> 여기서는 <code>EC2 Instatnce</code>를 생성하는 것이 아니라 <code>AMI</code> 검색에 대한 설명만 한다.</p>
+</li>
+<li><p><code>EC2</code> 서비스 하단에 있는 <code>인스턴스</code>를 클릭한다.</p>
+</li>
+<li><p>우측에서 <code>인스턴스 시작</code>을 클릭한다.</p>
+</li>
+<li><p><code>애플리케이션 및 OS 이미지(Amazon Machine Image)  정보</code> 하단에 있는  <code>더 많은 AMI 찾아보기</code>를 클릭한다.</p>
+</li>
+<li><p><code>AWS Marketplace AMI(5617)</code> 탭을 클릭한다.</p>
+</li>
+<li><p>상단의 <code>검색</code>란에 <code>rocky</code>를 입력한 후 검색한다.</p>
+</li>
+<li><p>하단에 출력된 것들 중에서 <code>Rocky Linux 9 (Official) - x86_64</code> 옆에 있는 <code>선택</code>을 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0e9f9730-1ba8-49d8-a194-84825783b51f/image.png" /></p>
+</li>
+<li><p><code>개요</code> 하단에 있는 <code>인스턴스 시작 시 구독</code>을 클릭한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/3376870f-04a5-4ab6-83ba-d9ce997683c6/image.png" /></p>
+</li>
+<li><p><code>카탈로그의 AMI</code> 항목 하단에 있는 <code>이미지 ID</code> 하단의 <code>ami-06b18c6a9a323f75f</code>를 확인한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e8a44f8e-7743-495f-be28-25fdde75539b/image.png" /></p>
+</li>
+<li><p><code>(매우 중요)</code> <code>Terraform</code> 특성상 코드로 입력한 훟 <code>Apply</code> 명령을 실행하면 <code>AWS</code>에서 즉시 반영이 되기 때문에 <code>유료 AMI</code>를 사용하는 것이 아니라면 <code>무료 AMI</code>와 <code>프리티어</code>를 꼭 확인 후 코드에 입력해야 한다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="instance_type">Instance_type</h4>
