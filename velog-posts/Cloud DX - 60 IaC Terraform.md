@@ -169,3 +169,40 @@ resource &quot;aws_instance&quot; &quot;example&quot; {         -&gt; EC2 Instan
 </li>
 </ul>
 <h4 id="instance_type">Instance_type</h4>
+<ul>
+<li><p>실행할 <code>EC2 Instance</code>의 유형을 말한다.</p>
+</li>
+<li><p>각각의 <code>EC2 Instance</code>가 제공하는 <code>CPU</code>, <code>메모리</code>, <code>디스크 공간</code> 및 <code>네트워크</code>는 용량이 서로 다르다.</p>
+<h4 id="코드main_01tf-생성">코드(main_01.tf) 생성</h4>
+</li>
+<li><p>개요</p>
+<ul>
+<li><p><code>Region</code>을 <code>아시아 태평양 서울(ap-northeast-2)</code>로 되어 있을 것을 확인한다.</p>
+</li>
+<li><p><code>EC2 서비스</code> 하단에 있는 <code>AMI 카탈로그</code>를 클릭한다.</p>
+</li>
+<li><p><code>커뮤니티 AMI(500)</code>에 나와 있는 대부분의 <code>AMI</code>들은 <code>유료</code>인 경우가 많이 때문에 꼭 확인해야 한다.</p>
+</li>
+<li><p>검색란에 <code>ubuntu 18.04</code>를 입력하고 검색된 화면 하단에 있는 항목에서 <code>AMI</code>를 확인만한다.</p>
+</li>
+<li><p><code>AWS Marketplace AMI(82)</code> 영역을 다시 선택한 후 검색을 다시 하도록 한다.</p>
+</li>
+<li><p>만약, 현재 <code>Region</code>에 없다면 <code>다른 Region(us-east-2)</code>에서 검색을 하면 된다.</p>
+<ul>
+<li>여기서는 <code>us-east-2</code> <code>Region</code>에서 제공하고 있던 <code>ami-0c55b159cbfafe1f0</code>를 사용하도록 한다.</li>
+</ul>
+</li>
+<li><p>따라서 <code>ami 매개변수</code>는 이 <code>AMI</code>를 복사해서 넣으면 된다.</p>
+</li>
+<li><p>(주의사항) 가급적 <code>AWS Marketplace AMI(82)</code>에서 검색할 것을 권장한다.</p>
+</li>
+<li><p><code>instance_type</code>은 <code>프리티어</code>에서 사용 가능한 <code>t2.micro</code> 인스턴스이고 <code>가상 CPU 1개</code>, <code>메모리 1GB</code>를 제공하고 있다.</p>
+</li>
+</ul>
+</li>
+<li><p>작업 </p>
+<ul>
+<li>Step 1. init <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7299f0bb-7495-4398-a8a2-0dbc92114586/image.png" /></li>
+</ul>
+</li>
+</ul>
