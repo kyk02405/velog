@@ -423,7 +423,7 @@ resource &quot;aws_instance&quot; &quot;app_server&quot; {
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d09feea2-bba3-4bcd-be5c-470af17655dc/image.png" /></p>
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/80f5c083-0b67-41c2-b1ae-20f574219d51/image.png" /></p>
 <hr />
-<h3 id="107-실습-4">10.7 실습 4.</h3>
+<h2 id="107-실습-4">10.7 실습 4.</h2>
 <h4 id="개요-두-개의-파일로-분리">개요 (두 개의 파일로 분리)</h4>
 <ul>
 <li><code>provider.tf</code><pre><code class="language-bash">terraform {
@@ -448,4 +448,42 @@ resource &quot;aws_vpc&quot; &quot;main&quot; {
    }
 }</code></pre><ul>
 <li><code>VPC</code> 생성 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ac59e924-f01f-4b97-b78f-95530238f57d/image.png" /></li>
+</ul>
+<hr />
+<h2 id="108-실습-5-vpc-subnet-ec2를-단계별로-생성">10.8 실습 5. VPC, Subnet, EC2를 단계별로 생성</h2>
+<h3 id="terraform의-module화">Terraform의 Module화</h3>
+<ul>
+<li>복잡한 인프라 구조를 보다 쉽게 관리하고 재사용할 수 있도록 만드는 핵심 기능이다.</li>
+<li><code>Terraform 구성 파일(*.tf)</code></li>
+</ul>
+<h3 id="구조">구조</h3>
+<ul>
+<li>구조 2. <code>Terraform Module</code>의 기본 구조<pre><code class="language-bash">Terraform Module(루트 모듈)
+└──main.tf
+└──modules
+└──ec2_instance
+│    ├ ec2.tf
+│    ├ variables.tf
+│    ├ outputs.tf
+└─ vpn (서브 모델2)  
+   ├ vpc.tf
+   ├ variables.tf
+   └ outputs.tf</code></pre>
+</li>
+</ul>
+<hr />
+<h3 id="module-코드-생성-1-module-파일들-생성">Module 코드 생성 1. Module 파일들 생성</h3>
+<ul>
+<li><p>예시 상황 설정</p>
+<ul>
+<li>AWS 인프라를 관리하기 위한 테라폼 구성을 만들고 있다고 상상해 보자.</li>
+<li>이 인프라에는 <code>VPC, 서브넷, 보안 그룹, EC2 인스턴스</code> 등이 포함되어 있다.</li>
+<li>처음에는 모든 구성을 하나의 <code>*.tf</code> 파일에 넣을 수 있지만, 이 구성이 커지면서 관리하기 어려워지기 시작한다. 이때 모듈화가 도움이 된다.</li>
+</ul>
+</li>
+<li><p><code>VPC</code> Module</p>
+<ul>
+<li><code>/sdb/Terraform/moduels/vpc/</code></li>
+</ul>
+</li>
 </ul>
