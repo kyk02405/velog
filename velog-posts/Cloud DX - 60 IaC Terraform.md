@@ -251,3 +251,139 @@ resource &quot;local_file&quot; &quot;dev&quot; {
   filename = &quot;${path.module}/def.txt&quot;
 }</code></pre>
 <h4 id="provisioning-2">Provisioning</h4>
+<hr />
+<h2 id="105-실습-2-공급자provider와-리소스resource-구성을-위한-maintf-코드">10.5 실습 2. 공급자(provider)와 리소스(resource) 구성을 위한 main.tf 코드</h2>
+<ul>
+<li><p>ami</p>
+<ul>
+<li>EC2 Instance를 생성하는 Amazon Machine Image를 말한다.</li>
+<li>‘AMI 카탈로그’ 확인<ul>
+<li>(주의사항) 여기서는 ‘EC2 Instance’를 생성하는 것이 아니라 AMI 검색에 대한 설명만 한다.</li>
+<li>‘EC2’ 서비스 하단에 있는 ‘인스턴스’를 클릭한다.</li>
+<li>‘애플리케이션 및 OS 이미지(Amazon Machine Image) 정보’ 하단에 있는 ‘더 많은 AMI 찾아보기’를 클릭한다.</li>
+<li>‘AWS Marketplace AMI(5617)’ 탭을 클릭한다.</li>
+<li>상단의 ‘검색’란에 ‘rocky’를 입력한 후 검색한다.</li>
+<li>하단에 출력된 것들 중에서 ‘Rocky Linux 9 (Official) - x86_64’ 옆에 있는 ‘선택’을 클릭한다.</li>
+<li>‘개요’ 하단에 있는 ‘인스턴스 시작 시 구독’을 클릭한다.</li>
+<li>‘카탈로그의 AMI’ 항목 하단에 있는 ‘이미지 ID’ 하단의 'ami-06b18c6a9a323f75f'를 확인한다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/c559f2b3-b5f0-4ce6-a2e0-7d7c22781104/image.png" /></li>
+<li>(매우 중요) Terraform 특성상 코드로 입력된 후 ‘Apply’ 명령을 실행하면 ‘AWS’에 즉시 반영이 되기 때문에 ‘유료 AMI’를 사용하는 것이 아니라면 '무료 AMI'와 '프리티어'를 꼭 확인 후 코드에 입력해야 한다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>instance_type</p>
+<ul>
+<li>실행할 ‘EC2 Instance’의 유형을 말한다.</li>
+<li>각각의 ‘EC2 Instance’가 제공하는 ‘CPU, 메모리, 디스크 공간 및 네트워크’는 용량이 서로 다르다.</li>
+<li><a href="https://aws.amazon.com/ko/ec2/instance-types/">https://aws.amazon.com/ko/ec2/instance-types/</a></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="코드main_01tf-생성-1">코드(main_01.tf) 생성</h3>
+<ul>
+<li>개요<ul>
+<li>‘Region’을 ‘아시아 태평양 서울(ap-northeast-2)’로 되어 있을 것을 확인한다.</li>
+<li>‘EC2 서비스’ 하단에 있는 ‘AMI 카탈로그’를 클릭한다.</li>
+<li>‘커뮤니티 AMI(500)’에 나와있는 대부분의 ‘AMI’들은 ‘유료’인 경우가 많기 때문에 꼭 확인해야 한다.</li>
+<li>‘AWS Marketplace AMI(82)’ 영역을 다시 선택한 후 검색을 다시 하도록 한다.</li>
+<li>만약, 현재 ‘Region’에 없다면 ‘다른 Region(us-east-2)’에서 검색을 하면 된다.</li>
+<li>‘ami 매개변수’는 위에서 확인된 ‘ami-0c55b159cbfafe1f0’을 복사해서 넣으면 된다.</li>
+<li>따라서 'ami 매개변수'는 이 'AMI'를 복사해서 넣으면 된다.</li>
+<li>(주의사항) 가급적 'AWS Marketplace AMI(82)'에서 검색할 것을 권장한다.</li>
+<li>‘instance_type’은 ‘프리티어’에서 사용 가능한 ‘t2.micro’ 인스턴스이고 ‘가상 CPU 1개’, ‘메모리 1GB’를 제공하고 있다.<pre><code class="language-bash">provider &quot;aws&quot; {
+region = &quot;us-east-2&quot;
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>resource &quot;aws_instance&quot; &quot;ubuntu1804&quot; {
+   ami = &quot;ami-0c55b159cbfafe1f0&quot;
+   instance_type = &quot;t3.micro&quot;
+}</p>
+<pre><code>
+#### 작업
+- Step 1. init
+- `terraform init`
+```HCL
+E:\Terraform&gt;terraform init
+Initializing the backend...
+Initializing provider plugins...
+- Finding latest version of hashicorp/aws...
+- Installing hashicorp/aws v6.27.0...
+- Installed hashicorp/aws v6.27.0 (signed by HashiCorp)
+Terraform has made some changes to the provider dependency selections recorded
+in the .terraform.lock.hcl file. Review those changes and commit them to your
+version control system if they represent changes you intended to make.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running &quot;terraform plan&quot; to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.</code></pre><ul>
+<li>Step 2. validate<pre><code class="language-HCL">E:\Terraform&gt;terraform validate
+Success! The configuration is valid.</code></pre>
+</li>
+</ul>
+<ul>
+<li>Step 3. apply<pre><code class="language-bash">E:\Terraform&gt;terraform apply
+</code></pre>
+</li>
+</ul>
+<p>Terraform used the selected providers to generate the following execution plan. Resource actions are indicated
+with the following symbols:</p>
+<ul>
+<li>create</li>
+</ul>
+<p>...</p>
+<pre><code>
+#### 인스턴스 확인 ![](https://velog.velcdn.com/images/kyk02405/post/de592620-7093-40ac-aa1c-b844610cc842/image.png)
+
+---
+### 코드 (main_02.tf)
+- ‘ami Image’가 없는 ‘Region’일 경우에는 ‘EC2 Instance’를 생성할 수가 없다.
+- 해당 문구를 확인한다. ![](https://velog.velcdn.com/images/kyk02405/post/88a5b08a-9c0c-415f-99d0-bdbf294f5aea/image.png)
+
+---
+### 코드 (main_03.tf)
+#### Name 필드 내용 추가 ![](https://velog.velcdn.com/images/kyk02405/post/b88339dc-338d-4f38-87f3-c2e8e5a1e50b/image.png)
+- 인스턴스에서 Name란에 해당 이름이 뜬다.
+- (매우 중요) ‘hashicorp/aws’의 버전에 따른 구분
+  - 코드 안에 ‘terraform {}’ 블록을 삽입하지 않은 경우
+    - ‘hashicorp/aws’의 버전을 자동으로 인식하기 때문에 오류가 발생하지 않는다.
+  - 코드 안에 ‘terraform {}’ 블록을 삽입한 경우
+    - ‘hashicorp/aws’의 버전을 현재 설치되어 있는 버전과 반드시 일치시켜야 한다.
+---
+### 코드 (main_04.tf) 코드 안에 terraform {} 블록을 삽입한 경우
+```bash
+terraform {
+   required_providers {
+      aws = {
+         source = &quot;hashicorp/aws&quot;
+         version = &quot;~&gt; 4.67.0&quot;
+      }
+   }
+required_version = &quot;&gt;= 1.4&quot;
+}
+
+provider &quot;aws&quot; {
+   region = &quot;us-east-2&quot;
+}
+
+resource &quot;aws_instance&quot; &quot;app_server&quot; {
+   ami = &quot;ami-0c55b159cbfafe1f0&quot;
+   instance_type = &quot;t3.micro&quot;
+   tags = {
+      name = &quot;TerraformUserInstance&quot;
+   }
+}</code></pre><h4 id="세부-상태-확인-1-show">세부 상태 확인 1. show</h4>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e01d3b0a-43db-4b70-b537-112782e736bf/image.png" /></p>
+<h4 id="제거">제거 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/594a3577-8355-4ce8-b462-0b5da8a1e2ad/image.png" /></h4>
+<hr />
+<h2 id="106-실습-3-ubuntu-최신-버전인-ubuntu">10.6 실습 3. Ubuntu 최신 버전인 Ubuntu</h2>
