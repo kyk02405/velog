@@ -586,3 +586,28 @@ resource &quot;aws_route_table_association&quot; &quot;new_public_subnet_2d_asso
 }</code></pre>
 <hr />
 <h2 id="1010-실습-7-terraform을-ec2-instance-생성">10.10 실습 7. Terraform을 EC2 Instance 생성</h2>
+<ul>
+<li><p>위의 10.9 실습 폴더를 압축해서 backup 해놓고, 
+<code>D:\0_Samadal\Personal\Terraform\vpc_ec2.tar</code> 해당 경로에 있는 압축파일을 VMware의 Win10 안 Terraform 폴더 안에 압축 해제해준다(역시 기존의 exe파일과 LICENSE는 남겨주기) <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/63aeded5-7e6d-48e1-b058-46ac9d5db64c/image.png" /></p>
+</li>
+<li><p><code>provider.tf</code></p>
+<ul>
+<li><code>version = &quot;4.67.0&quot;</code> 로 수정</li>
+</ul>
+</li>
+<li><p><code>main-ec2.tf</code></p>
+<ul>
+<li><code>instance_type          = &quot;t3.micro&quot;</code></li>
+<li><code>key_name  = &quot;key_name&quot;</code> 로 수정</li>
+</ul>
+</li>
+</ul>
+<h3 id="키페어-생성">키페어 생성 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/4ff2422d-8aa0-4a01-9584-6a777c4d6e3d/image.png" /></h3>
+<ul>
+<li>생성한 키페어 파일로 대체 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/163545e3-3e92-434a-8c63-27a27ec2f99b/image.png" /></li>
+</ul>
+<hr />
+<blockquote>
+<h3 id="mobaxterm">MobaXterm</h3>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/762bbfd6-7272-4cca-a257-b61107f91aab/image.png" /></p>
+</blockquote>
