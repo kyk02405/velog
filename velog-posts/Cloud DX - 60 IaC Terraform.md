@@ -386,4 +386,66 @@ resource &quot;aws_instance&quot; &quot;app_server&quot; {
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e01d3b0a-43db-4b70-b537-112782e736bf/image.png" /></p>
 <h4 id="제거">제거 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/594a3577-8355-4ce8-b462-0b5da8a1e2ad/image.png" /></h4>
 <hr />
-<h2 id="106-실습-3-ubuntu-최신-버전인-ubuntu">10.6 실습 3. Ubuntu 최신 버전인 Ubuntu</h2>
+<h2 id="106-실습-3-ubuntu-최신-버전인-ubuntu-server-2404-lts-hvm-ssd-vol-type으로-instance-생성">10.6 실습 3. Ubuntu 최신 버전인 Ubuntu Server 24.04 LTS (HVM), SSD Vol Type으로 Instance 생성</h2>
+<h3 id="개요-3">개요</h3>
+<pre><code class="language-bash">E:\Terraform\local&gt;aws configure list
+NAME       : VALUE                    : TYPE             : LOCATION
+profile    : &lt;not set&gt;                : None             : None
+access_key : ****************634V     : shared-credentials-file :
+secret_key : ****************T1eV     : shared-credentials-file :
+region     : ap-northeast-2           : config-file      : ~/.aws/config</code></pre>
+<ul>
+<li><code>ami</code>를 찾는 것이 목적이다.</li>
+<li>검색 후 해당 버전의 <code>ami</code>를 확인한다.</li>
+</ul>
+<h3 id="작업-1-ubuntu-server-2404-검색-후-ec2-instance를-생성-확인-후-삭제">작업 1. Ubuntu server 24.04 검색 후 EC2 Instance를 생성, 확인 후 삭제</h3>
+<pre><code class="language-bash">terraform {
+   required_providers {
+      aws = {
+         source = &quot;hashicorp/aws&quot;
+         version = &quot;~&gt; 4.67.0&quot;
+      }
+   }
+required_version = &quot;&gt;= 1.4&quot;
+}
+
+provider &quot;aws&quot; {
+   region = &quot;ap-northeast-2&quot;
+}
+
+resource &quot;aws_instance&quot; &quot;app_server&quot; {
+   ami = &quot;ami-0a71e3eb8b23101ed&quot;
+   instance_type = &quot;t3.micro&quot;
+   tags = {
+      name = &quot;TerraformUserInstance&quot;
+   }
+}</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d09feea2-bba3-4bcd-be5c-470af17655dc/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/80f5c083-0b67-41c2-b1ae-20f574219d51/image.png" /></p>
+<hr />
+<h3 id="107-실습-4">10.7 실습 4.</h3>
+<h4 id="개요-두-개의-파일로-분리">개요 (두 개의 파일로 분리)</h4>
+<ul>
+<li><code>provider.tf</code><pre><code class="language-bash">terraform {
+ required_providers {
+    aws = {
+       source = &quot;hashicorp/aws&quot;
+       version = &quot;~&gt; 4.67.0&quot;
+    }
+ }
+required_version = &quot;&gt;= 1.4&quot;
+}
+</code></pre>
+</li>
+</ul>
+<p>provider &quot;aws&quot; {}</p>
+<pre><code>- `main.tf`
+```bash
+resource &quot;aws_vpc&quot; &quot;main&quot; {
+   cidr_block = &quot;10.0.0.0/16&quot;
+   tags = {
+      Name = &quot;Terraform VPC&quot;
+   }
+}</code></pre><ul>
+<li><code>VPC</code> 생성 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/ac59e924-f01f-4b97-b78f-95530238f57d/image.png" /></li>
+</ul>
