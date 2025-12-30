@@ -137,7 +137,7 @@ resource &quot;aws_instance&quot; &quot;example&quot; {         -&gt; EC2 Instan
 <h4 id="step-2-key-등록">Step 2. Key 등록 <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/a5290ea6-d58a-40f1-9fd2-9735ca2009be/image.png" /></h4>
 <h4 id="step-3-key-확인-2">Step 3. Key 확인 2. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8f5f44ce-979c-4e57-9856-e03e7fb4f52c/image.png" /></h4>
 <hr />
-<h2 id="104-실습">10.4 실습</h2>
+<h2 id="104-실습-1-local-상태에서의-실습">10.4 실습 1. Local 상태에서의 실습</h2>
 <h3 id="실습-1-공급자와-리소스-구성을-위한-maintf-코드">실습 1. 공급자와 리소스 구성을 위한 main.tf 코드</h3>
 <h4 id="ami">ami</h4>
 <ul>
@@ -200,9 +200,54 @@ resource &quot;aws_instance&quot; &quot;example&quot; {         -&gt; EC2 Instan
 </li>
 </ul>
 </li>
-<li><p>작업 </p>
+</ul>
+<h3 id="maintf1">main.tf1</h3>
+<h4 id="코드-작성-교재-53p-3-1-예제">코드 작성 (교재 53p 3-1 예제)</h4>
+<pre><code class="language-bash">resource &quot;local_file&quot; &quot;abc&quot; {
+    content = &quot;abc!&quot;
+    filename = &quot;${path.module}/abc.txt&quot;
+}</code></pre>
+<h4 id="provisioning">Provisioning</h4>
 <ul>
-<li>Step 1. init <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7299f0bb-7495-4398-a8a2-0dbc92114586/image.png" /></li>
+<li><code>terraform init</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8a0e2d1c-254c-4435-9036-afc70fb570d9/image.png" /></li>
 </ul>
-</li>
+<ul>
+<li><code>terraform validate</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7ab4cbc0-83bf-4b5f-81ca-ee14b4647260/image.png" /></li>
 </ul>
+<ul>
+<li><code>terraform plan</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/28213dec-0df1-44c0-8b2a-b1fa7d6be7dc/image.png" /></li>
+</ul>
+<ul>
+<li><code>terraform apply</code> <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/0a802539-5ce2-45a2-902e-e4c24c6c231b/image.png" /></li>
+</ul>
+<hr />
+<h3 id="maintf2">main.tf2</h3>
+<h4 id="코드-작성-교재-53p-3-1-예제-1">코드 작성 (교재 53p 3-1 예제)</h4>
+<pre><code class="language-bash">resource &quot;local_file&quot; &quot;abc&quot; {
+    content = &quot;abc!&quot;
+    filename = &quot;${path.module}/abc.txt&quot;
+}
+resource &quot;local_file&quot; &quot;dev&quot; {
+  content  = &quot;def!&quot;
+  filename = &quot;${path.module}/def.txt&quot;
+}</code></pre>
+<h4 id="provisioning-1">Provisioning</h4>
+<ul>
+<li>소스 코드가 수정이 된 상태이기 때문에 <code>terraform init -upgrade</code>를 한다.<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e7dce78d-0888-4b49-84f1-5dc42996e0db/image.png" /></li>
+</ul>
+<ul>
+<li><code>terraform destroy</code><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8f6935ee-0577-49c5-9e15-ff884f104e37/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/701f6e4f-3d07-43cf-b14f-e21b6a8bee9d/image.png" /></li>
+</ul>
+<hr />
+<h3 id="maintf3">main.tf3</h3>
+<h4 id="코드-작성-교재-53p-3-1-예제-2">코드 작성 (교재 53p 3-1 예제)</h4>
+<pre><code class="language-bash">resource &quot;local_file&quot; &quot;abc&quot; {
+    content = &quot;abc!&quot;
+    filename = &quot;${path.module}/abc.txt&quot;
+}
+resource &quot;local_file&quot; &quot;dev&quot; {
+  content  = &quot;def!&quot;
+  filename = &quot;${path.module}/def.txt&quot;
+}</code></pre>
+<h4 id="provisioning-2">Provisioning</h4>
