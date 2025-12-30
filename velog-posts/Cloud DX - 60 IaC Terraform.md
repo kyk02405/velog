@@ -483,7 +483,12 @@ resource &quot;aws_vpc&quot; &quot;main&quot; {
 </li>
 <li><p><code>VPC</code> Module</p>
 <ul>
-<li><code>/sdb/Terraform/moduels/vpc/</code></li>
+<li><code>E:/Terraform/moduels/vpc/</code> 안에 <code>vpc.tf</code>, <code>variables.tf</code>, <code>outputs.tf;</code> 들을 생성한다.</li>
+<li>Step 1. vpc.tf (이 코드에는 VPC와 서브넷을 생성하는 코드가 포함되어 있다.)</li>
+<li>Step 2. variables.tf (VPC 크기, 서브넷 설정 등에 사용되는 변수들을 정의)</li>
+<li>Step 3. outputs.tf (생성된 VPC와 서브넷의 ID와 같은 출력값을 정의)</li>
 </ul>
 </li>
 </ul>
+<hr />
+<h2 id="109">10.9</h2>
