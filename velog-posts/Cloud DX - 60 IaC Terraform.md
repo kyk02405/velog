@@ -491,4 +491,98 @@ resource &quot;aws_vpc&quot; &quot;main&quot; {
 </li>
 </ul>
 <hr />
-<h2 id="109">10.9</h2>
+<h2 id="109-실습-6-vpc-subnet-igw-routing-자동-생성main-vpctf">10.9 실습 6. VPC, Subnet, IGW, Routing 자동 생성(main-vpc.tf)</h2>
+<pre><code class="language-bash">data &quot;aws_availability_zones&quot; &quot;available&quot; {
+    state = &quot;available&quot;
+}
+
+# VPC 생성
+resource &quot;aws_vpc&quot; &quot;new_vpc&quot; {
+    cidr_block = &quot;192.168.0.0/16&quot;
+    enable_dns_hostnames = true
+    enable_dns_support = true
+    instance_tenancy = &quot;default&quot;
+
+    tags = {
+        Name = &quot;NEW-VPC&quot;
+    }
+}
+
+# Subnet 생성
+resource &quot;aws_subnet&quot; &quot;new_public_subnet_2a&quot; {
+  vpc_id = aws_vpc.new_vpc.id
+  cidr_block = &quot;192.168.0.0/20&quot;
+  map_public_ip_on_launch = true
+  availability_zone = data.aws_availability_zones.available.names[0]
+  tags = {
+    Name = &quot;NEW-PUBLIC-SUBNET-2A&quot;
+  }
+}
+
+resource &quot;aws_subnet&quot; &quot;new_public_subnet_2b&quot; {
+  vpc_id = aws_vpc.new_vpc.id
+  cidr_block = &quot;192.168.16.0/20&quot;
+  map_public_ip_on_launch = true
+  availability_zone = data.aws_availability_zones.available.names[1]
+  tags = {
+    Name = &quot;NEW-PUBLIC-SUBNET-2B&quot;
+  }
+}
+resource &quot;aws_subnet&quot; &quot;new_public_subnet_2c&quot; {
+  vpc_id = aws_vpc.new_vpc.id
+  cidr_block = &quot;192.168.32.0/20&quot;
+  map_public_ip_on_launch = true
+  availability_zone = data.aws_availability_zones.available.names[2]
+  tags = {
+    Name = &quot;NEW-PUBLIC-SUBNET-2C&quot;
+  }
+}
+resource &quot;aws_subnet&quot; &quot;new_public_subnet_2d&quot; {
+  vpc_id = aws_vpc.new_vpc.id
+  cidr_block = &quot;192.168.48.0/20&quot;
+  map_public_ip_on_launch = true
+  availability_zone = data.aws_availability_zones.available.names[3]
+  tags = {
+    Name = &quot;NEW-PUBLIC-SUBNET-2D&quot;
+  }
+}
+
+# IGW 생성
+resource &quot;aws_internet_gateway&quot; &quot;new_igw&quot; {
+    vpc_id = aws_vpc.new_vpc.id
+    tags = {
+        Name = &quot;NEW-IGW&quot;
+    }
+}
+
+# Routing 테이블 생성
+resource &quot;aws_route_table&quot; &quot;new_public_rtb&quot; {
+  vpc_id = aws_vpc.new_vpc.id
+
+  route {
+    cidr_block = &quot;0.0.0.0/0&quot;
+    gateway_id = aws_internet_gateway.new_igw.id
+  }
+  tags = {
+    Name = &quot;NEW-PUBLIC-RTB&quot;
+  }
+}
+
+resource &quot;aws_route_table_association&quot; &quot;new_public_subnet_2a_association&quot; {
+  subnet_id = aws_subnet.new_public_subnet_2a.id
+  route_table_id = aws_route_table.new_public_rtb.id
+}
+resource &quot;aws_route_table_association&quot; &quot;new_public_subnet_2b_association&quot; {
+  subnet_id = aws_subnet.new_public_subnet_2b.id
+  route_table_id = aws_route_table.new_public_rtb.id
+}
+resource &quot;aws_route_table_association&quot; &quot;new_public_subnet_2c_association&quot; {
+  subnet_id = aws_subnet.new_public_subnet_2c.id
+  route_table_id = aws_route_table.new_public_rtb.id
+}
+resource &quot;aws_route_table_association&quot; &quot;new_public_subnet_2d_association&quot; {
+  subnet_id = aws_subnet.new_public_subnet_2d.id
+  route_table_id = aws_route_table.new_public_rtb.id
+}</code></pre>
+<hr />
+<h2 id="1010-실습-7-terraform을-ec2-instance-생성">10.10 실습 7. Terraform을 EC2 Instance 생성</h2>
