@@ -619,19 +619,159 @@ resource &quot;aws_route_table_association&quot; &quot;new_public_subnet_2d_asso
 <li><p>단일 웹 서버 배포는 <code>EC2 Instance</code>에서 웹 서버를 실행하는 것을 말한다.</p>
 </li>
 <li><p>실제 사용하는 환경에서는 <code>루비 온 레일즈(Ruby on Rails)</code>나 <code>장고(Django)</code>와 같은 <code>웹 프레임워크(서버용 프레임워크)</code>를 사용하여 웹 서버를 구축하는 것이 일반적이다.</p>
-<h3 id="실습">실습</h3>
+<h3 id="실습-리눅스-환경">실습 (리눅스 환경)</h3>
 <h4 id="step-1-웹-서버를-위한-script-준비">Step 1. 웹 서버를 위한 Script 준비</h4>
+<h4 id="개요-5">개요</h4>
 </li>
-<li><p>개요</p>
+<li><p><code>Hello, World!</code> 출력하는 <code>Shell Script</code>를 사용</p>
+</li>
+<li><p>단순 응답만을 위해서 <code>Bash Script</code>를 사용한다.</p>
+<h4 id="centos에서의-terraform">CentOS에서의 Terraform</h4>
+</li>
+<li><p><code>1_Updated</code>로 롤백하고 <code>64GB</code> HDD를 추가한 후 <code>/terraform</code> 생성 자동마운트를 설정한다.</p>
+</li>
+<li><p><code>AWS CLI</code> 설치
+```bash
+[root@localhost terraform]# curl &quot;<a href="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip&quot;">https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip&quot;</a> -o &quot;awscliv2.zip&quot;
+[root@localhost terraform]# ls -l
+합계 61740
+drwxr-xr-x 3 root root     4096 12월 30 19:13 aws</p>
+</li>
+<li><p>rw-r--r-- 1 root root 63198381 12월 31 10:25 awscliv2.zip
+drwx------ 2 root root    16384 12월 31 10:23 lost+found
+[root@localhost terraform]# cd aws/
+[root@localhost aws]# ls -l
+합계 80</p>
+</li>
+<li><p>rw-r--r-- 1 root root  1465 12월 30 19:03 README.md</p>
+</li>
+<li><p>rw-r--r-- 1 root root 66216 12월 30 19:03 THIRD_PARTY_LICENSES
+drwxr-xr-x 8 root root  4096 12월 30 19:13 dist</p>
+</li>
+<li><p>rwxr-xr-x 1 root root  4047 12월 30 19:03 install
+[root@localhost aws]# ./install
+You can now run: /usr/local/bin/aws --version
+[root@localhost aws]# /usr/local/bin/aws --version
+aws-cli/2.32.26 Python/3.13.11 Linux/3.10.0-1160.119.1.el7.x86_64 exe/x86_64.centos.7
+[root@localhost aws]# aws configure
+AWS Access Key ID [None]: access Key 입력
+AWS Secret Access Key [None]: Secret Access Key 입력
+Default region name [None]: ap-northeast-2
+Default output format [None]:
+[root@localhost aws]# HISTSIZE=1000
+[root@localhost aws]# aws configure list
+NAME       : VALUE                    : TYPE             : LOCATION
+profile    :                 : None             : None
+access_key : <strong><strong><strong>****</strong></strong></strong>634V     : shared-credentials-file :
+secret_key : <strong><strong><strong>****</strong></strong></strong>T1eV     : shared-credentials-file :
+region     : ap-northeast-2           : config-file      : ~/.aws/config</p>
+<pre><code></code></pre></li>
+<li><p><code>Terraform</code> 설치</p>
+<pre><code class="language-bash">[root@localhost Terraform]# wget https://releases.hashicorp.com/terraform/1.14.3/terraform_1.14.3_linux_amd64.zip
+[root@localhost Terraform]# unzip terraform_1.14.3_linux_amd64.zip
+[root@localhost Terraform]# mv terraform /usr/local/bin
+[root@localhost Terraform]#
+[root@localhost Terraform]# terraform --version
+Terraform v1.14.3
+on linux_amd64</code></pre>
+</li>
+<li><p><code>main.tf</code> 파일 생성</p>
+<pre><code class="language-bash">[root@localhost terraform]# vi main.tf
+terraform {
+ required_providers {
+    aws = {
+       source = &quot;hashicorp/aws&quot;
+       version = &quot;~&gt; 4.67.0&quot;
+    }
+ }
+required_version = &quot;&gt;= 1.4&quot;
+}
+</code></pre>
+</li>
+</ul>
+<p>provider &quot;aws&quot; {
+   region = &quot;ap-northeast-2&quot;
+}</p>
+<p>resource &quot;aws_instance&quot; &quot;app_server&quot; {
+   ami = &quot;ami-0a71e3eb8b23101ed&quot;
+   instance_type = &quot;t3.micro&quot;
+   tags = {
+      name = &quot;TerraformUserInstance&quot;
+   }
+}</p>
+<pre><code>- `terraform init` 
+- `terraform validate`
+- `terraform apply` ![](https://velog.velcdn.com/images/kyk02405/post/94794bdb-d78d-49de-94d8-90c9ff8e241f/image.png)
+---
+#### Step 1. 웹 서버를 위한 Script 준비
+- 개요
+  - 'Hello, World!' 출력하는 'Shell Script'를 사용
+  - 단순 응답만을 위해서 'Bash Script'를 사용한다.
+  ```bash
+  #!/bin/bash
+  echo &quot;Hello,World!&quot; &gt; index.html
+  nohup busybox httpd -f -p 8080 &amp;</code></pre><ul>
+<li><code>index.html</code>에 <code>Hello, World!</code>라는 문자열을 입력, 저장하고 <code>8080</code> 포트를 <code>LISTENING</code>하고 <code>busybox 유틸리티</code> 를 <code>Backgrond Mode(&amp;)</code>에서 <code>지속적으로 실행(nohup)</code>한다.</li>
+</ul>
 <ul>
-<li><code>Hello, World!</code> 출력하는 <code>Shell Script</code>를 사용</li>
-<li>단순 응답만을 위해서 <code>Bash Script</code>를 사용한다.</li>
-</ul>
-</li>
-<li><p>CentOS에서의 Terraform</p>
+<li><p><code>Busybox (비지박스) 유틸리티</code></p>
 <ul>
-<li><code>1_Updated</code>로 롤백하고 <code>64GB</code> HDD를 추가한 후 자동마운트를 설정한다.</li>
-<li><code>AWS CLI</code> 설치</li>
+<li>(핵심) <code>GPL 라이센스</code>로 개발되고 있는, 400개 여개의 리눅스 커맨드라인 명령어들을 모아 놓은 <code>단일 실행 파일</code>을 말한다.</li>
+</ul>
+</li>
+<li><p>포트 번호</p>
+<ul>
+<li><code>기본 HTTP 포트</code>인 <code>80</code>이 아닌 <code>8080</code>을 사용하는 이유는 <code>1024</code>보다 숫자가 작은 포트에서 청취하려면 <code>루트 사용자 권한</code>이 필요하기 때문이다. 따라서 더 높은 번호의 포트를 수신해야 한다. 서버를 손상시키는 공격자가 루트 권한을 가질 수 있으므로 보안 위험이 있고 루트 사용자가 아닌 권한이 제한된 다른 사용자로 웹 서버를 실행하는 것이 바람직하다. 그러나 이 장의 뒷부분에서 볼 수 있듯이 <code>80</code>으로 수신한 트래픽을 높은 번호의 포트로 라우팅하도록 <code>로드 밸런서(포트 라우팅)</code>를 구성할 수 있다.</li>
 </ul>
 </li>
 </ul>
+<hr />
+<h4 id="step-2-ec2-instance를-위한-구성-파일-maintf">Step 2. EC2 Instance를 위한 구성 파일 main.tf</h4>
+<pre><code class="language-bash">provider &quot;aws&quot; {
+  region = &quot;us-east-2&quot;
+}
+
+resource &quot;aws_instance&quot;  &quot;ubuntu1804&quot; {
+  ami = &quot;ami-0c55b159cbfafe1f0&quot;
+  instance_type = &quot;t3.micro&quot;
+  vpc_security_group_ids = [aws_security_group.instance.id]
+  user_data = &lt;&lt;-EOF
+  #!/bin/bash
+  echo &quot;Hello, World&quot; &gt; index.html
+  nohup busybox httpd -f -p 8080 &amp;
+  EOF
+  tags = {
+    Name = &quot;terraform-ubuntu1804&quot;
+  }
+}
+
+resource &quot;aws_security_group&quot; &quot;instance&quot; {
+  name = &quot;terraform-example-instance&quot;
+  ingress {
+    from_port = 8080
+    to_port = 8080
+    protocol = &quot;tcp&quot;
+    cidr_blocks = [&quot;0.0.0.0/0&quot;]
+  }
+}</code></pre>
+<hr />
+<h4 id="step-3-실행">Step 3. 실행</h4>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/382d264e-4aaa-4064-94f6-8c4e14b2d3fe/image.png" /></p>
+<hr />
+<h4 id="step-4-확인-1-생성된-instanc와-sg-확인-및-출력-확인">Step 4. 확인 1. 생성된 Instanc와 SG 확인 및 출력 확인</h4>
+<pre><code class="language-bash">[root@localhost terraform]# curl 3.16.46.185:8080
+Hello, World
+[root@localhost terraform]#</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b8129659-37fe-4f28-af30-dce7738aa2df/image.png" /></p>
+<hr />
+<h4 id="step-5-상태-목록-확인">Step 5. 상태 목록 확인</h4>
+<ul>
+<li><code>main.tf</code> 구성 파일에서의 <code>resource</code>의 목록을 출력한다.</li>
+<li>이 명령어는 특히 상태 파일을 수동으로 관리할 필요가 있을 때 유용하다.</li>
+</ul>
+<hr />
+<h4 id="step-6-삭제">Step 6. 삭제</h4>
+<pre><code class="language-bash">[root@localhost terraform]# terraform destroy</code></pre>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/67eaaff4-96e8-4f04-a85e-470a18dd6950/image.png" /></p>
+<hr />
+<h2 id="1012-단일-웹-서버-배포-2-ubuntu-2404">10.12 단일 웹 서버 배포 2. Ubuntu 24.04</h2>
