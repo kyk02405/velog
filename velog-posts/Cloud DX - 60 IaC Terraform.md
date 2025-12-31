@@ -777,37 +777,182 @@ Hello, World
 <h2 id="1012-단일-웹-서버-배포-2-ubuntu-2404">10.12 단일 웹 서버 배포 2. Ubuntu 24.04</h2>
 <h2 id="1013-응용-실습-1">10.13 응용 실습 1.</h2>
 <h3 id="작업-개요">작업 개요</h3>
+<h4 id="step-1-aws-management-console-ec2-amc">Step 1. AWS Management Console (ec2-amc)</h4>
+<pre><code>- ‘EC2 Instance(terraform-ubuntu2404)’를 ‘키페어’와 함께 생성한다.
+- 생성된 EC2 Instance에 원격접속을 한다.
+- Ubuntu에서 해야 할 기본 작업들을 모두 적용한다.
+- Apache 2 Web Server를 활성화 시킨 후 사이트 출력이 되는지 확인한다.
+    - 'EC2 Instance' 생성 with 키페어
+    - Public Key를 이용한 Priavate Key 생성
+    - 접속을 위한 Putty 설정
+    - 접속
+        - 정상적으로 접속이 되면 계정명과 비밀번호 입력 없이 자동 로그인된다.
+    - Ubuntu에서 해야 할 기본 작업들
+    - 사이트 출력</code></pre><h4 id="step-2-terraformec2-tf">Step 2. Terraform(ec2-tf)</h4>
 <ul>
-<li>Step 1. AWS Management Console (ec2-amc)<ul>
-<li>‘EC2 Instance(terraform-ubuntu2404)’를 ‘키페어’와 함께 생성한다.</li>
-<li>생성된 EC2 Instance에 원격접속을 한다.</li>
-<li>Ubuntu에서 해야 할 기본 작업들을 모두 적용한다.</li>
-<li>Apache 2 Web Server를 활성화 시킨 후 사이트 출력이 되는지 확인한다.<ul>
-<li>'EC2 Instance' 생성 with 키페어</li>
-<li>Public Key를 이용한 Priavate Key 생성</li>
-<li>접속을 위한 Putty 설정</li>
-<li>접속<ul>
-<li>정상적으로 접속이 되면 계정명과 비밀번호 입력 없이 자동 로그인된다.</li>
-</ul>
-</li>
-<li>Ubuntu에서 해야 할 기본 작업들</li>
-<li>사이트 출력</li>
-</ul>
+<li>작업 개요<pre><code>  - Terraform 코드를 이용해서 Busybox Bash Script 사이트를 출력한다.</code></pre></li>
+<li>main.tf 파일 생성<pre><code class="language-bash">################################
+# Provider (서울 리전)
+################################
+provider &quot;aws&quot; {
+region = &quot;ap-northeast-2&quot;
+}
+</code></pre>
 </li>
 </ul>
-</li>
-<li>Step 2. Terraform(ec2-tf)<ul>
-<li>작업 개요<ul>
-<li>Terraform 코드를 이용해서 Busybox Bash Script 사이트를 출력한다.</li>
+<p>################################</p>
+<h1 id="ubuntu-2404-ami-조회-서울">Ubuntu 24.04 AMI 조회 (서울)</h1>
+<p>################################
+data &quot;aws_ami&quot; &quot;ubuntu&quot; {
+  most_recent = true
+  owners      = [&quot;099720109477&quot;] # Canonical 공식 계정</p>
+<p>  filter {
+    name   = &quot;name&quot;
+    values = [&quot;ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*&quot;]
+  }</p>
+<p>  filter {
+    name   = &quot;virtualization-type&quot;
+    values = [&quot;hvm&quot;]
+  }
+}</p>
+<p>################################</p>
+<h1 id="security-group">Security Group</h1>
+<h1 id="--ssh22">- SSH(22)</h1>
+<h1 id="--busybox-web8080">- Busybox Web(8080)</h1>
+<p>################################
+resource &quot;aws_security_group&quot; &quot;tf_sg&quot; {
+  name        = &quot;tf-sg-seoul&quot;
+  description = &quot;Allow SSH and 8080 (Busybox)&quot;</p>
+<p>  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = &quot;tcp&quot;
+    cidr_blocks = [&quot;0.0.0.0/0&quot;] # 실습용 (내 IP로 바꿔도 됨)
+  }</p>
+<p>  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = &quot;tcp&quot;
+    cidr_blocks = [&quot;0.0.0.0/0&quot;]
+  }</p>
+<p>  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = &quot;-1&quot;
+    cidr_blocks = [&quot;0.0.0.0/0&quot;]
+  }
+}</p>
+<p>################################</p>
+<h1 id="ec2-instance-terraform-실습용">EC2 Instance (Terraform 실습용)</h1>
+<p>################################
+resource &quot;aws_instance&quot; &quot;tf_ec2&quot; {
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = &quot;t3.micro&quot;
+  key_name               = &quot;terraform-key&quot;   # 서울 리전에서 만든 키페어
+  vpc_security_group_ids = [aws_security_group.tf_sg.id]</p>
+<p>  user_data = &lt;&lt;-EOF
+    #!/bin/bash
+    apt update -y
+    apt install -y busybox
+    echo &quot;Hello from Terraform Busybox (Seoul)&quot; &gt; index.html
+    nohup busybox httpd -f -p 8080 &amp;
+  EOF</p>
+<p>  tags = {
+    Name = &quot;ec2-tf-seoul&quot;
+  }
+}</p>
+<pre><code>- 명령 실행
+- 사이트 출력 ![](https://velog.velcdn.com/images/kyk02405/post/2c7afd34-81ad-45bb-ab4e-d41de848f858/image.png)
+
+#### Step 3. Redirection
+- ec2-amc 사이트 출력 시 ec2-tf 사이트로 자동으로 넘어가도록 한다.
+---
+## 10.14 응용 실습 2.
+### 작업 개요
+#### Cent OS에서 DNS Server, Web Server 구축
+#### Windows 10 에서 사이트 출력
+- 사이트 출력 without ‘Redirection’ (CentOS의 기본 문서 출력)
+
+- 사이트 출력 with ‘Redirection’ (AWS의 ec2-amc로 접근 후 ex2-tf로 출력) 
+```bash
+$TTL 1D
+@       IN SOA  ns.gusiya.com.  root.gusiya.com. (
+                                        0       ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+        IN      NS      ns.gusiya.com.
+        IN      A       192.168.10.128
+
+ns      IN      A       192.168.10.128
+www     IN      A       43.201.20.34
+</code></pre><p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/dba2086a-037f-47a3-80a0-055e985c932a/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/8a842464-d6c0-47bb-bd74-7c049e058a8b/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/3d9b8652-67ed-4390-9d7a-5e95c4c2331c/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/10e3a91a-e292-4cb1-85d7-c1ce1b03bb48/image.png" /></p>
+<p>도메인 저렴하게 판매하는 사이트(<a href="https://domain.gabia.com/">https://domain.gabia.com/</a>)
+OR
+amazon route 53에서 파는 도메인 사서 aws랑 연결시킬수도있다.</p>
+<hr />
+<h2 id="1015-응용실습-3-aws-route53-을-이용한-도메인-출력">10.15 응용실습 3. AWS Route53 을 이용한 도메인 출력</h2>
+<h3 id="도메인-등록-종류">도메인 등록 종류</h3>
+<ul>
+<li>(추천) 'AWS'에서 도메인 구매 및 등록 후 'Ropute53'에서 서비스를 한 경우<ul>
+<li>네임서버 설정이 매우 쉽다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/aec922d5-fc81-442a-b257-e1572a1f38b6/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/72f4654b-ad2d-40ea-b32f-0b8950ae4d7a/image.png" /></li>
 </ul>
 </li>
-<li>main.tf 파일 생성</li>
-<li>명령 실행</li>
-<li>사이트 출력</li>
+</ul>
+<p>(기존에 가지고 있는 호스트 아이디가 있다, 옮길 때 (예를 들어 naver.com 기존 주소)) <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/d0687354-81f8-47a9-9b56-5a7c393960e6/image.png" /></p>
+<p>(기존의 주소를 라우트 53과 연결할 때) <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9c2bb00d-70ba-45c4-8802-4a3ec24bab41/image.png" /></p>
+<ul>
+<li>'Web Hosting'업체에서 도메인을 등록한 경우<ul>
+<li>네임서버 설정이 매우 어렵다.</li>
 </ul>
 </li>
-<li>Step 3. Redirection<ul>
-<li>ec2-amc 사이트 출력 시 ec2-tf 사이트로 자동으로 넘어가도록 한다.</li>
+</ul>
+<hr />
+<h2 id="1017-구성-가능한-웹-서버-배포변수">10.17 구성 가능한 웹 서버 배포(변수)</h2>
+<h3 id="변수variable">변수(Variable)</h3>
+<h4 id="특징">특징</h4>
+<ul>
+<li>변수 선언의 본문에는 '3개의 매개 변수'가 포함될 수 있고 나머지는 모두 '선택적 매개 변수'이다.</li>
+<li>변수 선언의 본문에는 '3개의 매개 변수'가 포함될 수 있고 나머지는 모두 '선택적 매개 변수'이다.<h4 id="변수-선언">변수 선언</h4>
+<pre><code class="language-bash">variable = &quot;NAME&quot; {
+      [CONFIG ...]
+}</code></pre>
+</li>
+</ul>
+<hr />
+<h3 id="3개의-매개-변수-사용-및-전달-방법">3개의 매개 변수 사용 및 전달 방법</h3>
+<h4 id="description-변수의-문서화">description (변수의 문서화)</h4>
+<ul>
+<li><code>변수 사용 방법을 문서화</code>하려면 이 매개변수를 사용한다.</li>
+<li>즉, 어떤 변수가 어떤 가지고 어디에 적용되는지 등을 설명을 통해 알아볼 수 있도록 한다.</li>
+<li>만약 팀별로 프로젝트를 한다고 가정하면 팀원은 코드를 읽을 때문만 아니라 <code>plan</code> 또는 <code>apply</code> 등의 명령어를 실행할 때 이 설명을 볼 수가 있다.</li>
+</ul>
+<h4 id="type-변수">type (변수)</h4>
+<ul>
+<li><code>Type Constraint (유형 제약 조건)</code>으로 <code>사용자가 전달하는 변수의 유형을 지정</code> 할 수 있는 변수이다.</li>
+<li><code>Terraform</code>에는 <code>string(문자열),</code> <code>number(숫자)</code>, <code>bool(대수, true, false)</code>, <code>list(리스트)</code>, <code>map(맵)</code>, <code>set(집합)</code>, <code>object(객체)</code>, <code>tuple(튜플)</code> 등의 제약 조건이 있다.</li>
+<li>유형을 지정하지 않으면 <code>Terraform</code>은 <code>any</code>로 간주한다.</li>
+</ul>
+<h4 id="default-값">default (값)</h4>
+<ul>
+<li><p><code>변수에 값을 전달하는 방법으로 사용</code>되는 변수이다.</p>
+</li>
+<li><p>전달 방법</p>
+<ul>
+<li><code>명령 줄(--var 옵션 사용)</code>로 전달한다.</li>
+<li><code>파일(-var~file 옵션 사용)</code>로 전달한다.</li>
+<li><code>환경변수(</code>Terraform<code>은 이름이</code>TF_VAR_<code>인 환경변수를 찾는다)</code>를 변수에 값을 전달힌다.</li>
+</ul>
+</li>
+<li><p>만약 값의 전달 유무에 따른 진행</p>
+<ul>
+<li>값이 전달되지 않으면 <code>기본값</code>이 전달된다.</li>
+<li>기본값이 없으면 <code>Terraform</code>은 대화식으로 사용자에게 변수에 대한 정보를 묻는다.</li>
 </ul>
 </li>
 </ul>
