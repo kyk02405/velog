@@ -6,6 +6,7 @@
 <hr />
 <h1 id="10-iac-terraform">10. IaC Terraform</h1>
 <h2 id="101-iacinfrastructure-as-code-도구-terraform">10.1 IaC(Infrastructure as Code) 도구, Terraform</h2>
+<h3 id="101--1010-terraform을-이용한-배포">10.1 ~ 10.10 Terraform을 이용한 배포</h3>
 <hr />
 <h3 id="개요">개요</h3>
 <ul>
@@ -611,3 +612,26 @@ resource &quot;aws_route_table_association&quot; &quot;new_public_subnet_2d_asso
 <h3 id="mobaxterm">MobaXterm</h3>
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/762bbfd6-7272-4cca-a257-b61107f91aab/image.png" /></p>
 </blockquote>
+<hr />
+<h2 id="1011-단일-웹-서버-배포">10.11 단일 웹 서버 배포</h2>
+<h3 id="개요-4">개요</h3>
+<ul>
+<li><p>단일 웹 서버 배포는 <code>EC2 Instance</code>에서 웹 서버를 실행하는 것을 말한다.</p>
+</li>
+<li><p>실제 사용하는 환경에서는 <code>루비 온 레일즈(Ruby on Rails)</code>나 <code>장고(Django)</code>와 같은 <code>웹 프레임워크(서버용 프레임워크)</code>를 사용하여 웹 서버를 구축하는 것이 일반적이다.</p>
+<h3 id="실습">실습</h3>
+<h4 id="step-1-웹-서버를-위한-script-준비">Step 1. 웹 서버를 위한 Script 준비</h4>
+</li>
+<li><p>개요</p>
+<ul>
+<li><code>Hello, World!</code> 출력하는 <code>Shell Script</code>를 사용</li>
+<li>단순 응답만을 위해서 <code>Bash Script</code>를 사용한다.</li>
+</ul>
+</li>
+<li><p>CentOS에서의 Terraform</p>
+<ul>
+<li><code>1_Updated</code>로 롤백하고 <code>64GB</code> HDD를 추가한 후 자동마운트를 설정한다.</li>
+<li><code>AWS CLI</code> 설치</li>
+</ul>
+</li>
+</ul>
