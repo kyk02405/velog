@@ -775,3 +775,39 @@ Hello, World
 <p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/67eaaff4-96e8-4f04-a85e-470a18dd6950/image.png" /></p>
 <hr />
 <h2 id="1012-단일-웹-서버-배포-2-ubuntu-2404">10.12 단일 웹 서버 배포 2. Ubuntu 24.04</h2>
+<h2 id="1013-응용-실습-1">10.13 응용 실습 1.</h2>
+<h3 id="작업-개요">작업 개요</h3>
+<ul>
+<li>Step 1. AWS Management Console (ec2-amc)<ul>
+<li>‘EC2 Instance(terraform-ubuntu2404)’를 ‘키페어’와 함께 생성한다.</li>
+<li>생성된 EC2 Instance에 원격접속을 한다.</li>
+<li>Ubuntu에서 해야 할 기본 작업들을 모두 적용한다.</li>
+<li>Apache 2 Web Server를 활성화 시킨 후 사이트 출력이 되는지 확인한다.<ul>
+<li>'EC2 Instance' 생성 with 키페어</li>
+<li>Public Key를 이용한 Priavate Key 생성</li>
+<li>접속을 위한 Putty 설정</li>
+<li>접속<ul>
+<li>정상적으로 접속이 되면 계정명과 비밀번호 입력 없이 자동 로그인된다.</li>
+</ul>
+</li>
+<li>Ubuntu에서 해야 할 기본 작업들</li>
+<li>사이트 출력</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Step 2. Terraform(ec2-tf)<ul>
+<li>작업 개요<ul>
+<li>Terraform 코드를 이용해서 Busybox Bash Script 사이트를 출력한다.</li>
+</ul>
+</li>
+<li>main.tf 파일 생성</li>
+<li>명령 실행</li>
+<li>사이트 출력</li>
+</ul>
+</li>
+<li>Step 3. Redirection<ul>
+<li>ec2-amc 사이트 출력 시 ec2-tf 사이트로 자동으로 넘어가도록 한다.</li>
+</ul>
+</li>
+</ul>
