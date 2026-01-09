@@ -401,5 +401,123 @@ variable &quot;number_example&quot; {
 <ul>
 <li>소스에 오류가 없기 때문에 즉, 이 소스는 변수에 대한 설정만 되어 있고 클릭에 대한 내용은 없기 때문에 아무런 내용도 출력되지 않는다.<h4 id="수정">수정</h4>
 </li>
-<li>변수를 선언했을 때는 값도 반드시 있어야 한다. </li>
+<li>변수를 선언했을 때는 값도 반드시 있어야 한다. 
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/9933ef5f-d278-48aa-bd31-9b1e85e7ac81/image.png" /></li>
+</ul>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e45a60d0-8fb9-4651-927f-0915fd048556/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/433f98a2-0544-4e8f-9e47-97be84d2034f/image.png" /></p>
+<hr />
+<h3 id="실습-2-enable에-문자열을-설정하면-오류가-발생한다-즉-boolean은-참true-1과-거짓false-0만을-구분하고-입력할-때는-이중-따옴표를-삽입하지-않아도-된다된다">실습 2. ‘enable’에 문자열을 설정하면 오류가 발생한다. 즉, ‘Boolean’은 ‘참(true, 1)’과 ‘거짓(false, 0)’만을 구분하고 입력할 때는 ‘이중 따옴표’를 삽입하지 않아도 된다된다.</h3>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/990ae633-d306-4fb9-af6e-a59465912bfc/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/97d45dff-eb80-4352-aebe-ea567c4d6521/image.png" /></p>
+<hr />
+<h3 id="실습-3-기본-값이-없으면-사용자에게-변수에-대한-정보값를-묻는다">실습 3. ‘기본 값이 없으면’ 사용자에게 변수에 대한 ‘정보(값)’를 묻는다.</h3>
+<ul>
+<li>실행 시 ‘Enter a value:’가 출력되고 해당 값(Port)을 입력
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e0c4d4e5-97bd-4247-9582-5defe71f8676/image.png" /></li>
+</ul>
+<hr />
+<h3 id="실습-4-대화식으로-명령어를-처리하지-않으려면-명령-줄의--var-옵션으로-변수값을-제공할-수-있다">실습 4. 대화식으로 명령어를 처리하지 않으려면 명령 줄의 ‘-var’ 옵션으로 변수값을 제공할 수 있다.</h3>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/acbfcddc-ed1d-4486-9009-fdd62648e917/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/06475342-c431-4093-97af-c4ddfc107a2b/image.png" /></p>
+<hr />
+<h3 id="실습-5-환경-변수">실습 5. 환경 변수</h3>
+<h4 id="개요-2">개요</h4>
+<ul>
+<li><code>TF_VAR_&lt;name&gt;</code>이라는 <code>환경 변수</code>를 통해서 변수를 설정할 수도 있다.</li>
+<li><code>&lt;name&gt;</code>는 설정하려는 환경 변수 등록할 때 <code>export</code> 사용
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5c123943-fa72-4f1b-92b0-6c6c22afd5ac/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/a823929c-f5cc-44e8-b9e3-6990a3ed35e2/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e2a49dab-f0b4-4445-8c42-1987b2567db1/image.png" /></li>
+<li>명령 실행 시 <code>포트 번호</code>를 물어보지도 않고 정상적으로 실행 된다. <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5ab2c5d1-f1bd-4298-b3e4-1999aec20c7d/image.png" /></li>
+</ul>
+<hr />
+<h3 id="실습-6-default-값을-지정해두면-plan이나-apply-명령어를-실행할-때마다-명령-줄-인수를-일일이-기억해서-처리하지-않아도-된다">실습 6. 'default 값'을 지정해두면 'plan'이나 'apply' 명령어를 실행할 때마다 명령 줄 인수를 일일이 기억해서 처리하지 않아도 된다.</h3>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/defd891e-0bc9-41c1-9b62-550fb48b98c7/image.png" /></p>
+<hr />
+<h3 id="실습-7-변수-참조variable-reference">실습 7. 변수 참조(Variable Reference)</h3>
+<h4 id="개요-3">개요</h4>
+<ul>
+<li><code>Terraform Code</code>에서 <code>입력 변수의 값</code>을 사용하려면 <code>변수 참조(Variable Reference)</code>라는 새로운 유형의 표현식을 사용한다.</li>
+<li>이 소스는 <code>보안 그룹</code>의 <code>from_port</code> 및 <code>to_port</code>라는 매개 변수를 <code>server_port</code>라는 변수의 값으로 설정하는 방법을 표현한 것이다.
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/aa01d216-79b8-4c5b-975b-fbff9c8a11db/image.png" /></li>
+</ul>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7deaa4ac-9e71-406a-8858-f1eef26a91db/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/11cce57a-8a22-4591-ad59-2e9825c91475/image.png" /></p>
+<p>주의 사항
+→ AWS관리 콘솔에서 확인해야 한다.</p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/e63ba09f-f535-441b-8741-6d46b90780fd/image.png" /></p>
+<p><img alt="" src="https://velog.velcdn.com/images/kyk02405/post/5843d149-2da4-41b9-8d2c-7c3bc6a09e82/image.png" /></p>
+<h4 id="내용-1-사용자-데이터-스크립트에서-포트를-설정할-때도-동일한-변수를-사용하는-것이-좋다">내용 1. 사용자 데이터 스크립트에서 포트를 설정할 때도 동일한 변수를 사용하는 것이 좋다.</h4>
+<ul>
+<li><p>개요
+→ 문자열 Literal(리터럴, 변수에 넣은 값이 변하지 않는 데이터, <code>상수(Constant)</code>와 유사) 내에서 참조를 사용하려면 <code>보간</code>이라는 새로운 유형의 표현식을 사용해야 한다.</p>
+</li>
+<li><p><code>보간</code>은 주어진 값을 특정 기준을 적용해서 새로운 값으로 지정하는 것을 말한다.</p>
+</li>
+<li><p><code>PHP</code>에서 변수를 표현하는 방법과 유사하다.</p>
+</li>
+<li><p><code>중괄호({. . .})</code>안에 참조를 넣을 수 있으며 <code>Terraform</code>은 이를 <code>문자열로 변환</code>한다.</p>
+</li>
+<li><p>표현식</p>
+</li>
+</ul>
+<pre><code class="language-bash">“${. . .}”</code></pre>
+<ul>
+<li>예시</li>
+</ul>
+<pre><code class="language-bash">user_date = &lt;&lt;-EOF
+    # !/bin/bash
+    echo “Hello, World!” &gt; index.html
+    nohup busybox httpd -f -p ${var.server_port} &amp;
+    EOF</code></pre>
+<h4 id="내용-2-terraform에서는-입력-변수-뿐만-아니라-출력-변수도-정의할-수-있다">내용 2. <code>Terraform</code>에서는 <code>입력 변수</code> 뿐만 아니라 <code>출력 변수</code>도 정의할 수 있다.</h4>
+<ul>
+<li><p><code>NAME</code>은 출력 변수의 이름이며 <code>VALUE</code>는 출력하려는 <code>Terraform</code> 표현식일 수 있다.</p>
+</li>
+<li><p>예시</p>
+<pre><code class="language-bash">    output &quot;&lt;NAME&gt;&quot; {\
+       value = &lt;VALUE&gt;
+       [CONFIG ...]
+    }</code></pre>
+</li>
+<li><p><code>CONFIG</code>는 다음의 2가지 선택적 매개 변수를 추가로 포함할 수 있다.</p>
+</li>
+<li><p><code>description</code></p>
+<ul>
+<li>출력 변수에 어떤 유형의 데이터가 포함되어 있는지를 알려준다.</li>
+</ul>
+</li>
+<li><p><code>sensitive</code></p>
+<ul>
+<li><code>terraform apply</code>의 실행이 끝날 때 출력을 기록하지 않도록 <code>Terraform</code>에 지시하려면
+<code>sensitive</code> 매개 변수를 <code>true</code>로 설정한다.</li>
+<li>(핵심) 이는 <code>출력 변수</code>에 패스워드나 개인 키와 민감한 자료 또는 <code>시크릿(secret)</code>이 포함되어 있는 경우 유용하다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="내용-3-새로운-결과-값-출력">내용 3. 새로운 결과 값 출력</h4>
+<ul>
+<li><code>apply 명령어</code>를 다시 실행하면 <code>Terraform</code>은 변경 사항을 적용하지는 않지만(리소스를 변경하지 않았기 때문에) 맨 끝에 새로운 결과값을 출력한다.</li>
+<li><code>terraform apply</code> 명령어를 실행하면 <code>콘솔(터미널 창)</code>에 출력 변수가 표시되는데 이 변수에는 <code>Terraform</code> 코드 사용자에게 유용한 정보가 포함되어 있다.</li>
+</ul>
+<hr />
+<h2 id="1018-실습">10.18 실습</h2>
+<h3 id="실습-1-vpc-배포">실습 1. VPC 배포</h3>
+<h4 id="개요-4">개요</h4>
+<ul>
+<li>실제 운영 환경에서 서버가 하나 뿐인 경우는 거의 없다.</li>
+<li>단일 장애점을 피하기 위해 단일 서버가 아닌 서버 클러스터를 구성하여 트래픽을 분산시키고, 트래픽 양에 따라 클러스터 크기를 늘리거나 줄여야 한다.</li>
+<li>AWS에서는 오토스케일링 그룹(Auto Scaling Group, ASG)를 사용하면 EC2 인스턴스 클러스터 시작, 각 인스턴스 상태 모니터링, 실패한 인스턴스 교체, 로드에 따른 클러스터 사이즈 조정 등 많은 작업을 자동으로 처리할 수 있다.</li>
+<li>여기서는 사용되는 리눅스는 'Amazon Linux'이다.<h4 id="작업-개요-1">작업 개요</h4>
+</li>
+<li>Terraform 구성 파일을 사용해서 ‘ASG’ 뿐만 아니라 사용자 VPC, 보안그룹(SG), EC2 Instance, ELB를 배포하는 과정을 진행한다.</li>
+</ul>
+<h4 id="step-1-vpc-생성">Step 1. ‘VPC’ 생성</h4>
+<ul>
+<li>코딩(main.tf) <img alt="" src="https://velog.velcdn.com/images/kyk02405/post/7bb1e79a-fd79-47b7-905e-8470e098dd1a/image.png" />
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/b2c2ea93-d381-4a48-8e55-867072012ee8/image.png" /></li>
+<li>실행
+<img alt="" src="https://velog.velcdn.com/images/kyk02405/post/2a5a5d50-985d-491a-9a01-af1671da7ea8/image.png" /></li>
+<li>확인</li>
 </ul>
